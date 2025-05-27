@@ -41,7 +41,6 @@ def test_Create_Board_voi_ten_hop_le(driver):
     Login_Page.click_login()
 
     AtlassianPage.Menu_click()
-    time.sleep(5)
     AtlassianPage.Trello_click()
 
     # Mở URL để tạo board mới
@@ -64,6 +63,9 @@ def test_Create_Board_voi_ten_hop_le(driver):
 
     wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
     HomePage.Create_Board_Click()
-    time.sleep(5)
     HomePage.click_trello_create_board_button()
+    HomePage.fill_board_name_input()
+    time.sleep(2)
+    HomePage.create_board_with_name()
     time.sleep(10)
+
