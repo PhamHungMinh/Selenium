@@ -22,9 +22,10 @@ class TestPasswordReset:
         yield
         self.driver.quit()
 
+#Test Case 5 - Gửi yêu cầu quên mật khẩu
     def test_successful_password_reset(self):
         (self.password_page.open_reset_page()
          .enter_email("nghiatrong4554@gmail.com")
          .click_submit())
-        time.sleep(10)
+        time.sleep(5)
 

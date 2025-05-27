@@ -1,42 +1,66 @@
-import time
 import pytest
+import time
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 
-@pytest.fixture()
+@pytest.fixture
 def driver():
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    driver.implicitly_wait(10)
+    # Khởi tạo trình duyệt
+    service = ChromeService(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
     yield driver
-    driver.close()
-    driver.quit()
+    driver.quit()  # Đóng trình duyệt sau khi kiểm thử
+
+def wait_for_element(driver, by, value):
+    """Hàm đợi cho một phần tử trở nên hiển thị và có thể nhấp được trong tối đa 10 giây."""
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
 
 def test_Create_Board_voi_ten_hop_le(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
 
-    time.sleep(5)
+    # Mở trang đăng nhập
     Login_Page.open_page("https://id.atlassian.com/login")
-    time.sleep(5)
+
+    # Đợi cho phần tử email hiển thị và nhập email
+    wait_for_element(driver, By.ID, "username")  # ID cho trường email
     Login_Page.enter_email("ngotrongnghia8424@gmail.com")
     Login_Page.click_continue()
-    time.sleep(2)
+
+    # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
+    wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
     Login_Page.enter_password("khongcomatkhau4654")
     Login_Page.click_login()
-    time.sleep(5)
 
-    time.sleep(5)
     AtlassianPage.Menu_click()
-    time.sleep(3)
+    time.sleep(5)
     AtlassianPage.Trello_click()
-    time.sleep(5)
+
+    # Mở URL để tạo board mới
+    driver.get("https://trello.com/create")
+
+    # Lưu ID của cửa sổ gốc
+    original_window = driver.current_window_handle
+
+    # Kiểm tra và đóng các cửa sổ khác nếu có
+    for window_handle in driver.window_handles:
+        if window_handle != original_window:
+            driver.switch_to.window(window_handle)
+            driver.close()  # Đóng cửa sổ mới
+            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
+
+    # Đảm bảo chỉ có một cửa sổ mở
+    assert len(driver.window_handles) == 1
+
+    # Đợi cho nút tạo board hiển thị và nhấp vào
+    wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
     HomePage.Create_Board_Click()
-    time.sleep(5)
+    time.sleep(10)
