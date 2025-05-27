@@ -45,7 +45,7 @@ def test_Create_Board_voi_ten_hop_le(driver):
     AtlassianPage.Trello_click()
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/create")
+    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -59,8 +59,11 @@ def test_Create_Board_voi_ten_hop_le(driver):
 
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
-
     # Đợi cho nút tạo board hiển thị và nhấp vào
+    HomePage.click_trello_login_button()
+
     wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
     HomePage.Create_Board_Click()
+    time.sleep(5)
+    HomePage.click_trello_create_board_button()
     time.sleep(10)
