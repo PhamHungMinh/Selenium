@@ -27,9 +27,9 @@ def test_register_voi_ten_khong_hop_le(driver):
 #Test case 3 - Đăng ký với email đã đăng ký trước đó
 def test_register_voi_email_da_DangKy(driver):
     register_Page = RegisterPage(driver)
-    time.sleep(10)
+    time.sleep(5)
     register_Page.open_page("https://id.atlassian.com/signup")
     time.sleep(5)
     register_Page.enter_email("ngotrongnghia8424@gmail.com")
     register_Page.click_continue()
-    time.sleep(5)
+    time.sleep(5000)

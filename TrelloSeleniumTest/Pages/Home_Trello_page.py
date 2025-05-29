@@ -11,7 +11,7 @@ class HomeTrelloPage:
         self.name_board = "Test"
         self.Board_Name_Input = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/div[1]/label/input")
         self.create_board_button = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/button")
-        self.Button_Into_Board = (By.XPATH,"/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[2]/a/div/div[1]/div")
+        self.Button_Into_Board = (By.XPATH,"//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
         self.Click_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[3]/a/div")
         self.Click_Menu_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
         self.Click_Change = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[7]/button/div")

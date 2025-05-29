@@ -1,9 +1,6 @@
 import pytest
 import time
-from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
@@ -81,7 +78,13 @@ def test_Tao_List_Voi_Ten_Hop_Le(driver):
     QLBoardPage.fill_list_name_input()
     QLBoardPage.Button_CreateList_WithName_Click()
     time.sleep(5)
-
+    # Chờ cho danh sách hiển thị
+    list_xpath = "//div[contains(@class, 'EAVRQ0SLBlQrwI')]//ol/li[2]/div/div[1]/div[1]"
+    wait_for_element(driver, By.XPATH, list_xpath)
+    # Kiểm tra xem danh sách đã được tạo thành công
+    created_list = driver.find_element(By.XPATH, list_xpath)
+    assert created_list.is_displayed(), "Test case FAIL: Danh sách không hiển thị."
+    print("Test case PASS: Danh sách đã được tạo thành công và hiển thị trên giao diện.")
 
 # Test case 15
 def test_Tao_List_Voi_Trung(driver):
@@ -97,7 +100,14 @@ def test_Tao_List_Voi_Trung(driver):
     QLBoardPage.Create_List_Click()
     QLBoardPage.fill_list_ten_trung_input()
     QLBoardPage.Button_CreateList_WithName_Click()
-    time.sleep(5)
+    # Chờ cho danh sách hiển thị
+    list_xpath = "//div[contains(@class, 'EAVRQ0SLBlQrwI')]//ol/li[2]/div/div[1]/div[1]"
+    wait_for_element(driver, By.XPATH, list_xpath)
+
+    # Kiểm tra xem danh sách đã được tạo thành công
+    created_list = driver.find_element(By.XPATH, list_xpath)
+    assert created_list.is_displayed(), "Test case FAIL: Danh sách không hiển thị."
+    print("Test case PASS: Danh sách đã được tạo thành công và hiển thị trên giao diện.")
 
 
 # Test case 16
