@@ -1,8 +1,11 @@
 import time
+
+
 import pytest
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Register_page import RegisterPage
 
@@ -16,20 +19,37 @@ def driver():
 
 #Test Case 2 - Đăng ký với tên không hợp lệ
 def test_register_voi_ten_khong_hop_le(driver):
-    register_Page = RegisterPage(driver)
-    time.sleep(10)
-    register_Page.open_page("https://id.atlassian.com/signup")
-    time.sleep(5)
-    register_Page.enter_email("minhpham")
-    register_Page.click_continue()
-    time.sleep(5)
+    register_page = RegisterPage(driver)
+    register_page.open_page("https://id.atlassian.com/signup")
+    time.sleep(2)
+    register_page.enter_email("minhpham")
+    register_page.click_continue()
+
+    time.sleep(2)  # đợi native tooltip hiển thị (dù không bắt buộc)
+
+    error_message = register_page.get_error_message()
+    print(f"Lỗi hiển thị: {error_message}")
+
+    assert "@" in error_message or "email" in error_message.lower()
+
 
 #Test case 3 - Đăng ký với email đã đăng ký trước đó
-def test_register_voi_email_da_DangKy(driver):
-    register_Page = RegisterPage(driver)
-    time.sleep(5)
-    register_Page.open_page("https://id.atlassian.com/signup")
-    time.sleep(5)
-    register_Page.enter_email("ngotrongnghia8424@gmail.com")
-    register_Page.click_continue()
-    time.sleep(5000)
+def test_register_voi_email_da_dang_ky(driver):
+    register_page = RegisterPage(driver)
+    register_page.open_page("https://id.atlassian.com/signup")
+    register_page.enter_email("ngotrongnghia8424@gmail.com")
+    register_page.click_continue()
+
+    # Sử dụng WebDriverWait để chờ thông báo lỗi
+    error_message2 = WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "selector_of_error_message"))
+    ).text
+
+    print("Thông báo lỗi thực tế:", error_message2)
+
+    expected_vn = "Có vẻ như bạn đã có một tài khoản liên kết với email này. Thay vào đó, hãy đăng nhập hoặc lấy lại mật khẩu nếu bạn quên mật khẩu"
+    expected_en = "It looks like you already have an account associated with this email. Please log in instead or retrieve your password if you forgot it."
+
+    # Kiểm tra thông báo lỗi
+    assert expected_vn.lower() in error_message2.lower() or expected_en.lower() in error_message2.lower(), \
+        "Thông báo lỗi không khớp với kỳ vọng bằng tiếng Việt hoặc tiếng Anh."

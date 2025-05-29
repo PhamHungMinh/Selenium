@@ -7,10 +7,10 @@ class HomeTrelloPage:
         self.driver = driver
         self.Create_Board = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
         self.Login = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
-        self.Create_New_Board = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/div/ul/li[1]/button/span/span")
-        self.name_board = "Test"
-        self.Board_Name_Input = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/div[1]/label/input")
-        self.create_board_button = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/button")
+        self.Create_New_Board = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/ul/li[1]")
+        self.name_board = "Test2"
+        self.Board_Name_Input = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/form/div[1]/label/input")
+        self.create_board_button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/form/button")
         self.Button_Into_Board = (By.XPATH,"//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
         self.Click_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[3]/a/div")
         self.Click_Menu_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
@@ -18,6 +18,7 @@ class HomeTrelloPage:
         self.Click_Change_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[2]/div")
         self.Click_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[1]")
         self.Click_Cancel = (By.XPATH, "/html/body/div[3]/div/section/div[2]/header/button[2]/span")
+        self.Return = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
 
 
     def Create_Board_Click(self):
@@ -76,4 +77,8 @@ class HomeTrelloPage:
     def click_cancel(self):
         WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.Click_Cancel)
+        ).click()
+    def click_return(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Return)
         ).click()
