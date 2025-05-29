@@ -63,28 +63,34 @@ def navigate_to_trello(driver):
     time.sleep(5)  # Consider replacing with wait_for_element if applicable
 
 
+# Hàm để đếm số lượng danh sách hiện có
+def count_lists(driver):
+    lists_xpath = "//ol[@data-testid='lists']/li"
+    lists = driver.find_elements(By.XPATH, lists_xpath)
+    return len(lists)
+
+
 # Test case 14
 def test_Tao_List_Voi_Ten_Hop_Le(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
 
-    # Đợi cho nút tạo board hiển thị và nhấp vào
-    #wait_for_element(driver, By.XPATH, XPATH_BUTTON_CREATE_BOARD)
-    #time.sleep()
     HomePage.Into_Board_Click()
     QLBoardPage = Quan_ly_board(driver)
     QLBoardPage.Create_List_Click()
     QLBoardPage.fill_list_name_input()
     QLBoardPage.Button_CreateList_WithName_Click()
-    time.sleep(5)
-    # Chờ cho danh sách hiển thị
-    list_xpath = "//div[contains(@class, 'EAVRQ0SLBlQrwI')]//ol/li[2]/div/div[1]/div[1]"
-    wait_for_element(driver, By.XPATH, list_xpath)
-    # Kiểm tra xem danh sách đã được tạo thành công
-    created_list = driver.find_element(By.XPATH, list_xpath)
-    assert created_list.is_displayed(), "Test case FAIL: Danh sách không hiển thị."
-    print("Test case PASS: Danh sách đã được tạo thành công và hiển thị trên giao diện.")
+
+    time.sleep(5)  # Chờ cho danh sách hiển thị
+
+    # Đếm số lượng danh sách hiện có
+    list_count = count_lists(driver)
+    expected_count = 2  # 1 danh sách mặc định + 1 danh sách mới
+
+    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+    print("Test case PASS: Đã tạo thành công danh sách với tên hợp lệ.")
+
 
 # Test case 15
 def test_Tao_List_Voi_Trung(driver):
@@ -92,22 +98,21 @@ def test_Tao_List_Voi_Trung(driver):
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
 
-    # Đợi cho nút tạo board hiển thị và nhấp vào
-    #wait_for_element(driver, By.XPATH, XPATH_BUTTON_CREATE_BOARD)
     time.sleep(2)
     HomePage.Into_Board_Click()
     QLBoardPage = Quan_ly_board(driver)
     QLBoardPage.Create_List_Click()
     QLBoardPage.fill_list_ten_trung_input()
     QLBoardPage.Button_CreateList_WithName_Click()
-    # Chờ cho danh sách hiển thị
-    list_xpath = "//div[contains(@class, 'EAVRQ0SLBlQrwI')]//ol/li[2]/div/div[1]/div[1]"
-    wait_for_element(driver, By.XPATH, list_xpath)
 
-    # Kiểm tra xem danh sách đã được tạo thành công
-    created_list = driver.find_element(By.XPATH, list_xpath)
-    assert created_list.is_displayed(), "Test case FAIL: Danh sách không hiển thị."
-    print("Test case PASS: Danh sách đã được tạo thành công và hiển thị trên giao diện.")
+    time.sleep(5)  # Chờ cho danh sách hiển thị
+
+    # Đếm số lượng danh sách hiện có
+    list_count = count_lists(driver)
+    expected_count = 3  # 1 danh sách mặc định + 2 danh sách mới
+
+    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+    print("Test case PASS: Đã tạo thành công danh sách với tên trùng.")
 
 
 # Test case 16
@@ -116,12 +121,18 @@ def test_Tao_List_Voi_Dai(driver):
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
 
-    # Đợi cho nút tạo board hiển thị và nhấp vào
-    #wait_for_element(driver, By.XPATH, XPATH_CREATE_LIST)
     time.sleep(2)
     HomePage.Into_Board_Click()
     QLBoardPage = Quan_ly_board(driver)
     QLBoardPage.Create_List_Click()
     QLBoardPage.fill_list_ten_dai()
     QLBoardPage.Button_CreateList_WithName_Click()
-    time.sleep(5)
+
+    time.sleep(5)  # Chờ cho danh sách hiển thị
+
+    # Đếm số lượng danh sách hiện có
+    list_count = count_lists(driver)
+    expected_count = 4  # 1 danh sách mặc định + 3 danh sách mới
+
+    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+    print("Test case PASS: Đã tạo thành công danh sách với tên dài.")
