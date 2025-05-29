@@ -14,6 +14,7 @@ from TrelloSeleniumTest.Pages.Login_page import LoginPage
 def driver():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     driver.implicitly_wait(10)
+    driver.maximize_window()
     yield driver
     driver.close()
     driver.quit()

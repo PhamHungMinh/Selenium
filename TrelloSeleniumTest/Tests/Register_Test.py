@@ -9,6 +9,7 @@ from TrelloSeleniumTest.Pages.Register_page import RegisterPage
 def driver():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
     driver.implicitly_wait(10)
+    driver.maximize_window()
     yield driver
     driver.close()
     driver.quit()

@@ -15,6 +15,7 @@ def driver():
     # Khởi tạo trình duyệt
     service = ChromeService(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
+    driver.maximize_window()
     yield driver
     driver.quit()  # Đóng trình duyệt sau khi kiểm thử
 

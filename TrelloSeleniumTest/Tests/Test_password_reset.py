@@ -19,6 +19,7 @@ class TestPasswordReset:
     def setup(self):
         self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
         self.password_page = PasswordResetPage(self.driver)
+        self.driver.maximize_window()
         yield
         self.driver.quit()
 

@@ -6,11 +6,12 @@ class HomeTrelloPage:
     def __init__(self, driver):
         self.driver = driver
         self.Create_Board = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
-        self.Login = (By.XPATH, '//html/body/div[1]/div[2]/div[1]/div/main/div/div/div[2]/div/div/p/a')
+        self.Login = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
         self.Create_New_Board = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/div/ul/li[1]/button/span/span")
         self.name_board = "Test"
         self.Board_Name_Input = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/div[1]/label/input")
         self.create_board_button = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/button")
+        self.Button_Into_Board = (By.XPATH,"/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[2]/a/div/div[1]/div")
 
     def Create_Board_Click(self):
         WebDriverWait(self.driver, 20).until(
@@ -36,4 +37,9 @@ class HomeTrelloPage:
         # Nhấp vào nút tạo board với tên đã nhập
         WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.create_board_button)
+        ).click()
+
+    def Into_Board_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Button_Into_Board)
         ).click()
