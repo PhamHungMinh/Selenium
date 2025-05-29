@@ -3,15 +3,15 @@ import pytest
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Register_page import RegisterPage
 
-@pytest.fixture()
+
+@pytest.fixture
 def driver():
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    driver.implicitly_wait(10)
-    driver.maximize_window()
+    # Khởi tạo trình duyệt
+    driver = get_chrome_driver()  # Sử dụng hàm từ chrome_driver.py
     yield driver
-    driver.close()
     driver.quit()
 
 #Test Case 2 - Đăng ký với tên không hợp lệ

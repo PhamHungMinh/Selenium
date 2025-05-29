@@ -7,16 +7,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 
 
-@pytest.fixture()
+@pytest.fixture
 def driver():
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    driver.implicitly_wait(10)
-    driver.maximize_window()
+    # Khởi tạo trình duyệt
+    driver = get_chrome_driver()  # Sử dụng hàm từ chrome_driver.py
     yield driver
-    driver.close()
     driver.quit()
 
 #Test case 1 - Đăng nhập với tài khoản chưa đăng ký

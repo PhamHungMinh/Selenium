@@ -9,9 +9,10 @@ class Quan_ly_board:
         self.driver = driver
         self.Create_List_Button = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div/button")
         self.Name_List = "List_Test_1"
-        self.Name_Link = "https://docs.google.com/"
-        self.TextArea_Name_List = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/main/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div[1]/form/textarea")
-        self.Button_CreateList_WithName = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/main/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div[1]/form/div/button[1]")
+        self.Name_Same = "List_Test_1"
+        self.Name_Long = "Kế hoạch phát triển bản thân cho năm 2025 sẽ tập trung vào việc nâng cao kỹ năng và kiến thức thông qua các khóa học trực tuyến và tham gia hội thảo chuyên môn. Tôi sẽ duy trì sức khỏe bằng cách tập thể dục đều đặn và ăn uống lành mạnh. Ngoài ra, tôi cũng sẽ tham gia các hoạt động tình nguyện để giúp đỡ cộng đồng, xây dựng mối quan hệ tốt đẹp với bạn bè và đồng nghiệp. Cuối cùng, tôi sẽ lên kế hoạch tài chính cá nhân để tiết kiệm cho tương lai và đầu tư vào những cơ hội phát triển nghề nghiệp bản thân về sau"
+        self.TextArea_Name_List = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div[1]/form/textarea")
+        self.Button_CreateList_WithName = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div[2]/div/div/div/div[2]/ol/div[1]/form/div/button[1]")
 
     def Create_List_Click(self):
         WebDriverWait(self.driver, 20).until(
@@ -30,8 +31,14 @@ class Quan_ly_board:
             EC.visibility_of_element_located(self.Button_CreateList_WithName)
         ).click()
 
-    def fill_list_name_link_input(self):
+    def fill_list_ten_trung_input(self):
         text_area = WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.TextArea_Name_List)
         )
-        text_area.send_keys(self.Name_Link)
+        text_area.send_keys(self.Name_Same)
+
+    def fill_list_ten_dai(self):
+        text_area = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.TextArea_Name_List)
+        )
+        text_area.send_keys(self.Name_Long)
