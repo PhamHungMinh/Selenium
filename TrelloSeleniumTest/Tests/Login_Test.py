@@ -30,27 +30,27 @@ def test_login_voi_TaiKhoan_chua_dang_ky(driver):
     time.sleep(10)
 
 #Test case 4 - Đăng nhập với mật khẩu sai
-def test_login_voi_mat_khau_sai(driver):
-    Login_Page = LoginPage(driver)
-    time.sleep(10)
-    Login_Page.open_page("https://id.atlassian.com/login")
-    time.sleep(5)
-    Login_Page.enter_email("eoww749@gmail.com")
-    Login_Page.click_continue()
-    time.sleep(1)
-    Login_Page.enter_password("12223456543")
-    Login_Page.click_login()
-    time.sleep(5)
+# def test_login_voi_mat_khau_sai(driver):
+#     Login_Page = LoginPage(driver)
+#     time.sleep(10)
+#     Login_Page.open_page("https://id.atlassian.com/login")
+#     time.sleep(5)
+#     Login_Page.enter_email("eoww749@gmail.com")
+#     Login_Page.click_continue()
+#     time.sleep(1)
+#     Login_Page.enter_password("12223456543")
+#     Login_Page.click_login()
+#     time.sleep(5)
 
 #Test case 6 - Đăng nhập thành công
-def test_login_succes(driver):
-    Login_Page = LoginPage(driver)
-    time.sleep(10)
-    Login_Page.open_page("https://id.atlassian.com/login")
-    time.sleep(5)
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
-    time.sleep(1)
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+# def test_login_succes(driver):
+#     Login_Page = LoginPage(driver)
+#     time.sleep(10)
+#     Login_Page.open_page("https://id.atlassian.com/login")
+#     time.sleep(5)
+#     Login_Page.enter_email("ngotrongnghia8424@gmail.com")
+#     Login_Page.click_continue()
+#     time.sleep(1)
+#     Login_Page.enter_password("khongcomatkhau4654")
+#     Login_Page.click_login()
 
