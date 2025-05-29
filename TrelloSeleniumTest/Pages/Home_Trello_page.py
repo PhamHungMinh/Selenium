@@ -11,8 +11,13 @@ class HomeTrelloPage:
         self.name_board = "Test"
         self.Board_Name_Input = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/div[1]/label/input")
         self.create_board_button = (By.XPATH, "/html/body/div[3]/div[3]/section/div[2]/div/form/button")
-        self.Button_Into_Board = (By.XPATH,"//div[contains(@class, 'EAVRQ0SLBlQrwI')]//a[@href='/b/6jkUMfhu/test' and @title='Test']")
-
+        self.Button_Into_Board = (By.XPATH,"/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[2]/a/div/div[1]/div")
+        self.Click_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[3]/a/div")
+        self.Click_Menu_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
+        self.Click_Change = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[7]/button/div")
+        self.Click_Change_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[2]/div")
+        self.Click_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[1]")
+        self.Click_Cancel = (By.XPATH, "/html/body/div[3]/div/section/div[2]/header/button[2]/span")
 
 
     def Create_Board_Click(self):
@@ -46,3 +51,29 @@ class HomeTrelloPage:
             EC.visibility_of_element_located(self.Button_Into_Board)
         ).click()
 
+    def click_board(self):
+        WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.Click_Board)
+        ).click()
+
+    def click_menu_board(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Click_Menu_Board)
+        ).click()
+
+    def click_change(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Click_Change)
+        ).click()
+    def click_change_color(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Click_Change_Color)
+        ).click()
+    def click_color(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Click_Color)
+        ).click()
+
+    def click_cancel(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Click_Cancel)
+        ).click()

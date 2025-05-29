@@ -68,5 +68,16 @@ def test_Create_Board_voi_ten_hop_le(driver):
     time.sleep(2)
     HomePage.create_board_with_name()
     time.sleep(10)
-
+    HomePage.click_board()
+    time.sleep(10)
+    HomePage.click_menu_board()
+    time.sleep(10)
+    HomePage.click_change()
+    time.sleep(10)
+    HomePage.click_change_color()
+    time.sleep(10)
+    HomePage.click_color()
+    time.sleep(5)
+    HomePage.click_cancel()
+    time.sleep(10)
 
