@@ -9,15 +9,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 
 @pytest.fixture
 def driver():
     # Khởi tạo trình duyệt
-    service = ChromeService(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service)
-    driver.maximize_window()
+    driver = get_chrome_driver()  # Sử dụng hàm từ chrome_driver.py
     yield driver
-    driver.quit()  # Đóng trình duyệt sau khi kiểm thử
+    driver.quit()
 
 def wait_for_element(driver, by, value):
     """Hàm đợi cho một phần tử trở nên hiển thị và có thể nhấp được trong tối đa 10 giây."""

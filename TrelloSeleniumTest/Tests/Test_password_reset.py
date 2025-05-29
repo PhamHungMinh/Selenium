@@ -1,13 +1,9 @@
 import time
-
 import pytest
 import sys
 import os
-
-from Selenium.TrelloSeleniumTest.Pages.reset_password_page import PasswordResetPage
-
+from TrelloSeleniumTest.Pages.reset_password_page import PasswordResetPage
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
