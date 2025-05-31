@@ -20,6 +20,11 @@ class Quan_Ly_List:
         self.List_edit_menu_button = (By.XPATH, "//button[@data-testid='list-edit-menu-button' and @type='button']")
         self.Archive_List_Button = (By.XPATH, "//button[@data-testid='list-actions-archive-list-button']")
         self.alert_xpath = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div")
+        self.textarea_xpath = "//ol[@id='board']/li[4]//h2[@data-testid='list-name']"
+        self.Cho_Bang_Hien_Thi ="//ol[@id='board']/li[1]"
+        self.List_Test_1_XPATH = "//ol[@id='board']/li[1]"
+        self.Drop_XPATH = "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div/button"
+
 
     def Create_List_Click(self):
         WebDriverWait(self.driver, 20).until(
@@ -68,3 +73,11 @@ class Quan_Ly_List:
             return True  # Thông báo đã xuất hiện
         except:
             return False
+
+    # def is_name_length_equal_to_512(self):
+    #     # Tìm textarea và lấy giá trị của nó
+    #     textarea = self.driver.find_element(By.XPATH, self.textarea_xpath)
+    #     name_value = textarea.get_attribute("value")
+    #
+    #     # Kiểm tra độ dài của tên
+    #     return len(name_value) == 512

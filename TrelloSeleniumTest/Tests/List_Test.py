@@ -8,10 +8,7 @@ from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Pages.Quan_ly_List import Quan_Ly_List
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-
-# Global variable for XPATHs
-XPATH_CREATE_LIST = "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/ul/li[2]/a/div"
-XPATH_BUTTON_CREATE_BOARD = "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[2]/div[2]/div/div[2]/div[2]/a/div"
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 @pytest.fixture
@@ -71,16 +68,17 @@ def count_lists(driver):
 # Test case 14
 def test_Tao_List_Voi_Ten_Hop_Le(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-
     HomePage.Into_Board_Click()
+
     QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
     QLListPage.fill_list_name_input()
     QLListPage.Button_CreateList_WithName_Click()
 
-    time.sleep(5)  # Chờ cho danh sách hiển thị
+    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
 
     # Đếm số lượng danh sách hiện có
     list_count = count_lists(driver)
@@ -93,17 +91,17 @@ def test_Tao_List_Voi_Ten_Hop_Le(driver):
 # Test case 15
 def test_Tao_List_Voi_Trung(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-
-    time.sleep(2)
     HomePage.Into_Board_Click()
+
     QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
     QLListPage.fill_list_ten_trung_input()
     QLListPage.Button_CreateList_WithName_Click()
 
-    time.sleep(5)  # Chờ cho danh sách hiển thị
+    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
 
     # Đếm số lượng danh sách hiện có
     list_count = count_lists(driver)
@@ -115,43 +113,88 @@ def test_Tao_List_Voi_Trung(driver):
 
 # Test case 16
 def test_Tao_List_Voi_Dai(driver):
+    # Đăng nhập vào Atlassian
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-
-    time.sleep(2)
     HomePage.Into_Board_Click()
+
     QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
-    QLListPage.fill_list_ten_dai()
+    QLListPage.fill_list_ten_dai()  # Giả định rằng tên dài đã được điền
     QLListPage.Button_CreateList_WithName_Click()
 
-    time.sleep(5)  # Chờ cho danh sách hiển thị
-
+    #wait_for_element(driver, By.XPATH, QLListPage.textarea_xpath)
     # Đếm số lượng danh sách hiện có
     list_count = count_lists(driver)
     expected_count = 4  # 1 danh sách mặc định + 3 danh sách mới
 
+    # Kiểm tra số lượng danh sách
     assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+
+    # Kiểm tra độ dài tên danh sách bằng cách sử dụng phương thức từ lớp Quan_Ly_List
+    textarea = driver.find_element(By.XPATH, QLListPage.textarea_xpath)
+    length = len(textarea.text)
+
+    # Kiểm tra độ dài tên danh sách
+    expected_length = 512
+
+    if length < expected_length:
+        assert False, f"Test case FAIL: Độ dài tên danh sách là {length}, nhỏ hơn 512."
+    elif length > expected_length:
+        assert False, f"Test case FAIL: Độ dài tên danh sách là {length}, lớn hơn 512."
+    else:
+        print("Tên danh sách có độ dài chính xác là 512 ký tự.")
+
     print("Test case PASS: Đã tạo thành công danh sách với tên dài.")
 
-
+# Test case 18
 def test_Archive_List(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-
-    time.sleep(2)
     HomePage.Into_Board_Click()
+
     QLListPage = Quan_Ly_List(driver)
     QLListPage.click_menu_list()
     QLListPage.click_archive_list()
-    time.sleep(2)
+
+    #wait_for_element(driver, By.XPATH, QLListPage.alert_xpath)
     alert_visible = QLListPage.check_alert_message()
-    time.sleep(1)
+
     # Reload lại trang
     driver.refresh()  # Reload trang hiện tại
-    time.sleep(5)
-    expected_count = 3
+    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+
     # Đếm số lượng danh sách hiện có sau khi reload
     list_count = count_lists(driver)
+    expected_count = 3  # Giả định rằng có 3 danh sách còn lại sau khi lưu trữ
+
+    # Kiểm tra cả hai điều kiện
+    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+    assert alert_visible, "Test case FAIL: Thông báo không xuất hiện sau khi lưu trữ danh sách."
+
+    print("Test case PASS: Đã lưu trữ danh sách thành công, thông báo đã xuất hiện và số lượng danh sách đúng.")
+
+#Test case 17
+def test_Drag_List_ViTri_HopLe(driver):
+    # Đăng nhập vào Atlassian
+    login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
+    navigate_to_trello(driver)
+    HomePage = HomeTrelloPage(driver)
+    HomePage.Into_Board_Click()
+
+    QLListPage = Quan_Ly_List(driver)
+    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+
+    actions = ActionChains(driver)
+    list_1 = driver.find_element(By.XPATH, QLListPage.List_Test_1_XPATH)
+    list_3 = driver.find_element(By.XPATH, QLListPage.Drop_XPATH)
+    actions.drag_and_drop(list_1, list_3).perform()
+
+    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+
+    time.sleep(10)
