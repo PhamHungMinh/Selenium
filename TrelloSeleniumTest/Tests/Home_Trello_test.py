@@ -1,6 +1,7 @@
 import pytest
 import time
-from selenium.webdriver.chrome.service import Service as ChromeService
+import pymsgbox
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
@@ -84,4 +85,56 @@ def test_Create_Board_voi_ten_hop_le(driver):
     time.sleep(3)
     HomePage.click_cancel()
     time.sleep(3)
+def test_TaoBoard_Background(driver):
+    Login_Page = LoginPage(driver)
+    AtlassianPage = HomeAtlassianPage(driver)
+    HomePage = HomeTrelloPage(driver)
 
+    # Mở trang đăng nhập
+    Login_Page.open_page("https://id.atlassian.com/login")
+
+    # Đợi cho phần tử email hiển thị và nhập email
+    wait_for_element(driver, By.ID, "username")  # ID cho trường email
+    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
+    Login_Page.click_continue()
+
+    # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
+    wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
+    Login_Page.enter_password("khongcomatkhau4654")
+    Login_Page.click_login()
+
+    AtlassianPage.Menu_click()
+    AtlassianPage.Trello_click()
+
+    # Mở URL để tạo board mới
+    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+
+    # Lưu ID của cửa sổ gốc
+    original_window = driver.current_window_handle
+
+    # Kiểm tra và đóng các cửa sổ khác nếu có
+    for window_handle in driver.window_handles:
+        if window_handle != original_window:
+            driver.switch_to.window(window_handle)
+            driver.close()  # Đóng cửa sổ mới
+            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
+
+    # Đảm bảo chỉ có một cửa sổ mở
+    assert len(driver.window_handles) == 1
+    # Đợi cho nút tạo board hiển thị và nhấp vào
+    HomePage.click_trello_login_button()
+    HomePage.click_board()
+    time.sleep(5)
+    HomePage.click_menu_board()
+    time.sleep(5)
+    HomePage.click_change()
+    time.sleep(5)
+    HomePage.upload_background(r"D:\ui\Anh.jpg")
+    try:
+        error_message = WebDriverWait(driver, 5).until(
+            EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), 'File too large')]"))
+        )
+        pymsgbox.alert("❌ Upload thất bại: File quá lớn!", "Kết quả")
+    except TimeoutException:
+        pymsgbox.alert("✅ Upload thành công: Không có lỗi!", "Kết quả")
+    time.sleep(10)
