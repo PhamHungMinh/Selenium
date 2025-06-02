@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,7 +14,7 @@ from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
 @pytest.fixture
 def driver():
     # Khởi tạo trình duyệt
-    driver = get_chrome_driver()  # Sử dụng hàm từ chrome_driver.py
+    driver = get_chrome_driver()
     yield driver
     driver.quit()
 
@@ -53,6 +55,7 @@ def navigate_to_trello(driver):
     assert len(driver.window_handles) == 1
     home_page.click_trello_login_button()
 
+#Test case 20
 def test_Tao_Card_Voi_Ten_Hop_Le(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -67,6 +70,7 @@ def test_Tao_Card_Voi_Ten_Hop_Le(driver):
     # Thay đổi assertEqual thành assert để tương thích với pytest
     assert number_of_cards == 1, f"Số lượng thẻ trong danh sách không đúng: {number_of_cards}. Kỳ vọng là 1."
 
+#Test case 21
 def test_Tao_Card_Voi_Ten_Link(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -81,6 +85,7 @@ def test_Tao_Card_Voi_Ten_Link(driver):
     # Thay đổi assertEqual thành assert để tương thích với pytest
     assert number_of_cards == 2, f"Số lượng thẻ trong danh sách không đúng: {number_of_cards}. Kỳ vọng là 2."
 
+#Test case 23
 def test_Set_DeadLine(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -94,3 +99,32 @@ def test_Set_DeadLine(driver):
 
     # So sánh với số lượng mong muốn (3)
     assert number_of_deadline_cards == 3, f"Số lượng thẻ có deadline không đúng: {number_of_deadline_cards}. Kỳ vọng là 3."
+
+#Test case 30 - Đặt giới hạn card cho list
+def test_limit_cards_List(driver):
+    login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+
+    navigate_to_trello(driver)
+    HomePage = HomeTrelloPage(driver)
+    HomePage.Into_Board_Click()
+
+    QLListPage = Quan_Ly_List(driver)
+    QLListPage.click_menu_list()
+    time.sleep(1)
+    QLListPage.click_add_limit_card_button()
+    QLListPage.fill_input_limit()
+    QLListPage.click_save_button()
+    QLListPage.click_close_button()
+
+    ql_card = QuanLyCard(driver)
+    ql_card.create_card('short')
+    time.sleep(100)
+    number_of_cards = ql_card.count_cards_in_list()
+
+    # Kiểm tra màu nền của thẻ danh sách
+    list_element = driver.find_element(By.CSS_SELECTOR,
+                                       "div[data-testid='list'][style*='--accent-background: var(--ds-background-warning)']")
+
+    # Assert để kiểm tra số lượng thẻ và màu nền
+    assert number_of_cards == 3, f"Số lượng thẻ trong danh sách không đúng: {number_of_cards}. Kỳ vọng là 3."
+    assert list_element is not None, "Thẻ danh sách không chuyển nền thành màu vàng khi vượt quá giới hạn."

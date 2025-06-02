@@ -23,7 +23,43 @@ class HomeTrelloPage:
         self.Return = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
         #self.Click_Background = (By.XPATH, "/html/body/div[4]/div/section/div[2]/div/div/section/div/div[2]/div/div[1]")
         self.input_background = (By.CSS_SELECTOR, "input[type='file'][data-testid='custom-background-uploader']")
+        #Broken_Link_Test
+        self.BASE_URL = "https://trello.com"
+        self.FOOTER_LINKS = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
+        self.Thong_Tin_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
+        self.More_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
 
+        self.LINK_MAPPING = {
+            "Biểu phí": (By.XPATH, "//a[@href='/pricing']"),
+            "Ứng dụng": (By.XPATH, "//a[@href='/platforms']"),
+            "Blog": (By.XPATH, "//a[@href='https://blog.trello.com']"),
+            "Chính sách Bảo mật": (By.XPATH, "//a[@href='/privacy']"),
+            "Thông báo thu thập thông tin": (By.XPATH,
+                                             "//a[@href='https://www.atlassian.com/legal/privacy-policy#additional-disclosures-for-ca-residents']"),
+            "Trợ giúp": (By.XPATH, "//a[@href='http://help.trello.com']"),
+            "Nhà phát triển": (By.XPATH, "//a[@href='https://developers.trello.com']"),
+            "Pháp lý": (By.XPATH, "//a[@href='/legal']"),
+            "Thuộc tính": (By.XPATH, "//a[@href='/attributions']")
+        }
+        #Test Work Space
+        self.ThanhVien_Button = (By.XPATH, "//a[@href='/w/userkhonggianlamvic33097947/members']")
+        self.Moi_Thanh_Vien_Button = (By.XPATH, "//button[contains(@class, 'bxgKMAm3lq5BpA') and contains(@class, 'SdamsUKjxSBwGb')]")
+        self.Input_Email_Memmbers = (By.XPATH, "//input[@data-testid='add-members-input']")
+        self.Add_Button = (By.XPATH, "//button[@type='button' and contains(@class, 'bxgKMAm3lq5BpA')]")
+        self.email_list = [
+            "ngotrongnghia8424@gmail.com"
+            "minhnghiaseleniumtest1@gmail.com",
+            "minhnghiaseleniumtest2@gmail.com",
+            "minhnghiaseleniumtest3@gmail.com",
+            "minhnghiaseleniumtest4@gmail.com",
+            "minhnghiaseleniumtest5@gmail.com",
+            "minhnghiaseleniumtest6@gmail.com",
+            "minhnghiaseleniumtest7@gmail.com",
+            "minhnghiaseleniumtest8@gmail.com",
+            "minhnghiaseleniumtest9@gmail.com",
+            "minhnghiaseleniumtest10@gmail.com"
+        ]
+        self.email_string =','.join(self.email_list)
     def Create_Board_Click(self):
         WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.Create_Board)
@@ -98,3 +134,49 @@ class HomeTrelloPage:
 
         # Gửi đường dẫn ảnh vào input
         upload_input.send_keys(file_path)
+
+    #Brokne_Link_Test
+    def Thong_Tin_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Thong_Tin_Button)
+        ).click()
+    def More_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.More_Button)
+        ).click()
+    def get_all_footer_links(self):
+        """Lấy tất cả các link trong footer"""
+        return self.driver.find_elements(*self.FOOTER_LINKS)
+
+    def get_link_url(self, link_text):
+        """Lấy URL của link dựa trên text hiển thị"""
+        link = self.driver.find_element(*self.LINK_MAPPING[link_text])
+        return link.get_attribute("href")
+
+    def get_link_status(self, url):
+        """Lấy HTTP status code của URL (sử dụng requests)"""
+        import requests
+        try:
+            response = requests.head(url, timeout=10, allow_redirects=True)
+            return response.status_code
+        except requests.exceptions.RequestException as e:
+            return f"Error: {str(e)}"
+
+    #Work space test
+    def ThanhVien_Button_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.ThanhVien_Button)
+        ).click()
+    def Add_Email_Button_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Moi_Thanh_Vien_Button)
+        ).click()
+    def Fill_Email_Input_Click(self):
+            WebDriverWait(self.driver, 20).until(
+                EC.visibility_of_element_located(self.Input_Email_Memmbers)
+            ).send_keys(self.email_string)
+
+    def Add_Button_Click(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Add_Button)
+        ).click()

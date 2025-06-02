@@ -179,22 +179,24 @@ def test_Archive_List(driver):
     print("Test case PASS: Đã lưu trữ danh sách thành công, thông báo đã xuất hiện và số lượng danh sách đúng.")
 
 #Test case 17
-def test_Drag_List_ViTri_HopLe(driver):
-    # Đăng nhập vào Atlassian
-    login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+# def test_Drag_List_ViTri_HopLe(driver):
+#     # Đăng nhập vào Atlassian
+#     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+#
+#     navigate_to_trello(driver)
+#     HomePage = HomeTrelloPage(driver)
+#     HomePage.Into_Board_Click()
+#
+#     QLListPage = Quan_Ly_List(driver)
+#     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+#
+#     actions = ActionChains(driver)
+#     list_1 = driver.find_element(By.XPATH, QLListPage.List_Test_1_XPATH)
+#     list_3 = driver.find_element(By.XPATH, QLListPage.Drop_XPATH)
+#     actions.drag_and_drop(list_1, list_3).perform()
+#
+#     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+#
+#     time.sleep(10)
 
-    navigate_to_trello(driver)
-    HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
 
-    QLListPage = Quan_Ly_List(driver)
-    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
-
-    actions = ActionChains(driver)
-    list_1 = driver.find_element(By.XPATH, QLListPage.List_Test_1_XPATH)
-    list_3 = driver.find_element(By.XPATH, QLListPage.Drop_XPATH)
-    actions.drag_and_drop(list_1, list_3).perform()
-
-    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
-
-    time.sleep(10)

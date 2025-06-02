@@ -24,6 +24,11 @@ class Quan_Ly_List:
         self.Cho_Bang_Hien_Thi ="//ol[@id='board']/li[1]"
         self.List_Test_1_XPATH = "//ol[@id='board']/li[1]"
         self.Drop_XPATH = "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div/button"
+        #Test case 30
+        self.Set_Limit_card_button = (By.XPATH, "//span[text()='Set list limit']")
+        self.Input_Limit = (By.XPATH, "//input[@id='listLimit' and @type='number']")
+        self.Save_Button = (By.XPATH, "//button[@type='submit' and @class='bxgKMAm3lq5BpA SdamsUKjxSBwGb u0Qu04nzhYsVX_ SEj5vUdI3VvxDc']")
+        self.Close_Button = (By.XPATH, "//button[@aria-label='Close popover' and @class='q7bda2GIwjst4f zKzcyhLUVG0jDw']")
 
 
     def Create_List_Click(self):
@@ -74,10 +79,22 @@ class Quan_Ly_List:
         except:
             return False
 
-    # def is_name_length_equal_to_512(self):
-    #     # Tìm textarea và lấy giá trị của nó
-    #     textarea = self.driver.find_element(By.XPATH, self.textarea_xpath)
-    #     name_value = textarea.get_attribute("value")
-    #
-    #     # Kiểm tra độ dài của tên
-    #     return len(name_value) == 512
+    #Test case 30
+    def click_add_limit_card_button(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Set_Limit_card_button)
+        ).click()
+    def fill_input_limit(self):
+        # Chờ cho textarea có thể nhìn thấy và nhập tên danh sách
+        text_area = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Input_Limit)
+        )
+        text_area.send_keys("2")
+    def click_save_button(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Save_Button)
+        ).click()
+    def click_close_button(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Close_Button)
+        ).click()
