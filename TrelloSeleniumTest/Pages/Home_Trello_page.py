@@ -23,11 +23,14 @@ class HomeTrelloPage:
         self.Return = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
         #self.Click_Background = (By.XPATH, "/html/body/div[4]/div/section/div[2]/div/div/section/div/div[2]/div/div[1]")
         self.input_background = (By.CSS_SELECTOR, "input[type='file'][data-testid='custom-background-uploader']")
+        self.close_board = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[20]/button")
+        self.confirm_closing_board = (By.XPATH, "/html/body/div[3]/div[4]/section/div[2]/div/button")
         #Broken_Link_Test
         self.BASE_URL = "https://trello.com"
         self.FOOTER_LINKS = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
         self.Thong_Tin_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
         self.More_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
+
 
         self.LINK_MAPPING = {
             "Biểu phí": (By.XPATH, "//a[@href='/pricing']"),
@@ -134,6 +137,16 @@ class HomeTrelloPage:
 
         # Gửi đường dẫn ảnh vào input
         upload_input.send_keys(file_path)
+
+    def click_close_board(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.close_board)
+        ).click()
+
+    def click_confirm(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.confirm_closing_board)
+        ).click()
 
     #Brokne_Link_Test
     def Thong_Tin_Click(self):
