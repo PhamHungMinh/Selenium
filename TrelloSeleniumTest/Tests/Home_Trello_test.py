@@ -188,3 +188,54 @@ def test_dong_Board(driver):
     time.sleep(10)
     driver.refresh()
 
+def test_mo_board_da_dong(driver):
+    Login_Page = LoginPage(driver)
+    AtlassianPage = HomeAtlassianPage(driver)
+    HomePage = HomeTrelloPage(driver)
+    Login_Page.open_page("https://id.atlassian.com/login")
+    wait_for_element(driver, By.ID, "username")
+    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
+    Login_Page.click_continue()
+
+    # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
+    wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
+    Login_Page.enter_password("khongcomatkhau4654")
+    Login_Page.click_login()
+
+    AtlassianPage.Menu_click()
+    AtlassianPage.Trello_click()
+    # time.sleep(500)
+
+    # Mở URL để tạo board mới
+    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+
+    # Lưu ID của cửa sổ gốc
+    original_window = driver.current_window_handle
+
+    # Kiểm tra và đóng các cửa sổ khác nếu có
+    for window_handle in driver.window_handles:
+        if window_handle != original_window:
+            driver.switch_to.window(window_handle)
+            driver.close()  # Đóng cửa sổ mới
+            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
+
+    # Đảm bảo chỉ có một cửa sổ mở
+    assert len(driver.window_handles) == 1
+    # Đợi cho nút tạo board hiển thị và nhấp vào
+    HomePage.click_trello_login_button()
+    HomePage.click_xem_board_da_dong()
+    time.sleep(10)
+    try:
+        board = driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/div/div/div/ul/li[3]/div[1]/a")
+    except:
+        print("Không tìm thấy board!")
+    HomePage.click_open_again()
+    time.sleep(5)
+    button = driver.find_element(By.CSS_SELECTOR, "button[data-testid='workspace-chooser-reopen-button']")
+    button.click()
+    time.sleep(5)
+    HomePage.click_exit()
+    driver.refresh()
+
+
+

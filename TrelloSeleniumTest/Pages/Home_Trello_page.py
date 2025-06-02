@@ -25,6 +25,9 @@ class HomeTrelloPage:
         self.input_background = (By.CSS_SELECTOR, "input[type='file'][data-testid='custom-background-uploader']")
         self.close_board = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[20]/button")
         self.confirm_closing_board = (By.XPATH, "/html/body/div[3]/div[4]/section/div[2]/div/button")
+        self.xem_board_da_dong = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/button")
+        self.open_again = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/div/div/div/ul/li[3]/div[2]/div/button")
+        self.exit = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/header/button/span/span")
         #Broken_Link_Test
         self.BASE_URL = "https://trello.com"
         self.FOOTER_LINKS = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
@@ -148,6 +151,20 @@ class HomeTrelloPage:
             EC.presence_of_element_located(self.confirm_closing_board)
         ).click()
 
+    def click_xem_board_da_dong(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.xem_board_da_dong)
+        ).click()
+
+    def click_open_again(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.open_again)
+        ).click()
+
+    def click_exit(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.exit)
+        ).click()
     #Brokne_Link_Test
     def Thong_Tin_Click(self):
         WebDriverWait(self.driver, 20).until(
