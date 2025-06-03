@@ -28,7 +28,9 @@ def test_login_voi_TaiKhoan_chua_dang_ky(driver):
     Login_Page.click_continue()
 
     # Đợi cho trang chuyển hướng
-    time.sleep(5)  # Thời gian chờ cho chuyển hướng, có thể thay thế bằng cách sử dụng WebDriverWait
+    WebDriverWait(driver, 10).until(
+        EC.url_to_be("https://id.atlassian.com/signup")
+    )
 
     # Kiểm tra URL hiện tại
     current_url = driver.current_url

@@ -110,6 +110,7 @@ def test_footer_links_broken(driver):
     print("Thông tin các link:")
     for entry in link_statuses:
         print(entry)
+
 #Test case 31
 @pytest.mark.brokenlink
 def test_open_links_in_new_tabs(driver):
