@@ -34,8 +34,6 @@ class HomeTrelloPage:
         self.FOOTER_LINKS = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
         self.Thong_Tin_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
         self.More_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
-
-
         self.LINK_MAPPING = {
             "Biểu phí": (By.XPATH, "//a[@href='/pricing']"),
             "Ứng dụng": (By.XPATH, "//a[@href='/platforms']"),
@@ -67,6 +65,18 @@ class HomeTrelloPage:
             "minhnghiaseleniumtest10@gmail.com"
         ]
         self.email_string =','.join(self.email_list)
+
+        # Test case 23
+        self.Members_Button_23 = (By.XPATH, "//a[.//span[@data-testid='MemberIcon']]")
+        self.Moi_ThanhVien_23 = (By.XPATH, "//button[contains(@class, 'w2Ok_QPiPTxPuy') and contains(@class, 'bxgKMAm3lq5BpA')]")
+        self.Input_Member_23 = (By.XPATH, "//input[contains(@class, 'autocomplete-input') and contains(@class, 'xgUfhtnEk1vlSn')]")
+        self.Add_Member_Button_23 = (By.XPATH, "//button[span[text()='Gửi lời mời']]")
+        self.Close_Add_Member_Button_23 = (By.XPATH, "//button[@aria-label='Đóng']")
+        self.Work_Space_Button = (By.XPATH, "//span[text()='Work Space Test']")
+        self.Boards_Button = (By.XPATH, "//span[text()='Boards']")
+
+
+
     def Create_Board_Click(self):
         WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.Create_Board)
@@ -216,4 +226,38 @@ class HomeTrelloPage:
     def Add_Button_Click(self):
         WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(self.Add_Button)
+        ).click()
+
+    #Test case 23
+    def Xem_Thanh_Vien_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Members_Button_23)
+        ).click()
+    def Moi_Thanh_Vien_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Moi_ThanhVien_23)
+        ).click()
+    def Fill_Email_Member_Input_Click_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Input_Member_23)
+        ).send_keys("minhnghiaseleniumtest2@gmail.com,")
+
+    def Button_add_click_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Add_Member_Button_23)
+        ).click()
+
+    def Close_Add_Member_Click_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Close_Add_Member_Button_23)
+        ).click()
+
+    def Work_Space_Click_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Work_Space_Button)
+        ).click()
+
+    def Boards_Click_23(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Boards_Button)
         ).click()

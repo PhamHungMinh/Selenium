@@ -30,6 +30,20 @@ class QuanLyCard:
         self.Ngay_Deadline = "6/1/2025"
         self.Ngay_Gan = "6/2/2025"
         self.Ngay_Xa = "10/6/2025"
+        # test case 26
+        self.Comment_Card = "Complete comment card"
+        self.Input_Comment_Card = (By.XPATH,
+                                   "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
+        self.Click_Button_Input = (By.XPATH,
+                                   "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
+        self.Button_Save = (By.XPATH,
+                            "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[2]/button")
+        # test case 27
+        self.Tag_User = "@"
+        self.Comment_User = "Bạn làm bài tới đâu rồi hửm"
+        self.Input_Tag_User = (By.XPATH, "//div[@id='ak-editor-textarea' and @contenteditable='true']")
+        self.Choose_User = (By.XPATH,
+                            "//div[@data-mention-item='true' and @data-mention-id='682b65bbd4dcd7cbb7f769d6']")
 
     def click_create_card_area(self):
         WebDriverWait(self.driver, 20).until(
@@ -98,3 +112,35 @@ class QuanLyCard:
         WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable(self.Close_Set_Deadline_Button)
         ).click()
+
+    # Test case 26
+    def fill_Input_Comment_Card(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Input_Comment_Card)
+        ).send_keys(self.Comment_Card)
+
+    def click_Button_Comment_Card(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.Click_Button_Input)
+        ).click()
+
+    def Click_Button_Save(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.Button_Save)
+        ).click()
+
+    # Test case 27
+    def fill_tag_user(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Input_Tag_User)
+        ).send_keys(self.Tag_User)
+
+    def click_choose_user(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.element_to_be_clickable(self.Choose_User)
+        ).click()
+
+    def comment_user(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(self.Input_Tag_User)
+        ).send_keys(self.Comment_User)
