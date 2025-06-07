@@ -64,27 +64,16 @@ def test_Create_Board_voi_ten_hop_le(driver):
 
     wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
     HomePage.Create_Board_Click()
-    time.sleep(3)
     HomePage.click_trello_create_board_button()
-    time.sleep(3)
     HomePage.fill_board_name_input()
-    time.sleep(3)
     HomePage.create_board_with_name()
-    time.sleep(3)
     HomePage.click_return()
-    time.sleep(3)
     HomePage.click_board()
-    time.sleep(3)
     HomePage.click_menu_board()
-    time.sleep(3)
     HomePage.click_change()
-    time.sleep(3)
     HomePage.click_change_color()
-    time.sleep(3)
     HomePage.click_color()
-    time.sleep(3)
     HomePage.click_cancel()
-    time.sleep(3)
 
 def test_TaoBoard_Background(driver):
     Login_Page = LoginPage(driver)
@@ -126,11 +115,8 @@ def test_TaoBoard_Background(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.click_trello_login_button()
     HomePage.click_board()
-    time.sleep(5)
     HomePage.click_menu_board()
-    time.sleep(5)
     HomePage.click_change()
-    time.sleep(5)
     HomePage.upload_background(r"D:\ui\Anh.jpg")
     try:
         error_message = WebDriverWait(driver, 5).until(
@@ -177,15 +163,10 @@ def test_dong_Board(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.click_trello_login_button()
     HomePage.click_board()
-    time.sleep(5)
     HomePage.click_menu_board()
-    time.sleep(5)
     HomePage.click_close_board()
-    time.sleep(5)
     HomePage.click_confirm()
-    time.sleep(5)
     HomePage.click_return()
-    time.sleep(10)
     driver.refresh()
 
 def test_mo_board_da_dong(driver):
@@ -224,16 +205,13 @@ def test_mo_board_da_dong(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.click_trello_login_button()
     HomePage.click_xem_board_da_dong()
-    time.sleep(10)
     try:
         board = driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/div/div/div/ul/li[3]/div[1]/a")
     except:
         print("Không tìm thấy board!")
     HomePage.click_open_again()
-    time.sleep(5)
     button = driver.find_element(By.CSS_SELECTOR, "button[data-testid='workspace-chooser-reopen-button']")
     button.click()
-    time.sleep(5)
     HomePage.click_exit()
     driver.refresh()
 
@@ -273,15 +251,10 @@ def test_TaoBoard_TenDai(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.click_trello_login_button()
     HomePage.Create_Board_Click()
-    time.sleep(5)
     HomePage.click_trello_create_board_button()
-    time.sleep(10)
     HomePage.fill_board_name_input_withnamelong()
-    time.sleep(5)
     HomePage.create_board_with_name()
-    time.sleep(10)
     HomePage.click_return()
-    time.sleep(5)
     driver.refresh()
 
 

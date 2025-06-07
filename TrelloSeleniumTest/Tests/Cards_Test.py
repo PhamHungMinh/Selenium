@@ -118,7 +118,6 @@ def test_limit_cards_List(driver):
 
     ql_card = QuanLyCard(driver)
     ql_card.create_card('short')
-    time.sleep(100)
     number_of_cards = ql_card.count_cards_in_list()
 
     # Kiểm tra màu nền của thẻ danh sách

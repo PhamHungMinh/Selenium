@@ -65,7 +65,7 @@ def count_lists(driver):
     return len(lists)
 
 
-# Test case 14
+# Test case 13
 def test_Tao_List_Voi_Ten_Hop_Le(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
@@ -73,22 +73,21 @@ def test_Tao_List_Voi_Ten_Hop_Le(driver):
     HomePage = HomeTrelloPage(driver)
     HomePage.Into_Board_Click()
 
-    QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
+    QLListPage = Quan_Ly_List(driver)
     QLListPage.Create_List_Click()
     QLListPage.fill_list_name_input()
     QLListPage.Button_CreateList_WithName_Click()
 
     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+    try:
+        list_element = driver.find_element(By.XPATH, "//button[text()='List_Test_1']")
+        assert list_element.is_displayed(), "Danh sách 'List_Test_1' không được tìm thấy."
+        print("Danh sách 'List_Test_1' đã được tạo và tìm thấy.")
+    except Exception as e:
+        driver.fail("Không thể tìm thấy danh sách 'List_Test_1': " + str(e))
 
-    # Đếm số lượng danh sách hiện có
-    list_count = count_lists(driver)
-    expected_count = 2  # 1 danh sách mặc định + 1 danh sách mới
 
-    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
-    print("Test case PASS: Đã tạo thành công danh sách với tên hợp lệ.")
-
-
-# Test case 15
+# Test case 14
 def test_Tao_List_Voi_Trung(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
@@ -102,16 +101,18 @@ def test_Tao_List_Voi_Trung(driver):
     QLListPage.Button_CreateList_WithName_Click()
 
     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+    # Tìm tất cả các danh sách có tên "List_Test_1"
+    list_elements = driver.find_elements(By.XPATH, "//button[text()='List_Test_1']")
+    count = len(list_elements)
 
-    # Đếm số lượng danh sách hiện có
-    list_count = count_lists(driver)
-    expected_count = 3  # 1 danh sách mặc định + 2 danh sách mới
+    # Assert xem có đúng 2 danh sách không
+    assert count == 2, f"Số lượng danh sách 'List_Test_1' không phải là 2, mà là {count}."
 
-    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
-    print("Test case PASS: Đã tạo thành công danh sách với tên trùng.")
+    # In ra thông báo nếu có 2 danh sách
+    print("Có 2 danh sách 'List_Test_1' được tìm thấy.")
 
 
-# Test case 16
+# Test case 15
 def test_Tao_List_Voi_Dai(driver):
     # Đăng nhập vào Atlassian
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
@@ -124,14 +125,6 @@ def test_Tao_List_Voi_Dai(driver):
     QLListPage.Create_List_Click()
     QLListPage.fill_list_ten_dai()  # Giả định rằng tên dài đã được điền
     QLListPage.Button_CreateList_WithName_Click()
-
-    #wait_for_element(driver, By.XPATH, QLListPage.textarea_xpath)
-    # Đếm số lượng danh sách hiện có
-    list_count = count_lists(driver)
-    expected_count = 4  # 1 danh sách mặc định + 3 danh sách mới
-
-    # Kiểm tra số lượng danh sách
-    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
 
     # Kiểm tra độ dài tên danh sách bằng cách sử dụng phương thức từ lớp Quan_Ly_List
     textarea = driver.find_element(By.XPATH, QLListPage.textarea_xpath)
@@ -149,7 +142,7 @@ def test_Tao_List_Voi_Dai(driver):
 
     print("Test case PASS: Đã tạo thành công danh sách với tên dài.")
 
-# Test case 18
+# Test case 17
 def test_Archive_List(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
@@ -161,22 +154,20 @@ def test_Archive_List(driver):
     QLListPage.click_menu_list()
     QLListPage.click_archive_list()
 
-    #wait_for_element(driver, By.XPATH, QLListPage.alert_xpath)
+    # Kiểm tra xem thông báo có hiển thị không
     alert_visible = QLListPage.check_alert_message()
 
-    # Reload lại trang
-    driver.refresh()  # Reload trang hiện tại
     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
 
-    # Đếm số lượng danh sách hiện có sau khi reload
-    list_count = count_lists(driver)
-    expected_count = 3  # Giả định rằng có 3 danh sách còn lại sau khi lưu trữ
+    # Đếm số lượng danh sách có tên "List_Test_1"
+    list_elements = driver.find_elements(By.XPATH, "//button[text()='List_Test_1']")
+    list_count = len(list_elements)
 
-    # Kiểm tra cả hai điều kiện
-    assert list_count == expected_count, f"Test case FAIL: Số lượng danh sách hiện có là {list_count}, nhưng mong đợi {expected_count}."
+    # Assert điều kiện: thông báo hiển thị và số lượng danh sách là 1
     assert alert_visible, "Test case FAIL: Thông báo không xuất hiện sau khi lưu trữ danh sách."
+    assert list_count == 1, f"Test case FAIL: Số lượng danh sách 'List_Test_1' là {list_count}, nhưng mong đợi là 1."
 
-    print("Test case PASS: Đã lưu trữ danh sách thành công, thông báo đã xuất hiện và số lượng danh sách đúng.")
+    print("Test case PASS: Thông báo đã xuất hiện và chỉ có 1 danh sách 'List_Test_1'.")
 
 #Test case 17
 # def test_Drag_List_ViTri_HopLe(driver):

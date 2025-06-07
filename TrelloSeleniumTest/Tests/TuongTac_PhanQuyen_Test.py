@@ -513,7 +513,6 @@ def test_Thanh_Vien_Binh_Luan_Thanh_Cong(driver):
     login_page.click_login()
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
-    time.sleep(10)
     comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
     # Lấy tất cả các bình luận
     comments = driver.find_elements(By.XPATH, comments_xpath)
@@ -575,4 +574,3 @@ def test_ThanhVien_BinhLuanTagUser(driver):
         print(f"Bình luận mới nhất: {latest_comment}")
     else:
         print("Không có bình luận mới.")
-    time.sleep(10)

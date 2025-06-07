@@ -17,7 +17,7 @@ class Quan_Ly_List:
                                    "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div[1]/form/textarea")
         self.Button_CreateList_WithName = (By.XPATH,
                                            "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div[2]/div/div/div/div[2]/ol/div[1]/form/div/button[1]")
-        self.List_edit_menu_button = (By.XPATH, "//button[@data-testid='list-edit-menu-button' and @type='button']")
+        self.List_edit_menu_button = (By.XPATH, "//li[@data-testid='list-wrapper'][2]//button[@data-testid='list-edit-menu-button']")
         self.Archive_List_Button = (By.XPATH, "//button[@data-testid='list-actions-archive-list-button']")
         self.alert_xpath = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div")
         self.textarea_xpath = "//ol[@id='board']/li[4]//h2[@data-testid='list-name']"
