@@ -10,24 +10,29 @@ class HomeTrelloPage:
         self.Create_Board = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
         self.Login = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
         self.Create_New_Board = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/div/ul/li[1]/button")
-        self.name_board = "Test2"
+        self.name_board = "Test3"
         self.name_board2 = "Dự án phát triển hệ thống quản lý nhân sự cho doanh nghiệp vừa và nhỏ năm 2025 - bản mở rộng đặc biệt - kế hoạch 10 năm"
         self.Board_Name_Input = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/div[1]/label/input")
         self.create_board_button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/button")
         self.Button_Into_Board = (By.XPATH,"//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
-        self.Click_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/ul/li[3]/a/div")
+        # Test case 09
+        self.Click_Board = (By.XPATH, "//a[@href='/b/wrJPJ1YC/test1']")
         self.Click_Menu_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
         self.Click_Change = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[7]/button/div")
         self.Click_Change_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[2]/div")
         self.Click_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[1]")
         self.Click_Cancel = (By.XPATH, "/html/body/div[3]/div/section/div[2]/header/button[2]/span")
         self.Return = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
-        #self.Click_Background = (By.XPATH, "/html/body/div[4]/div/section/div[2]/div/div/section/div/div[2]/div/div[1]")
+        #test case 10
         self.input_background = (By.CSS_SELECTOR, "input[type='file'][data-testid='custom-background-uploader']")
+        #test case 11
         self.close_board = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[20]/button")
         self.confirm_closing_board = (By.XPATH, "/html/body/div[3]/div[4]/section/div[2]/div/button")
+        # test case 12
         self.xem_board_da_dong = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/button")
-        self.open_again = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/div/div/div/ul/li[3]/div[2]/div/button")
+        self.open_again = (By.XPATH, "//a[@href='/b/wrJPJ1YC']")
+        self.reopen = (By.XPATH, "//button[@data-testid='workspace-chooser-trigger-button']")
+        self.confirm = (By.XPATH, "//button[@data-testid='workspace-chooser-reopen-button' and text()='Reopen board']")
         self.exit = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/header/button/span/span")
         #Broken_Link_Test
         self.BASE_URL = "https://trello.com"
@@ -107,6 +112,7 @@ class HomeTrelloPage:
             EC.visibility_of_element_located(self.Button_Into_Board)
         ).click()
 
+    # Test case 09
     def click_board(self):
         WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.Click_Board)
         ).click()
@@ -160,20 +166,24 @@ class HomeTrelloPage:
         WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.confirm_closing_board)
         ).click()
-
+    #Test case 12
     def click_xem_board_da_dong(self):
         WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.xem_board_da_dong)
         ).click()
 
+    def click_reopen(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(self.reopen)
+        ).click()
     def click_open_again(self):
         WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.open_again)
         ).click()
 
-    def click_exit(self):
+    def click_confirm_reopen(self):
         WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.exit)
+            EC.presence_of_element_located(self.confirm)
         ).click()
 
     def fill_board_name_input_withnamelong(self):

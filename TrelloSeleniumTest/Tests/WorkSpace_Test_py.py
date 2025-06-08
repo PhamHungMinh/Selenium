@@ -8,6 +8,8 @@ from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Pages.Quan_ly_List import Quan_Ly_List
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
+from utils import wait_for_element, login_to_atlassian, navigate_to_trello
+
 from selenium.webdriver.common.action_chains import ActionChains
 
 
@@ -18,45 +20,6 @@ def driver():
     yield driver
     driver.quit()
 
-
-def wait_for_element(driver, by, value):
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
-
-
-def login_to_atlassian(driver, email, password):
-    Login_Page = LoginPage(driver)
-    driver.get("https://id.atlassian.com/login")
-
-    wait_for_element(driver, By.ID, "username")
-    Login_Page.enter_email(email)
-    Login_Page.click_continue()
-
-    wait_for_element(driver, By.ID, "password")
-    Login_Page.enter_password(password)
-    Login_Page.click_login()
-
-
-def navigate_to_trello(driver):
-    AtlassianPage = HomeAtlassianPage(driver)
-    HomePage = HomeTrelloPage(driver)
-
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
-
-    # Lưu ID của cửa sổ gốc
-    original_window = driver.current_window_handle
-
-    # Kiểm tra và đóng các cửa sổ khác nếu có
-    for window_handle in driver.window_handles:
-        if window_handle != original_window:
-            driver.switch_to.window(window_handle)
-            driver.close()  # Đóng cửa sổ mới
-            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
-
-    # Đảm bảo chỉ có một cửa sổ mở
-    assert len(driver.window_handles) == 1
-    HomePage.click_trello_login_button()
 
 # Test case 29
 def test_Gioi_Han_WorkSpace(driver):

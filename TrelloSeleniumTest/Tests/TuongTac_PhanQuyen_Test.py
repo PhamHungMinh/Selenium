@@ -14,6 +14,7 @@ from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Quan_Ly_Board import Quan_Ly_Board
 from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
+from utils import wait_for_element, login_to_atlassian, navigate_to_trello
 
 Email_Invite = "0306221443@caothang.edu.vn"
 Find_User = "@nghiangotrng3"
@@ -25,44 +26,7 @@ def driver():
     yield driver
     driver.quit()
 
-def wait_for_element(driver, by, value):
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
-
-def login_to_atlassian(driver, email, password):
-    login_page = LoginPage(driver)
-    driver.get("https://id.atlassian.com/login")
-
-    wait_for_element(driver, By.ID, "username")
-    login_page.enter_email(email)
-    login_page.click_continue()
-
-    wait_for_element(driver, By.ID, "password")
-    login_page.enter_password(password)
-    login_page.click_login()
-
-def navigate_to_trello(driver):
-    atlassian_page = HomeAtlassianPage(driver)
-    home_page = HomeTrelloPage(driver)
-
-    atlassian_page.Menu_click()
-    atlassian_page.Trello_click()
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
-
-    # Lưu ID của cửa sổ gốc
-    original_window = driver.current_window_handle
-
-    # Kiểm tra và đóng các cửa sổ khác nếu có
-    for window_handle in driver.window_handles:
-        if window_handle != original_window:
-            driver.switch_to.window(window_handle)
-            driver.close()  # Đóng cửa sổ mới
-            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
-
-    # Đảm bảo chỉ có một cửa sổ mở
-    assert len(driver.window_handles) == 1
-    home_page.click_trello_login_button()
-
-#Test case 21
+#Test case 22
 def test_Them_Thanh_Vien_Vao_Bang(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -112,8 +76,8 @@ def test_Them_Thanh_Vien_Vao_Bang(driver):
             print("Test case FAIL: Phần tử không tìm thấy.")
 
 
-# Test case 22
-def test_Thanh_Vien_Tham_Gia_Bang_Bang_Link(driver):
+# Test case 23
+def test_Thanh_Vien_Yeu_Cau_Vao_Bang(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
 
@@ -513,6 +477,7 @@ def test_Thanh_Vien_Binh_Luan_Thanh_Cong(driver):
     login_page.click_login()
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
+    time.sleep(10)
     comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
     # Lấy tất cả các bình luận
     comments = driver.find_elements(By.XPATH, comments_xpath)
@@ -574,3 +539,4 @@ def test_ThanhVien_BinhLuanTagUser(driver):
         print(f"Bình luận mới nhất: {latest_comment}")
     else:
         print("Không có bình luận mới.")
+    time.sleep(10)
