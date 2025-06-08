@@ -12,24 +12,24 @@ class QuanLyCard:
         self.Name_Link = "https://docs.google.com/"
 
         # XPath cho các phần tử cần thiết
-        self.Create_Card_Area = (By.XPATH, "//button[@data-testid='list-add-card-button']")
+        self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][.//h2/button[contains(text(), 'List_Test_1')]]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
         self.Input_Name_Card = (By.XPATH, "//textarea[@data-testid='list-card-composer-textarea']")
         self.Create_Card_Button = (By.XPATH, "//button[@data-testid='list-card-composer-add-card-button']")
 
         # XPath cho các thẻ trong danh sách thứ hai
         self.First_List_Cards = (By.XPATH, "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card']")
-        self.Second_List_Cards_With_Deadline = (By.XPATH,"//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][2]//ol[@data-testid='list-cards']/li[@data-testid='list-card' and .//div[@data-testid='card-done-state']]")
-        self.FirstCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[2]/li[1]")
-        self.SecondCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[2]/li[2]")
-        self.ThirdCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[2]/li[3]")
+        self.Second_List_Cards_With_Deadline = (By.XPATH,"//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card' and .//div[@data-testid='card-done-state']]")
+        self.FirstCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[1]")
+        self.SecondCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[2]")
+        self.ThirdCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[3]")
         self.Edit_DeadLine = (By.XPATH, "//button//span[@data-testid='ClockIcon']/ancestor::button")
         self.Input_Date = (By.XPATH, "//input[@data-testid='due-date-field']")
         self.Input_Hour = (By.XPATH, "/html/body/div[5]/div/section/div[2]/div/div/form/div[2]/div[2]/div/div[2]/input")
         self.Button_Save_Deadline = (By.XPATH, "//button[@data-testid='save-date-button']")
         self.Close_Set_Deadline_Button = (By.XPATH, "//span[@data-testid='CloseIcon']")
-        self.Ngay_Deadline = "6/1/2025"
-        self.Ngay_Gan = "6/2/2025"
-        self.Ngay_Xa = "10/6/2025"
+        self.Ngay_Deadline = "6/8/2025"
+        self.Ngay_Gan = "6/9/2025"
+        self.Ngay_Xa = "6/10/2025"
         # test case 26
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH,
@@ -67,19 +67,14 @@ class QuanLyCard:
             card_name = self.Name_Card
         elif card_type == 'link':
             card_name = self.Name_Link
+        elif card_type == 'limit':
+            card_name = "limit"
         else:
             raise ValueError("Invalid card type. Use 'short' or 'link'.")
 
         self.click_create_card_area()
         self.fill_card_name_input(card_name)
         self.click_create_card_button()
-
-    def count_cards_in_list(self):
-        # Đếm số lượng thẻ trong danh sách thứ hai
-        cards = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_all_elements_located(self.First_List_Cards)
-        )
-        return len(cards)
 
     def count_cards_with_deadline(self):
         # Đếm số lượng thẻ có deadline trong danh sách thứ hai

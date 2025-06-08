@@ -52,7 +52,6 @@ class HomeTrelloPage:
         self.Input_Email_Memmbers = (By.XPATH, "//input[@data-testid='add-members-input']")
         self.Add_Button = (By.XPATH, "//button[@type='button' and contains(@class, 'bxgKMAm3lq5BpA')]")
         self.email_list = [
-            "ngotrongnghia8424@gmail.com"
             "minhnghiaseleniumtest1@gmail.com",
             "minhnghiaseleniumtest2@gmail.com",
             "minhnghiaseleniumtest3@gmail.com",

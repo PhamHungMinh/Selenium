@@ -62,7 +62,7 @@ def navigate_to_trello(driver):
     assert len(driver.window_handles) == 1
     home_page.click_trello_login_button()
 
-#Test case 22
+#Test case 21
 def test_Them_Thanh_Vien_Vao_Bang(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -112,8 +112,8 @@ def test_Them_Thanh_Vien_Vao_Bang(driver):
             print("Test case FAIL: Phần tử không tìm thấy.")
 
 
-# Test case 23
-def test_Thanh_Vien_Yeu_Cau_Vao_Bang(driver):
+# Test case 22
+def test_Thanh_Vien_Tham_Gia_Bang_Bang_Link(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
 
