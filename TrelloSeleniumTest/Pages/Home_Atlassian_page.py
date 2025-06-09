@@ -10,12 +10,12 @@ class HomeAtlassianPage:
         self.Trello_Button = (By.XPATH, "/html/body/div[4]/div[3]/div/div/div/div[2]/div/div/section[1]/div/ul/li[2]/div/div/div/a/span")
 
     # Chuyển từ trang chủ Atlassian sang Trello
-    def Menu_click(self):
+    def Menu_Click(self):
         # Đợi cho phần tử Menu hiển thị và có thể nhấp được
         WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.Menu))
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.Menu)).click()
 
-    def Trello_click(self):
+    def Trello_Click(self):
         # Đợi cho phần tử Trello_Button hiển thị và có thể nhấp được
         WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.Trello_Button))
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.Trello_Button)).click()

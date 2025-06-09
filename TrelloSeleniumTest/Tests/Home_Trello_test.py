@@ -11,6 +11,7 @@ from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
+from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Password
 
 @pytest.fixture
 def driver():
@@ -29,23 +30,23 @@ def test_Create_Board_voi_ten_hop_le(driver):
     HomePage = HomeTrelloPage(driver)
 
     # Mở trang đăng nhập
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
+    AtlassianPage.Menu_Click()
+    AtlassianPage.Trello_Click()
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+    driver.get(Trello_Url)
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -60,18 +61,18 @@ def test_Create_Board_voi_ten_hop_le(driver):
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
     # Đợi cho nút tạo board hiển thị và nhấp vào
-    HomePage.click_trello_login_button()
+    HomePage.Click_Login_Button()
 
     wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
-    HomePage.Create_Board_Click()
+    HomePage.Click_Create_Board()
     time.sleep(3)
-    HomePage.click_trello_create_board_button()
+    HomePage.Click_Create_New_Board_Button()
     time.sleep(3)
-    HomePage.fill_board_name_input()
+    HomePage.Fill_Board_Name_Input()
     time.sleep(3)
-    HomePage.create_board_with_name()
+    HomePage.Submit_Create_Board()
     time.sleep(3)
-    HomePage.click_return()
+    HomePage.Click_Return_Home()
     time.sleep(3)
 
 #Test case 09
@@ -82,23 +83,23 @@ def test__TaoBoard_Background(driver):
     HomePage = HomeTrelloPage(driver)
 
     # Mở trang đăng nhập
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
+    AtlassianPage.Menu_Click()
+    AtlassianPage.Trello_Click()
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+    driver.get(Trello_Url)
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -113,18 +114,18 @@ def test__TaoBoard_Background(driver):
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
     # Đợi cho nút tạo board hiển thị và nhấp vào
-    HomePage.click_trello_login_button()
-    HomePage.click_board()
+    HomePage.Click_Login_Button()
+    HomePage.Click_Select_Board()
     time.sleep(3)
-    HomePage.click_menu_board()
+    HomePage.Click_Open_Board_Menu()
     time.sleep(3)
-    HomePage.click_change()
+    HomePage.Click_Change_Board()
     time.sleep(3)
-    HomePage.click_change_color()
+    HomePage.Click_Change_Color()
     time.sleep(3)
-    HomePage.click_color()
+    HomePage.Click_Select_Color()
     time.sleep(3)
-    HomePage.click_cancel()
+    HomePage.Click_Cancel()
     time.sleep(3)
 
 #Test case 10
@@ -134,24 +135,24 @@ def test__TaiAnhNen_KichThuocLon(driver):
     HomePage = HomeTrelloPage(driver)
 
     # Mở trang đăng nhập
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
+    AtlassianPage.Menu_Click()
+    AtlassianPage.Trello_Click()
     #time.sleep(500)
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+    driver.get(Trello_Url)
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -166,14 +167,14 @@ def test__TaiAnhNen_KichThuocLon(driver):
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
     # Đợi cho nút tạo board hiển thị và nhấp vào
-    HomePage.click_trello_login_button()
-    HomePage.click_board()
+    HomePage.Click_Login_Button()
+    HomePage.Click_Select_Board()
     time.sleep(5)
-    HomePage.click_menu_board()
+    HomePage.Click_Open_Board_Menu()
     time.sleep(5)
-    HomePage.click_change()
+    HomePage.Click_Change_Board()
     time.sleep(5)
-    HomePage.upload_background(r"D:\ui\Anh.jpg")
+    HomePage.Upload_Background(r"D:\Anh\Anh.jpg")
     try:
         error_message = WebDriverWait(driver, 5).until(
             EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), 'File too large')]"))
@@ -189,22 +190,22 @@ def test_dong_Board(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
     wait_for_element(driver, By.ID, "username")
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
+    AtlassianPage.Menu_Click()
+    AtlassianPage.Trello_Click()
     # time.sleep(500)
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+    driver.get(Trello_Url)
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -219,16 +220,16 @@ def test_dong_Board(driver):
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
     # Đợi cho nút tạo board hiển thị và nhấp vào
-    HomePage.click_trello_login_button()
-    HomePage.click_board()
+    HomePage.Click_Login_Button()
+    HomePage.Click_Select_Board()
     time.sleep(5)
-    HomePage.click_menu_board()
+    HomePage.Click_Open_Board_Menu()
     time.sleep(5)
-    HomePage.click_close_board()
+    HomePage.Click_Close_Board()
     time.sleep(5)
-    HomePage.click_confirm()
+    HomePage.Click_Confirm_Close_Board()
     time.sleep(5)
-    HomePage.click_return()
+    HomePage.Click_Return_Home()
     time.sleep(5)
     driver.refresh()
 
@@ -238,22 +239,22 @@ def test_mo_board_da_dong(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
     wait_for_element(driver, By.ID, "username")
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
+    AtlassianPage.Menu_Click()
+    AtlassianPage.Trello_Click()
     # time.sleep(500)
 
     # Mở URL để tạo board mới
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+    driver.get(Trello_Url)
 
     # Lưu ID của cửa sổ gốc
     original_window = driver.current_window_handle
@@ -268,12 +269,12 @@ def test_mo_board_da_dong(driver):
     # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
     # Đợi cho nút tạo board hiển thị và nhấp vào
-    HomePage.click_trello_login_button()
-    HomePage.click_xem_board_da_dong()
-    HomePage.click_open_again()
-    HomePage. click_reopen()
-    HomePage.click_confirm_reopen()
-    HomePage.click_return()
+    HomePage.Click_Login_Button()
+    HomePage.Click_View_Closed_Board()
+    HomePage.Click_Open_Board_Again()
+    HomePage.Click_Reopen_Board()
+    HomePage.Click_Confirm_Reopen()
+    HomePage.Click_Return_Home()
     time.sleep(10)
     driver.refresh()
 
@@ -281,22 +282,22 @@ def test_mo_board_da_dong(driver):
 #     Login_Page = LoginPage(driver)
 #     AtlassianPage = HomeAtlassianPage(driver)
 #     HomePage = HomeTrelloPage(driver)
-#     Login_Page.open_page("https://id.atlassian.com/login")
+#     Login_Page.Open_Page(Login_Url)
 #     wait_for_element(driver, By.ID, "username")
-#     Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-#     Login_Page.click_continue()
+#     Login_Page.Enter_Email(Email)
+#     Login_Page.Click_Continue()
 #
 #     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
 #     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-#     Login_Page.enter_password("khongcomatkhau4654")
-#     Login_Page.click_login()
+#     Login_Page.Enter_Password(Password)
+#     Login_Page.Click_Login()
 #
-#     AtlassianPage.Menu_click()
-#     AtlassianPage.Trello_click()
+#     AtlassianPage.Menu_Click()
+#     AtlassianPage.Trello_Click()
 #     # time.sleep(500)
 #
 #     # Mở URL để tạo board mới
-#     driver.get("https://trello.com/u/ngotrongnghia8424/boards")
+#     driver.get(Trello_Url)
 #
 #     # Lưu ID của cửa sổ gốc
 #     original_window = driver.current_window_handle
@@ -311,16 +312,16 @@ def test_mo_board_da_dong(driver):
 #     # Đảm bảo chỉ có một cửa sổ mở
 #     assert len(driver.window_handles) == 1
 #     # Đợi cho nút tạo board hiển thị và nhấp vào
-#     HomePage.click_trello_login_button()
+#     HomePage.Click_Login_Button()
 #     HomePage.Create_Board_Click()
 #     time.sleep(5)
-#     HomePage.click_trello_create_board_button()
+#     HomePage.Click_Create_New_Board_Button()
 #     time.sleep(10)
 #     HomePage.fill_board_name_input_withnamelong()
 #     time.sleep(5)
-#     HomePage.create_board_with_name()
+#     HomePage.Submit_Create_Board()
 #     time.sleep(10)
-#     HomePage.click_return()
+#     HomePage.Click_Return_Home()
 #     time.sleep(5)
 #     driver.refresh()
 

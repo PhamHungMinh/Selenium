@@ -5,6 +5,7 @@ from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Password, Signup_Url, Home_Url
 
 @pytest.fixture
 def driver():
@@ -20,21 +21,21 @@ def wait_for_element(driver, by, value):
 def test_login_voi_TaiKhoan_chua_dang_ky(driver):
     Login_Page = LoginPage(driver)
     # Mở trang đăng nhập
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
 
     # Nhập email chưa đăng ký và nhấn tiếp tục
     email = "nghiatrong4114@gmail.com"
-    Login_Page.enter_email(email)
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(email)
+    Login_Page.Click_Continue()
 
     # Đợi cho trang chuyển hướng
     WebDriverWait(driver, 10).until(
-        EC.url_to_be("https://id.atlassian.com/signup")
+        EC.url_to_be(Signup_Url)
     )
 
     # Kiểm tra URL hiện tại
     current_url = driver.current_url
-    expected_url = "https://id.atlassian.com/signup"
+    expected_url = Signup_Url
 
     if current_url.startswith(expected_url):
         print("Test case PASS: Đã chuyển hướng đến trang đăng ký")
@@ -45,13 +46,13 @@ def test_login_voi_TaiKhoan_chua_dang_ky(driver):
 def test_login_voi_mat_khau_sai(driver):
     Login_Page = LoginPage(driver)
     # Mở trang đăng nhập
-    Login_Page.open_page("https://id.atlassian.com/login")
+    Login_Page.Open_Page(Login_Url)
     # Nhập email và nhấn tiếp tục
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
     # Nhập mật khẩu sai và nhấn đăng nhập
-    Login_Page.enter_password("TestPassWord")
-    Login_Page.click_login()
+    Login_Page.Enter_Password("TestPassWord")
+    Login_Page.Click_Login()
 
     # Kiểm tra xem thông báo lỗi có hiển thị không
     error_xpath = "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div"
@@ -69,17 +70,17 @@ def test_login_voi_mat_khau_sai(driver):
 #Test case 6 - Đăng nhập thành công
 def test_login_success(driver):
     Login_Page = LoginPage(driver)
-    Login_Page.open_page("https://id.atlassian.com/login")
-    Login_Page.enter_email("ngotrongnghia8424@gmail.com")
-    Login_Page.click_continue()
-    Login_Page.enter_password("khongcomatkhau4654")
-    Login_Page.click_login()
+    Login_Page.Open_Page(Login_Url)
+    Login_Page.Enter_Email(Email)
+    Login_Page.Click_Continue()
+    Login_Page.Enter_Password(Password)
+    Login_Page.Click_Login()
 
     # Kiểm tra URL sau khi đăng nhập
-    WebDriverWait(driver, 10).until(EC.url_contains("https://home.atlassian.com/"))
+    WebDriverWait(driver, 10).until(EC.url_contains(Home_Url))
 
     current_url = driver.current_url
-    expected_url = "https://home.atlassian.com/"
+    expected_url = Home_Url
 
     if current_url.startswith(expected_url):
         print("Test case PASS: Đăng nhập thành công và chuyển hướng đến trang chủ")

@@ -1,62 +1,73 @@
 import os
 
+import requests
+
 from selenium.webdriver.common.by import By
+from TrelloSeleniumTest.Base.base_page import BasePage
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class HomeTrelloPage:
+
+class HomeTrelloPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
-        self.Create_Board = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
-        self.Login = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
-        self.Create_New_Board = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/div/ul/li[1]/button")
-        self.name_board = "Test3"
-        self.name_board2 = "Dự án phát triển hệ thống quản lý nhân sự cho doanh nghiệp vừa và nhỏ năm 2025 - bản mở rộng đặc biệt - kế hoạch 10 năm"
+        self.Driver = driver
+        self.Create_Board_Button = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
+        self.Login_Button = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
+        self.Create_New_Board_Button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/div/ul/li[1]/button")
+        self.Board_Name = "Test3"
+        self.Long_Board_Name = "Dự án phát triển hệ thống quản lý nhân sự cho doanh nghiệp vừa và nhỏ năm 2025 - bản mở rộng đặc biệt - kế hoạch 10 năm"
         self.Board_Name_Input = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/div[1]/label/input")
-        self.create_board_button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/button")
-        self.Button_Into_Board = (By.XPATH,"//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
+        self.Create_Board_Submit_Button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/button")
+        self.Enter_Board_Button = (By.XPATH, "//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
+
         # Test case 09
-        self.Click_Board = (By.XPATH, "//a[@href='/b/wrJPJ1YC/test1']")
-        self.Click_Menu_Board = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
-        self.Click_Change = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[7]/button/div")
-        self.Click_Change_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[2]/div")
-        self.Click_Color = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[1]")
-        self.Click_Cancel = (By.XPATH, "/html/body/div[3]/div/section/div[2]/header/button[2]/span")
-        self.Return = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
-        #test case 10
-        self.input_background = (By.CSS_SELECTOR, "input[type='file'][data-testid='custom-background-uploader']")
-        #test case 11
-        self.close_board = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[20]/button")
-        self.confirm_closing_board = (By.XPATH, "/html/body/div[3]/div[4]/section/div[2]/div/button")
-        # test case 12
-        self.xem_board_da_dong = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/button")
-        self.open_again = (By.XPATH, "//a[@href='/b/wrJPJ1YC']")
-        self.reopen = (By.XPATH, "//button[@data-testid='workspace-chooser-trigger-button']")
-        self.confirm = (By.XPATH, "//button[@data-testid='workspace-chooser-reopen-button' and text()='Reopen board']")
-        self.exit = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/header/button/span/span")
-        #Broken_Link_Test
-        self.BASE_URL = "https://trello.com"
-        self.FOOTER_LINKS = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
-        self.Thong_Tin_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
-        self.More_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
-        self.LINK_MAPPING = {
+        self.Select_Board = (By.XPATH, "//a[@href='/b/wrJPJ1YC/test1']")
+        self.Open_Board_Menu = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
+        self.Change_Board_Button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[7]/button/div")
+        self.Change_Color_Button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[2]/div")
+        self.Select_Color_Button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/div/div[1]/button[1]")
+        self.Cancel_Button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/header/button[2]/span")
+        self.Return_Home_Button = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[1]/nav/div[1]/a/div")
+
+        # Test case 10
+        self.Background_Input = (By.CSS_SELECTOR, "input[type='file']")
+
+        # Test case 11
+        self.Close_Board_Button = (By.XPATH, "/html/body/div[3]/div/section/div[2]/div/div/section/ul/li[20]/button")
+        self.Confirm_Close_Board_Button = (By.XPATH, "/html/body/div[3]/div[4]/section/div[2]/div/button")
+
+        # Test case 12
+        self.View_Closed_Board_Button = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div[2]/div/div/div/div/div/div/div/button")
+        self.Open_Board_Again_Button = (By.XPATH, "//a[@href='/b/wrJPJ1YC']")
+        self.Reopen_Board_Button = (By.XPATH, "//button[@data-testid='workspace-chooser-trigger-button']")
+        self.Confirm_Reopen_Button = (By.XPATH, "//button[@data-testid='workspace-chooser-reopen-button' and text()='Reopen board']")
+        self.Exit_Button = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/header/button/span/span")
+
+        # Broken Link Test
+        self.Base_URL = "https://trello.com"
+        self.Footer_Links = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
+        self.Info_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
+        self.More_Info_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
+
+        self.Link_Mapping = {
             "Biểu phí": (By.XPATH, "//a[@href='/pricing']"),
             "Ứng dụng": (By.XPATH, "//a[@href='/platforms']"),
             "Blog": (By.XPATH, "//a[@href='https://blog.trello.com']"),
             "Chính sách Bảo mật": (By.XPATH, "//a[@href='/privacy']"),
-            "Thông báo thu thập thông tin": (By.XPATH,
-                                             "//a[@href='https://www.atlassian.com/legal/privacy-policy#additional-disclosures-for-ca-residents']"),
+            "Thông báo thu thập thông tin": (By.XPATH, "//a[@href='https://www.atlassian.com/legal/privacy-policy#additional-disclosures-for-ca-residents']"),
             "Trợ giúp": (By.XPATH, "//a[@href='http://help.trello.com']"),
             "Nhà phát triển": (By.XPATH, "//a[@href='https://developers.trello.com']"),
             "Pháp lý": (By.XPATH, "//a[@href='/legal']"),
             "Thuộc tính": (By.XPATH, "//a[@href='/attributions']")
         }
-        #Test Work Space
-        self.ThanhVien_Button = (By.XPATH, "//a[@href='/w/userkhonggianlamvic33097947/members']")
-        self.Moi_Thanh_Vien_Button = (By.XPATH, "//button[contains(@class, 'bxgKMAm3lq5BpA') and contains(@class, 'SdamsUKjxSBwGb')]")
-        self.Input_Email_Memmbers = (By.XPATH, "//input[@data-testid='add-members-input']")
-        self.Add_Button = (By.XPATH, "//button[@type='button' and contains(@class, 'bxgKMAm3lq5BpA')]")
-        self.email_list = [
+
+        # Test Work Space
+        self.Member_Button = (By.XPATH, "//a[@href='/w/userkhonggianlamvic33097947/members']")
+        self.Add_Member_Button = (By.XPATH, "//button[contains(@class, 'bxgKMAm3lq5BpA') and contains(@class, 'SdamsUKjxSBwGb')]")
+        self.Email_Input_Members = (By.XPATH, "//input[@data-testid='add-members-input']")
+        self.Submit_Add_Button = (By.XPATH, "//button[@type='button' and contains(@class, 'bxgKMAm3lq5BpA')]")
+
+        self.Email_List = [
             "minhnghiaseleniumtest1@gmail.com",
             "minhnghiaseleniumtest2@gmail.com",
             "minhnghiaseleniumtest3@gmail.com",
@@ -68,205 +79,153 @@ class HomeTrelloPage:
             "minhnghiaseleniumtest9@gmail.com",
             "minhnghiaseleniumtest10@gmail.com"
         ]
-        self.email_string =','.join(self.email_list)
+        self.Email_String = ','.join(self.Email_List)
 
         # Test case 23
         self.Members_Button_23 = (By.XPATH, "//a[.//span[@data-testid='MemberIcon']]")
-        self.Moi_ThanhVien_23 = (By.XPATH, "//button[contains(@class, 'w2Ok_QPiPTxPuy') and contains(@class, 'bxgKMAm3lq5BpA')]")
-        self.Input_Member_23 = (By.XPATH, "//input[contains(@class, 'autocomplete-input') and contains(@class, 'xgUfhtnEk1vlSn')]")
-        self.Add_Member_Button_23 = (By.XPATH, "//button[span[text()='Gửi lời mời']]")
+        self.Add_Member_23_Button = (By.XPATH, "//button[contains(@class, 'w2Ok_QPiPTxPuy') and contains(@class, 'bxgKMAm3lq5BpA')]")
+        self.Member_Input_23 = (By.XPATH, "//input[contains(@class, 'autocomplete-input') and contains(@class, 'xgUfhtnEk1vlSn')]")
+        self.Send_Invite_Button_23 = (By.XPATH, "//button[span[text()='Gửi lời mời']]")
         self.Close_Add_Member_Button_23 = (By.XPATH, "//button[@aria-label='Đóng']")
         self.Work_Space_Button = (By.XPATH, "//span[text()='Work Space Test']")
         self.Boards_Button = (By.XPATH, "//span[text()='Boards']")
 
+    def Click_Create_Board(self):
+        self.Wait_And_Click(self.Create_Board_Button)
 
+    def Click_Login_Button(self):
+        self.Wait_And_Click(self.Login_Button)
 
-    def Create_Board_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Create_Board)
-        ).click()
+    def Click_Create_New_Board_Button(self):
+        self.Wait_And_Click(self.Create_New_Board_Button)
 
-    def click_trello_login_button(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Login)
-        ).click()
+    def Fill_Board_Name_Input(self):
+        self.Wait_And_Send_Keys(self.Board_Name_Input, self.Board_Name)
 
-    def click_trello_create_board_button(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Create_New_Board)
-        ).click()
+    def Submit_Create_Board(self):
+        self.Wait_And_Click(self.Create_Board_Submit_Button)
 
-    def fill_board_name_input(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Board_Name_Input)
-        ).send_keys(self.name_board)
+    def Click_Enter_Board(self):
+        self.Wait_And_Click(self.Enter_Board_Button)
 
-    def create_board_with_name(self):
-        # Nhấp vào nút tạo board với tên đã nhập
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.create_board_button)
-        ).click()
+     # Test case 09
+    def Click_Select_Board(self):
+        self.Wait_And_Click(self.Select_Board)
 
-    def Into_Board_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Button_Into_Board)
-        ).click()
+    def Click_Open_Board_Menu(self):
+        self.Wait_And_Click(self.Open_Board_Menu)
 
-    # Test case 09
-    def click_board(self):
-        WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.Click_Board)
-        ).click()
+    def Click_Change_Board(self):
+        self.Wait_And_Click(self.Change_Board_Button)
 
-    def click_menu_board(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Click_Menu_Board)
-        ).click()
+    def Click_Change_Color(self):
+        self.Wait_And_Click(self.Change_Color_Button)
 
-    def click_change(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Click_Change)
-        ).click()
-    def click_change_color(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Click_Change_Color)
-        ).click()
-    def click_color(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Click_Color)
-        ).click()
+    def Click_Select_Color(self):
+        self.Wait_And_Click(self.Select_Color_Button)
 
-    def click_cancel(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Click_Cancel)
-        ).click()
-    def click_return(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Return)
-        ).click()
+    def Click_Cancel(self):
+        self.Wait_And_Click(self.Cancel_Button)
 
-    def upload_background(self, file_path):
-        # Kiểm tra file tồn tại
+    def Click_Return_Home(self):
+        self.Wait_And_Click(self.Return_Home_Button)
+
+    def Upload_Background(self, file_path):
         if not os.path.isfile(file_path):
             raise FileNotFoundError(f"Không tìm thấy file: {file_path}")
 
-        # Chờ input file có mặt trên DOM
-        upload_input = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.input_background)
+        # Chờ phần tử có trong DOM (không cần hiển thị nếu nó bị ẩn)
+        upload_input = WebDriverWait(self.Driver, 10).until(
+            EC.presence_of_element_located(self.Background_Input)
         )
 
-        # Gửi đường dẫn ảnh vào input
+        # Bỏ ẩn input nếu cần
+        self.Driver.execute_script("arguments[0].style.display = 'block';", upload_input)
+
+        # Gửi file vào input
         upload_input.send_keys(file_path)
 
-    def click_close_board(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.close_board)
-        ).click()
+    def Click_Close_Board(self):
+        self.Wait_And_Click(self.Close_Board_Button)
 
-    def click_confirm(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.confirm_closing_board)
-        ).click()
-    #Test case 12
-    def click_xem_board_da_dong(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.xem_board_da_dong)
-        ).click()
+    def Click_Confirm_Close_Board(self):
+        self.Wait_And_Click(self.Confirm_Close_Board_Button)
 
-    def click_reopen(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.reopen)
-        ).click()
-    def click_open_again(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.open_again)
-        ).click()
+        # Test case 12
 
-    def click_confirm_reopen(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(self.confirm)
-        ).click()
+    def Click_View_Closed_Board(self):
+        self.Wait_And_Click(self.View_Closed_Board_Button)
 
-    def fill_board_name_input_withnamelong(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Board_Name_Input)
-        ).send_keys(self.name_board2)
+    def Click_Reopen_Board(self):
+        self.Wait_And_Click(self.Reopen_Board_Button)
 
-    #Brokne_Link_Test
-    def Thong_Tin_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Thong_Tin_Button)
-        ).click()
-    def More_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.More_Button)
-        ).click()
-    def get_all_footer_links(self):
+    def Click_Open_Board_Again(self):
+        self.Wait_And_Click(self.Open_Board_Again_Button)
+
+    def Click_Confirm_Reopen(self):
+        self.Wait_And_Click(self.Confirm_Reopen_Button)
+
+    def Fill_Board_Name_Input_With_Long_Name(self):
+        self.Wait_And_Send_Keys(self.Board_Name_Input, self.Long_Board_Name)
+
+        # Broken Link Test
+
+    def Click_Info_Button(self):
+        self.Wait_And_Click(self.Info_Button)
+
+    def Click_More_Info(self):
+        self.Wait_And_Click(self.More_Info_Button)
+
+    def Get_All_Footer_Links(self):
         """Lấy tất cả các link trong footer"""
-        return self.driver.find_elements(*self.FOOTER_LINKS)
+        return self.Driver.find_elements(*self.Footer_Links)
 
-    def get_link_url(self, link_text):
+    def Get_Link_URL(self, link_text):
         """Lấy URL của link dựa trên text hiển thị"""
-        link = self.driver.find_element(*self.LINK_MAPPING[link_text])
+        link = self.Driver.find_element(*self.Link_Mapping[link_text])
         return link.get_attribute("href")
 
-    def get_link_status(self, url):
+    def Get_Link_Status(self, url):
         """Lấy HTTP status code của URL (sử dụng requests)"""
-        import requests
         try:
             response = requests.head(url, timeout=10, allow_redirects=True)
             return response.status_code
         except requests.exceptions.RequestException as e:
             return f"Error: {str(e)}"
 
-    #Work space test
-    def ThanhVien_Button_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.ThanhVien_Button)
-        ).click()
-    def Add_Email_Button_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Moi_Thanh_Vien_Button)
-        ).click()
-    def Fill_Email_Input_Click(self):
-            WebDriverWait(self.driver, 20).until(
-                EC.visibility_of_element_located(self.Input_Email_Memmbers)
-            ).send_keys(self.email_string)
+        # Work space test
 
-    def Add_Button_Click(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Add_Button)
-        ).click()
+    def Click_Member_Button(self):
+        self.Wait_And_Click(self.Member_Button)
 
-    #Test case 23
-    def Xem_Thanh_Vien_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Members_Button_23)
-        ).click()
-    def Moi_Thanh_Vien_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Moi_ThanhVien_23)
-        ).click()
+    def Click_Add_Member_Button(self):
+        self.Wait_And_Click(self.Add_Member_Button)
+
+    def Fill_Email_Input_Members(self):
+        self.Wait_And_Send_Keys(self.Email_Input_Members, self.Email_String)
+
+    def Click_Submit_Add_Button(self):
+        self.Wait_And_Click(self.Submit_Add_Button)
+
+        # Test case 23
+
+    def Click_View_Members_23(self):
+        self.Wait_And_Click(self.Members_Button_23)
+
+    def Click_Add_Member_23(self):
+        self.Wait_And_Click(self.Add_Member_23_Button)
+
     def Fill_Email_Member_Input_Click_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Member_23)
-        ).send_keys("minhnghiaseleniumtest2@gmail.com,")
+        self.Wait_And_Send_Keys(self.Member_Input_23, "minhnghiaseleniumtest2@gmail.com,")
 
-    def Button_add_click_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Add_Member_Button_23)
-        ).click()
+    def Click_Send_Invite_Button_23(self):
+        self.Wait_And_Click(self.Send_Invite_Button_23)
 
-    def Close_Add_Member_Click_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Close_Add_Member_Button_23)
-        ).click()
+    def Click_Close_Add_Member_Button_23(self):
+        self.Wait_And_Click(self.Close_Add_Member_Button_23)
 
-    def Work_Space_Click_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Work_Space_Button)
-        ).click()
+    def Click_Work_Space_23(self):
+        self.Wait_And_Click(self.Work_Space_Button)
 
-    def Boards_Click_23(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Boards_Button)
-        ).click()
+    def Click_Boards_23(self):
+        self.Wait_And_Click(self.Boards_Button)

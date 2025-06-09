@@ -1,34 +1,30 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from TrelloSeleniumTest.Base.base_page import BasePage  # Cập nhật đúng đường dẫn base_page nếu cần
 
-class LoginPage:
+class LoginPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
-        self.email_textbox = (By.ID, "username")
-        self.continue_button = (By.ID, "login-submit")
-        self.password_textbox = (By.ID, "password")
-        self.login_button = (By.ID, "login-submit")
+        super().__init__(driver)  # Gọi constructor của BasePage
+        self.Email_Textbox = (By.ID, "username")
+        self.Continue_Button = (By.ID, "login-submit")
+        self.Password_Textbox = (By.ID, "password")
+        self.Login_Button = (By.ID, "login-submit")
 
-    def open_page(self, url):
-        self.driver.get(url)
+    def Open_Page(self, url):
+        """Mở trang đăng nhập."""
+        self.Driver.get(url)
 
-    def enter_email(self, email):
-        # Chờ cho trường email hiển thị và sau đó nhập email
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.email_textbox))
-        self.driver.find_element(*self.email_textbox).send_keys(email)
+    def Enter_Email(self, email):
+        """Nhập địa chỉ email vào trường email."""
+        self.Wait_And_Send_Keys(self.Email_Textbox, email)
 
-    def click_continue(self):
-        # Chờ cho nút tiếp tục hiển thị và sau đó nhấn
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.continue_button))
-        self.driver.find_element(*self.continue_button).click()
+    def Click_Continue(self):
+        """Nhấn nút tiếp tục."""
+        self.Wait_And_Click(self.Continue_Button)
 
-    def enter_password(self, password):
-        # Chờ cho trường mật khẩu hiển thị và sau đó nhập mật khẩu
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.password_textbox))
-        self.driver.find_element(*self.password_textbox).send_keys(password)
+    def Enter_Password(self, password):
+        """Nhập mật khẩu vào trường mật khẩu."""
+        self.Wait_And_Send_Keys(self.Password_Textbox, password)
 
-    def click_login(self):
-        # Chờ cho nút đăng nhập hiển thị và sau đó nhấn
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.login_button))
-        self.driver.find_element(*self.login_button).click()
+    def Click_Login(self):
+        """Nhấn nút đăng nhập."""
+        self.Wait_And_Click(self.Login_Button)

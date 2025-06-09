@@ -1,0 +1,6 @@
+Login_Url = "https://id.atlassian.com/login"
+Trello_Url = "https://trello.com/u/ngotrongnghia8424/boards"
+Email = "ngotrongnghia8424@gmail.com"
+Password = "khongcomatkhau4654"
+Signup_Url = "https://id.atlassian.com/signup"
+Home_Url = "https://home.atlassian.com/"

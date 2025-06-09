@@ -7,6 +7,7 @@ from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 
+
 def wait_for_element(driver, by, value):
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
 
