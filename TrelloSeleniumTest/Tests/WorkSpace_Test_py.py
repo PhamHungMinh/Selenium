@@ -6,11 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
-from TrelloSeleniumTest.Pages.Quan_ly_List import Quan_Ly_List
+from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from utils import wait_for_element, login_to_atlassian, navigate_to_trello
-
-from selenium.webdriver.common.action_chains import ActionChains
+from TrelloSeleniumTest.Until.utils import login_to_atlassian
+from TrelloSeleniumTest.Until.utils import navigate_to_trello
 
 
 @pytest.fixture
@@ -28,9 +27,9 @@ def test_Gioi_Han_WorkSpace(driver):
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
 
-    HomePage.ThanhVien_Button_Click()
-    HomePage.Add_Email_Button_Click()
-    HomePage.Fill_Email_Input_Click()
+    HomePage.Click_Member_Button()
+    HomePage.Click_Add_Member_Button()
+    HomePage.Fill_Email_Input_Members()
 
     # Kiểm tra trạng thái của nút "Gửi lời mời"
     add_button = driver.find_element(By.XPATH,

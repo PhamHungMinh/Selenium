@@ -16,27 +16,28 @@ def login_to_atlassian(driver, email, password):
     driver.get("https://id.atlassian.com/login")
 
     wait_for_element(driver, By.ID, "username")
-    login_page.enter_email(email)
-    login_page.click_continue()
+    login_page.Fill_Email(email)
+    login_page.Continue_Button_Click()
 
     wait_for_element(driver, By.ID, "password")
-    login_page.enter_password(password)
-    login_page.click_login()
+    login_page.Fill_Password(password)
+    login_page.Continue_Button_Click()
 
 def navigate_to_trello(driver):
     atlassian_page = HomeAtlassianPage(driver)
     home_page = HomeTrelloPage(driver)
 
-    atlassian_page.Menu_click()
-    atlassian_page.Trello_click()
+    atlassian_page.Menu_Click()
+    atlassian_page.Trello_Click()
     driver.get("https://trello.com/u/ngotrongnghia8424/boards")
 
     original_window = driver.current_window_handle
     for window_handle in driver.window_handles:
         if window_handle != original_window:
             driver.switch_to.window(window_handle)
-            driver.close()
-            driver.switch_to.window(original_window)
+            driver.close()  # Đóng cửa sổ mới
+            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
 
+    # Đảm bảo chỉ có một cửa sổ mở
     assert len(driver.window_handles) == 1
-    home_page.click_trello_login_button()
+    home_page.Click_Login_Button()
