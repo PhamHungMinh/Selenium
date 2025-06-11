@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
-from TrelloSeleniumTest.Pages.Quan_ly_List import Quan_Ly_List
+from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
 
@@ -26,19 +26,19 @@ def login_to_atlassian(driver, email, password):
     driver.get("https://id.atlassian.com/login")
 
     wait_for_element(driver, By.ID, "username")
-    login_page.enter_email(email)
-    login_page.click_continue()
+    login_page.Fill_Email(email)
+    login_page.Continue_Button_Click()
 
     wait_for_element(driver, By.ID, "password")
-    login_page.enter_password(password)
-    login_page.click_login()
+    login_page.Fill_Password(password)
+    login_page.Continue_Button_Click()
 
 def navigate_to_trello(driver):
     atlassian_page = HomeAtlassianPage(driver)
     home_page = HomeTrelloPage(driver)
 
-    atlassian_page.Menu_click()
-    atlassian_page.Trello_click()
+    atlassian_page.Menu_Click()
+    atlassian_page.Trello_Click()
     driver.get("https://trello.com/u/ngotrongnghia8424/boards")
 
     # Lưu ID của cửa sổ gốc
@@ -80,10 +80,10 @@ def test_Tao_Card_Voi_Ten_Hop_Le(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
 
     ql_card = QuanLyCard(driver)
-    ql_card.create_card('short')
+    ql_card.Create_Card('short')
 
     try:
         # Chờ cho danh sách "List_Test_1" xuất hiện
@@ -110,10 +110,10 @@ def test_Tao_Card_Voi_Ten_Link(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
 
     ql_card = QuanLyCard(driver)
-    ql_card.create_card('link')
+    ql_card.Create_Card('link')
 
     try:
         # Chờ cho danh sách "List_Test_1" xuất hiện
@@ -140,11 +140,11 @@ def test_Set_DeadLine(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     ql_card = QuanLyCard(driver)
-    ql_card.set_deadline()
+    ql_card.Set_Deadline()
 
-    number_of_deadline_cards = ql_card.count_cards_with_deadline()
+    number_of_deadline_cards = ql_card.Count_Cards_With_Deadline()
 
     # So sánh với số lượng mong muốn (3)
     assert number_of_deadline_cards == 3, f"Số lượng thẻ có deadline không đúng: {number_of_deadline_cards}. Kỳ vọng là 3."
@@ -156,17 +156,17 @@ def test_limit_cards_List(driver):
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
-    QLListPage = Quan_Ly_List(driver)
-    QLListPage.click_menu_list()
+    HomePage.Click_Enter_Board()
+    QLListPage = QuanLyList(driver)
+    QLListPage.Click_Menu_List()
     time.sleep(1)
-    QLListPage.click_add_limit_card_button()
-    QLListPage.fill_input_limit()
-    QLListPage.click_save_button()
-    QLListPage.click_close_button()
+    QLListPage.Add_Limit_Card_Button_Click()
+    QLListPage.Fill_Input_Limit()
+    QLListPage.Save_Button_Click()
+    QLListPage.Click_Close_Button()
 
     ql_card = QuanLyCard(driver)
-    ql_card.create_card('limit')
+    ql_card.Create_Card('limit')
 
     card_count = count_cards_in_list(driver)
     print(f"Số lượng thẻ hiện tại trong danh sách 'List_Test_1': {card_count}")

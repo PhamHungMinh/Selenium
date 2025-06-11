@@ -34,13 +34,13 @@ def test_Create_Board_voi_ten_hop_le(driver):
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()
@@ -87,13 +87,13 @@ def test__TaoBoard_Background(driver):
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()
@@ -139,13 +139,13 @@ def test__TaiAnhNen_KichThuocLon(driver):
 
     # Đợi cho phần tử email hiển thị và nhập email
     wait_for_element(driver, By.ID, "username")  # ID cho trường email
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()
@@ -192,13 +192,13 @@ def test_dong_Board(driver):
     HomePage = HomeTrelloPage(driver)
     Login_Page.Open_Page(Login_Url)
     wait_for_element(driver, By.ID, "username")
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()
@@ -241,13 +241,13 @@ def test_mo_board_da_dong(driver):
     HomePage = HomeTrelloPage(driver)
     Login_Page.Open_Page(Login_Url)
     wait_for_element(driver, By.ID, "username")
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()

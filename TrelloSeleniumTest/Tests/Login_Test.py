@@ -25,8 +25,8 @@ def test_login_voi_TaiKhoan_chua_dang_ky(driver):
 
     # Nhập email chưa đăng ký và nhấn tiếp tục
     email = "nghiatrong4114@gmail.com"
-    Login_Page.Enter_Email(email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(email)
+    Login_Page.Continue_Button_Click()
 
     # Đợi cho trang chuyển hướng
     WebDriverWait(driver, 10).until(
@@ -48,11 +48,11 @@ def test_login_voi_mat_khau_sai(driver):
     # Mở trang đăng nhập
     Login_Page.Open_Page(Login_Url)
     # Nhập email và nhấn tiếp tục
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
     # Nhập mật khẩu sai và nhấn đăng nhập
-    Login_Page.Enter_Password("TestPassWord")
-    Login_Page.Click_Login()
+    Login_Page.Fill_Password("TestPassWord")
+    Login_Page.Login_Button_Click()
 
     # Kiểm tra xem thông báo lỗi có hiển thị không
     error_xpath = "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div"
@@ -71,10 +71,10 @@ def test_login_voi_mat_khau_sai(driver):
 def test_login_success(driver):
     Login_Page = LoginPage(driver)
     Login_Page.Open_Page(Login_Url)
-    Login_Page.Enter_Email(Email)
-    Login_Page.Click_Continue()
-    Login_Page.Enter_Password(Password)
-    Login_Page.Click_Login()
+    Login_Page.Fill_Email(Email)
+    Login_Page.Continue_Button_Click()
+    Login_Page.Fill_Password(Password)
+    Login_Page.Login_Button_Click()
 
     # Kiểm tra URL sau khi đăng nhập
     WebDriverWait(driver, 10).until(EC.url_contains(Home_Url))

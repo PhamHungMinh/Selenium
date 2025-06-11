@@ -75,10 +75,10 @@ def test_Tao_List_Voi_Ten_Hop_Le(driver):
 
     QLListPage = Quan_Ly_List(driver)
     QLListPage.Create_List_Click()
-    QLListPage.fill_list_name_input()
-    QLListPage.Button_CreateList_WithName_Click()
+    QLListPage.Fill_List_Name_Input()
+    QLListPage.Button_Create_List_WithName_Click()
 
-    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+    wait_for_element(driver, By.XPATH, QLListPage.Wait_For_Board_To_Display)
     try:
         list_element = driver.find_element(By.XPATH, "//button[text()='List_Test_1']")
         assert list_element.is_displayed(), "Danh sách 'List_Test_1' không được tìm thấy."
@@ -97,10 +97,10 @@ def test_Tao_List_Voi_Trung(driver):
 
     QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
-    QLListPage.fill_list_ten_trung_input()
-    QLListPage.Button_CreateList_WithName_Click()
+    QLListPage.Fill_Same_Name_List_Input()
+    QLListPage.Button_Create_List_WithName_Click()
 
-    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+    wait_for_element(driver, By.XPATH, QLListPage.Wait_For_Board_To_Display)
     # Tìm tất cả các danh sách có tên "List_Test_1"
     list_elements = driver.find_elements(By.XPATH, "//button[text()='List_Test_1']")
     count = len(list_elements)
@@ -123,11 +123,11 @@ def test_Tao_List_Voi_Dai(driver):
 
     QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
-    QLListPage.fill_list_ten_dai()  # Giả định rằng tên dài đã được điền
-    QLListPage.Button_CreateList_WithName_Click()
+    QLListPage.Fill_Long_Name_List()  # Giả định rằng tên dài đã được điền
+    QLListPage.Button_Create_List_WithName_Click()
 
     # Kiểm tra độ dài tên danh sách bằng cách sử dụng phương thức từ lớp Quan_Ly_List
-    textarea = driver.find_element(By.XPATH, QLListPage.textarea_xpath)
+    textarea = driver.find_element(By.XPATH, QLListPage.Text_Area_Xpath)
     length = len(textarea.text)
 
     # Kiểm tra độ dài tên danh sách
@@ -151,11 +151,11 @@ def test_Archive_List(driver):
     HomePage.Into_Board_Click()
 
     QLListPage = Quan_Ly_List(driver)
-    QLListPage.click_menu_list()
-    QLListPage.click_archive_list()
+    QLListPage.Click_Menu_List()
+    QLListPage.Archive_List_Button_Click()
 
     # Kiểm tra xem thông báo có hiển thị không
-    alert_visible = QLListPage.check_alert_message()
+    alert_visible = QLListPage.Check_Alert_Message()
 
     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
 

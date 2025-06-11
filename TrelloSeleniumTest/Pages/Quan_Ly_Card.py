@@ -1,22 +1,15 @@
 import time
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from TrelloSeleniumTest.Base.base_page import BasePage
 
-
-class QuanLyCard:
+class QuanLyCard(BasePage):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)  # Gọi hàm khởi tạo của lớp cha
         self.Name_Card = "card test 1"
         self.Name_Link = "https://docs.google.com/"
-
-        # XPath cho các phần tử cần thiết
         self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][.//h2/button[contains(text(), 'List_Test_1')]]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
         self.Input_Name_Card = (By.XPATH, "//textarea[@data-testid='list-card-composer-textarea']")
         self.Create_Card_Button = (By.XPATH, "//button[@data-testid='list-card-composer-add-card-button']")
-
-        # XPath cho các thẻ trong danh sách thứ hai
         self.First_List_Cards = (By.XPATH, "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card']")
         self.Second_List_Cards_With_Deadline = (By.XPATH,"//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card' and .//div[@data-testid='card-done-state']]")
         self.FirstCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[1]")
@@ -27,9 +20,9 @@ class QuanLyCard:
         self.Input_Hour = (By.XPATH, "/html/body/div[5]/div/section/div[2]/div/div/form/div[2]/div[2]/div/div[2]/input")
         self.Button_Save_Deadline = (By.XPATH, "//button[@data-testid='save-date-button']")
         self.Close_Set_Deadline_Button = (By.XPATH, "//span[@data-testid='CloseIcon']")
-        self.Ngay_Deadline = "6/8/2025"
-        self.Ngay_Gan = "6/9/2025"
-        self.Ngay_Xa = "6/10/2025"
+        self.Date_Deadline = "6/8/2025"
+        self.Near_Date = "6/9/2025"
+        self.Date_Away = "6/10/2025"
         # test case 26
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH,
@@ -45,24 +38,17 @@ class QuanLyCard:
         self.Choose_User = (By.XPATH,
                             "//div[@data-mention-item='true' and @data-mention-id='682b65bbd4dcd7cbb7f769d6']")
 
-    def click_create_card_area(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Create_Card_Area)
-        ).click()
+    def Click_Create_Card_Area(self):
+        self.Wait_And_Click(self.Create_Card_Area)
 
-    def fill_card_name_input(self, card_name):
-        text_area = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Name_Card)
-        )
-        text_area.send_keys(card_name)  # Nhập tên thẻ từ tham số
+    def Fill_Card_Name_Input(self, card_name):
+        text_area = self.Wait_For_Element(self.Input_Name_Card)
+        text_area.send_keys(card_name)
 
-    def click_create_card_button(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Create_Card_Button)
-        ).click()
+    def Click_Create_Card_Button(self):
+        self.Wait_And_Click(self.Create_Card_Button)
 
-    def create_card(self, card_type='short'):
-        # Trình tự tạo thẻ với tên được xác định trước
+    def Create_Card(self, card_type='short'):
         if card_type == 'short':
             card_name = self.Name_Card
         elif card_type == 'link':
@@ -72,70 +58,44 @@ class QuanLyCard:
         else:
             raise ValueError("Invalid card type. Use 'short' or 'link'.")
 
-        self.click_create_card_area()
-        self.fill_card_name_input(card_name)
-        self.click_create_card_button()
+        self.Click_Create_Card_Area()
+        self.Fill_Card_Name_Input(card_name)
+        self.Click_Create_Card_Button()
 
-    def count_cards_with_deadline(self):
-        # Đếm số lượng thẻ có deadline trong danh sách thứ hai
-        cards = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_all_elements_located(self.Second_List_Cards_With_Deadline)
-        )
+    def Count_Cards_With_Deadline(self):
+        cards = self.Wait_For_Element(self.Second_List_Cards_With_Deadline)
         return len(cards)
 
-    def set_deadline(self):
-        # Cận deadline
-        self._set_single_deadline(self.FirstCard, self.Ngay_Deadline)
-        self._set_single_deadline(self.SecondCard, self.Ngay_Gan)
-        self._set_single_deadline(self.ThirdCard, self.Ngay_Xa)
+    def Set_Deadline(self):
+        self.Set_Single_Deadline(self.FirstCard, self.Date_Deadline)
+        self.Set_Single_Deadline(self.SecondCard, self.Near_Date)
+        self.Set_Single_Deadline(self.ThirdCard, self.Date_Away)
 
-    def _set_single_deadline(self, card_xpath, date):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(card_xpath)
-        ).click()
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Edit_DeadLine)
-        ).click()
-        deadline = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Date)
-        )
+    def Set_Single_Deadline(self, card_xpath, date):
+        self.Wait_And_Click(card_xpath)
+        self.Wait_And_Click(self.Edit_DeadLine)
+        deadline = self.Wait_For_Element(self.Input_Date)
         deadline.clear()
         deadline.send_keys(date)
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Button_Save_Deadline)
-        ).click()
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Close_Set_Deadline_Button)
-        ).click()
+        self.Wait_And_Click(self.Button_Save_Deadline)
+        self.Wait_And_Click(self.Close_Set_Deadline_Button)
 
     # Test case 26
-    def fill_Input_Comment_Card(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Comment_Card)
-        ).send_keys(self.Comment_Card)
+    def Fill_Input_Comment_Card(self):
+        self.Wait_For_Element(self.Input_Comment_Card).send_keys(self.Comment_Card)
 
-    def click_Button_Comment_Card(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Click_Button_Input)
-        ).click()
+    def Click_Button_Comment_Card(self):
+        self.Wait_And_Click(self.Click_Button_Input)
 
     def Click_Button_Save(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Button_Save)
-        ).click()
+        self.Wait_And_Click(self.Button_Save)
 
     # Test case 27
-    def fill_tag_user(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Tag_User)
-        ).send_keys(self.Tag_User)
+    def Fill_Tag_User(self):
+        self.Wait_For_Element(self.Input_Tag_User).send_keys(self.Tag_User)
 
-    def click_choose_user(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.element_to_be_clickable(self.Choose_User)
-        ).click()
+    def Click_Choose_User(self):
+        self.Wait_And_Click(self.Choose_User)
 
-    def comment_user(self):
-        WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(self.Input_Tag_User)
-        ).send_keys(self.Comment_User)
+    def Comment_User(self):
+        self.Wait_For_Element(self.Input_Tag_User).send_keys(self.Comment_User)

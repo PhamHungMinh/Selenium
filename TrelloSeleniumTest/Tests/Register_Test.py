@@ -14,10 +14,10 @@ def driver():
 #Test Case 2 - Đăng ký với tên không hợp lệ
 def test_register_voi_ten_khong_hop_le(driver):
     register_page = RegisterPage(driver)
-    register_page.open_page("https://id.atlassian.com/signup")
-    register_page.enter_email("minhpham")
-    register_page.click_continue()
-    error_message = register_page.get_error_message()
+    register_page.Open_Page("https://id.atlassian.com/signup")
+    register_page.Fill_Email_Input("minhpham")
+    register_page.Continue_Button_Click()
+    error_message = register_page.Get_Error_Message()
     print(f"Lỗi hiển thị: {error_message}")
     assert "@" in error_message or "email" in error_message.lower()
 
@@ -25,11 +25,11 @@ def test_register_voi_ten_khong_hop_le(driver):
 #Test case 3 - Đăng ký với email đã đăng ký trước đó
 def test_register_voi_email_da_dang_ky(driver):
         register_page = RegisterPage(driver)
-        register_page.open_page("https://id.atlassian.com/signup")
-        register_page.enter_email("ngotrongnghia8424@gmail.com")
-        register_page.click_continue()
+        register_page.Open_Page("https://id.atlassian.com/signup")
+        register_page.Fill_Email_Input("ngotrongnghia8424@gmail.com")
+        register_page.Continue_Button_Click()
 
-        error_message2 = register_page.get_error_message2()
+        error_message2 = register_page.Get_Error_Message_TC3()
         print("Thông báo lỗi thực tế:", error_message2)
 
         expected_vn = "bạn đã có một tài khoản"

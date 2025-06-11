@@ -26,8 +26,8 @@ def driver():
     yield driver
     driver.quit()
 
-#Test case 22
-def test_Them_Thanh_Vien_Vao_Bang(driver):
+#Test case 21
+def test_Moi_Thanh_Vien_Vao_Bang(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
 
@@ -35,7 +35,7 @@ def test_Them_Thanh_Vien_Vao_Bang(driver):
     home_page.Into_Board_Click()
     QLBoard = Quan_Ly_Board(driver)
     QLBoard.Share_Button_Click()
-    QLBoard.fill_email_input(Email_Invite)
+    QLBoard.Fill_Email_Input(Email_Invite)
     QLBoard.Invite_Button_Click()
     QLBoard.Invite_Button_Click()
     # Admin bảng
@@ -76,7 +76,7 @@ def test_Them_Thanh_Vien_Vao_Bang(driver):
             print("Test case FAIL: Phần tử không tìm thấy.")
 
 
-# Test case 23
+# Test case 22
 def test_Thanh_Vien_Yeu_Cau_Vao_Bang(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
@@ -184,8 +184,8 @@ def test_ThanhVien_WS_Xem_Bang_Private(driver):
     home_page = HomeTrelloPage(driver)
     home_page.Into_Board_Click()
     QLBoard = Quan_Ly_Board(driver)
-    QLBoard.Phan_Quyen_Click()
-    QLBoard.Phan_Quyen_Private_Click()
+    QLBoard.Visibility_Click()
+    QLBoard.Visibility_Private_Click()
     QLBoard.Menu_Trello_Click()
     QLBoard.Trello_Home_Click()
     driver.get("https://trello.com/u/ngotrongnghia8424/boards")
@@ -299,9 +299,9 @@ def test_User_YeuCau_ThamGia_Bang_Private(driver):
 
     home_page.Into_Board_Click()
     QLBoard.Share_Button_Click()
-    QLBoard.YeuCau_VaoBang_Click()
-    QLBoard.Chon_PhanQuyen_Click()
-    QLBoard.Chon_ThanhVien_Click()
+    QLBoard.Request_Into_Board_Click()
+    QLBoard.Select_Visibility_Click()
+    QLBoard.Select_Member_Click()
 
     result_message = False
     try:
@@ -401,8 +401,8 @@ def test_Huy_YeuCau_User_ThamGia_Bang_Private(driver):
 
     home_page.Into_Board_Click()
     QLBoard.Share_Button_Click()
-    QLBoard.YeuCau_VaoBang_Click()
-    QLBoard.TuChoi_YeuCau_VaoBang_Click()
+    QLBoard.Request_Into_Board_Click()
+    QLBoard.Deny_Request_Into_Board_Click()
 
     notification_exists = False
     try:
@@ -459,8 +459,8 @@ def test_Thanh_Vien_Binh_Luan_Thanh_Cong(driver):
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
     QL_Card = QuanLyCard(driver)
-    QL_Card.click_Button_Comment_Card()
-    QL_Card.fill_Input_Comment_Card()
+    QL_Card.Click_Button_Comment_Card()
+    QL_Card.Fill_Input_Comment_Card()
     QL_Card.Click_Button_Save()
     QLBoard.Click_Close_Card()
     QLBoard.Member_Menu_Click()
@@ -502,10 +502,10 @@ def test_ThanhVien_BinhLuanTagUser(driver):
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
     QL_Card = QuanLyCard(driver)
-    QL_Card.click_Button_Comment_Card()
+    QL_Card.Click_Button_Comment_Card()
     QL_Card.fill_tag_user()
-    QL_Card.click_choose_user()
-    QL_Card.comment_user()
+    QL_Card.Click_Choose_User()
+    QL_Card.Comment_User()
     QL_Card.Click_Button_Save()
     QLBoard.Click_Close_Card()
     QLBoard.Member_Menu_Click()

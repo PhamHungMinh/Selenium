@@ -24,9 +24,9 @@ def setup():
 def test_successful_password_reset(setup):
     driver, password_page = setup
 
-    password_page.open_reset_page()\
-                 .enter_email("nghiatrong4554@gmail.com")\
-                 .click_submit()
+    password_page.Open_Reset_Page() \
+        .Fill_Email_Input("nghiatrong4554@gmail.com") \
+        .Submit_Button_Click()
 
     message_element = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div[2]"))
