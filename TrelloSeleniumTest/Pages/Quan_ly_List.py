@@ -13,6 +13,7 @@ class QuanLyList(BasePage):
                                    "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[2]/ol/div[1]/form/textarea")
         self.Button_Create_List_With_Name = (By.XPATH,
                                            "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div[2]/div/div/div/div[2]/ol/div[1]/form/div/button[1]")
+        self.Text_Area_Xpath = "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][2]//textarea[@data-testid='list-name-textarea']"
         self.List_Edit_Menu_Button = (By.XPATH, "//li[@data-testid='list-wrapper'][2]//button[@data-testid='list-edit-menu-button']")
         self.Archive_List_Button = (By.XPATH, "//button[@data-testid='list-actions-archive-list-button']")
         self.Alert_Xpath = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[2]/div/div/div/div[2]/div")

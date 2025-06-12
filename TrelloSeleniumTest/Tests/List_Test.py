@@ -6,10 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
-from TrelloSeleniumTest.Pages.Quan_ly_List import Quan_Ly_List
+from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from selenium.webdriver.common.action_chains import ActionChains
-
+from TrelloSeleniumTest.Until.utils import *
 
 @pytest.fixture
 def driver():
@@ -17,46 +17,6 @@ def driver():
     driver = get_chrome_driver()  # Sử dụng hàm từ chrome_driver.py
     yield driver
     driver.quit()
-
-
-def wait_for_element(driver, by, value):
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
-
-
-def login_to_atlassian(driver, email, password):
-    Login_Page = LoginPage(driver)
-    driver.get("https://id.atlassian.com/login")
-
-    wait_for_element(driver, By.ID, "username")
-    Login_Page.enter_email(email)
-    Login_Page.click_continue()
-
-    wait_for_element(driver, By.ID, "password")
-    Login_Page.enter_password(password)
-    Login_Page.click_login()
-
-
-def navigate_to_trello(driver):
-    AtlassianPage = HomeAtlassianPage(driver)
-    HomePage = HomeTrelloPage(driver)
-
-    AtlassianPage.Menu_click()
-    AtlassianPage.Trello_click()
-    driver.get("https://trello.com/u/ngotrongnghia8424/boards")
-
-    # Lưu ID của cửa sổ gốc
-    original_window = driver.current_window_handle
-
-    # Kiểm tra và đóng các cửa sổ khác nếu có
-    for window_handle in driver.window_handles:
-        if window_handle != original_window:
-            driver.switch_to.window(window_handle)
-            driver.close()  # Đóng cửa sổ mới
-            driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
-
-    # Đảm bảo chỉ có một cửa sổ mở
-    assert len(driver.window_handles) == 1
-    HomePage.click_trello_login_button()
 
 # Hàm để đếm số lượng danh sách hiện có
 def count_lists(driver):
@@ -66,14 +26,14 @@ def count_lists(driver):
 
 
 # Test case 13
-def test_Tao_List_Voi_Ten_Hop_Le(driver):
+def test_Create_List_With_Valid_Name(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
+    HomePage.Click_Enter_Board()
 
-    QLListPage = Quan_Ly_List(driver)
+    QLListPage = QuanLyList(driver)
     QLListPage.Create_List_Click()
     QLListPage.Fill_List_Name_Input()
     QLListPage.Button_Create_List_WithName_Click()
@@ -88,14 +48,14 @@ def test_Tao_List_Voi_Ten_Hop_Le(driver):
 
 
 # Test case 14
-def test_Tao_List_Voi_Trung(driver):
+def test_Create_List_With_Same_Name(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
+    HomePage.Click_Enter_Board()
 
-    QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
+    QLListPage = QuanLyList(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
     QLListPage.Fill_Same_Name_List_Input()
     QLListPage.Button_Create_List_WithName_Click()
@@ -113,33 +73,26 @@ def test_Tao_List_Voi_Trung(driver):
 
 
 # Test case 15
-def test_Tao_List_Voi_Dai(driver):
+def test_Create_List_With_Long_Name(driver):
     # Đăng nhập vào Atlassian
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
+    HomePage.Click_Enter_Board()
 
-    QLListPage = Quan_Ly_List(driver)  # Đã thay đổi tên
+    QLListPage = QuanLyList(driver)  # Đã thay đổi tên
     QLListPage.Create_List_Click()
     QLListPage.Fill_Long_Name_List()  # Giả định rằng tên dài đã được điền
     QLListPage.Button_Create_List_WithName_Click()
-
     # Kiểm tra độ dài tên danh sách bằng cách sử dụng phương thức từ lớp Quan_Ly_List
-    textarea = driver.find_element(By.XPATH, QLListPage.Text_Area_Xpath)
-    length = len(textarea.text)
+    textarea = driver.find_element(By.XPATH,
+                                   "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][2]//textarea[@data-testid='list-name-textarea']")
+    length = len(textarea.get_attribute("value"))
 
     # Kiểm tra độ dài tên danh sách
     expected_length = 512
-
-    if length < expected_length:
-        assert False, f"Test case FAIL: Độ dài tên danh sách là {length}, nhỏ hơn 512."
-    elif length > expected_length:
-        assert False, f"Test case FAIL: Độ dài tên danh sách là {length}, lớn hơn 512."
-    else:
-        print("Tên danh sách có độ dài chính xác là 512 ký tự.")
-
+    assert length == expected_length, f"Test case FAIL: Độ dài tên danh sách là {length}, khác 512."
     print("Test case PASS: Đã tạo thành công danh sách với tên dài.")
 
 # Test case 17
@@ -148,16 +101,16 @@ def test_Archive_List(driver):
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-    HomePage.Into_Board_Click()
+    HomePage.Click_Enter_Board()
 
-    QLListPage = Quan_Ly_List(driver)
+    QLListPage = QuanLyList(driver)
     QLListPage.Click_Menu_List()
     QLListPage.Archive_List_Button_Click()
 
     # Kiểm tra xem thông báo có hiển thị không
     alert_visible = QLListPage.Check_Alert_Message()
 
-    wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
+    wait_for_element(driver, By.XPATH, QLListPage.Wait_For_Board_To_Display)
 
     # Đếm số lượng danh sách có tên "List_Test_1"
     list_elements = driver.find_elements(By.XPATH, "//button[text()='List_Test_1']")
@@ -169,25 +122,9 @@ def test_Archive_List(driver):
 
     print("Test case PASS: Thông báo đã xuất hiện và chỉ có 1 danh sách 'List_Test_1'.")
 
-#Test case 17
-# def test_Drag_List_ViTri_HopLe(driver):
-#     # Đăng nhập vào Atlassian
-#     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
-#
-#     navigate_to_trello(driver)
-#     HomePage = HomeTrelloPage(driver)
-#     HomePage.Into_Board_Click()
-#
-#     QLListPage = Quan_Ly_List(driver)
-#     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
-#
-#     actions = ActionChains(driver)
-#     list_1 = driver.find_element(By.XPATH, QLListPage.List_Test_1_XPATH)
-#     list_3 = driver.find_element(By.XPATH, QLListPage.Drop_XPATH)
-#     actions.drag_and_drop(list_1, list_3).perform()
-#
-#     wait_for_element(driver, By.XPATH, QLListPage.Cho_Bang_Hien_Thi)
-#
-#     time.sleep(10)
-
+def test_xpath(driver):
+    login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
+    alassian = HomeAtlassianPage(driver)
+    alassian.Menu_Click()
+    alassian.Trello_Click()
 

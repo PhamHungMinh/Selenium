@@ -5,6 +5,7 @@ from TrelloSeleniumTest.Base.base_page import BasePage
 class QuanLyCard(BasePage):
     def __init__(self, driver):
         super().__init__(driver)  # Gọi hàm khởi tạo của lớp cha
+        self.driver = driver
         self.Name_Card = "card test 1"
         self.Name_Link = "https://docs.google.com/"
         self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][.//h2/button[contains(text(), 'List_Test_1')]]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
@@ -63,8 +64,12 @@ class QuanLyCard(BasePage):
         self.Click_Create_Card_Button()
 
     def Count_Cards_With_Deadline(self):
-        cards = self.Wait_For_Element(self.Second_List_Cards_With_Deadline)
-        return len(cards)
+        try:
+            cards = self.driver.find_elements(*self.Second_List_Cards_With_Deadline)
+            return len(cards)
+        except Exception as e:
+            print(f"Đã xảy ra lỗi khi đếm các thẻ có deadline: {e}")
+            return 0
 
     def Set_Deadline(self):
         self.Set_Single_Deadline(self.FirstCard, self.Date_Deadline)

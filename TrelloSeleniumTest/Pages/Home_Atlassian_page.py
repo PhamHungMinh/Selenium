@@ -6,8 +6,8 @@ from selenium.webdriver.common.by import By
 class HomeAtlassianPage:
     def __init__(self, driver):
         self.driver = driver
-        self.Menu = (By.XPATH, "/html/body/div[2]/div/div[2]/div/div/header/nav/div[1]/button/span/span")
-        self.Trello_Button = (By.XPATH, "/html/body/div[4]/div[3]/div/div/div/div[2]/div/div/section[1]/div/ul/li[2]/div/div/div/a/span")
+        self.Menu = (By.XPATH, "//button[@data-testid='app-switcher-button' and @type='button']")
+        self.Trello_Button = (By.XPATH, "//span[@data-testid='switcher-item__TRELLOTrello--primitive--icon-before']")
 
     # Chuyển từ trang chủ Atlassian sang Trello
     def Menu_Click(self):

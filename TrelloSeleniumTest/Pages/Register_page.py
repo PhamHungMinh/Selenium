@@ -27,6 +27,6 @@ class RegisterPage(BasePage):
         # Cập nhật selector để lấy thông báo lỗi
         element = self.Wait_For_Element((
             By.XPATH,
-            "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/span"  # Cập nhật selector cho thông báo lỗi
+            "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/span"
         ))
         return element.text

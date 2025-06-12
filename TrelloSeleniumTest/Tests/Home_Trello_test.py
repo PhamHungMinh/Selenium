@@ -12,6 +12,7 @@ from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Password
+from TrelloSeleniumTest.Until.utils import *
 
 @pytest.fixture
 def driver():
@@ -20,11 +21,8 @@ def driver():
     yield driver
     driver.quit()
 
-def wait_for_element(driver, by, value):
-    """Hàm đợi cho một phần tử trở nên hiển thị và có thể nhấp được trong tối đa 10 giây."""
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((by, value)))
 #Test case 07
-def test_Create_Board_voi_ten_hop_le(driver):
+def test_Create_Board_With_Valid_Name(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
@@ -65,19 +63,13 @@ def test_Create_Board_voi_ten_hop_le(driver):
 
     wait_for_element(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")  # XPath cho nút tạo board
     HomePage.Click_Create_Board()
-    time.sleep(3)
     HomePage.Click_Create_New_Board_Button()
-    time.sleep(3)
     HomePage.Fill_Board_Name_Input()
-    time.sleep(3)
     HomePage.Submit_Create_Board()
-    time.sleep(3)
     HomePage.Click_Return_Home()
-    time.sleep(3)
 
 #Test case 09
-
-def test__TaoBoard_Background(driver):
+def test_Change_BackGround_Board(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
@@ -116,20 +108,14 @@ def test__TaoBoard_Background(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.Click_Login_Button()
     HomePage.Click_Select_Board()
-    time.sleep(3)
     HomePage.Click_Open_Board_Menu()
-    time.sleep(3)
     HomePage.Click_Change_Board()
-    time.sleep(3)
     HomePage.Click_Change_Color()
-    time.sleep(3)
     HomePage.Click_Select_Color()
-    time.sleep(3)
     HomePage.Click_Cancel()
-    time.sleep(3)
 
 #Test case 10
-def test__TaiAnhNen_KichThuocLon(driver):
+def test_Load_BackGround_Large_Size(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
@@ -169,11 +155,8 @@ def test__TaiAnhNen_KichThuocLon(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.Click_Login_Button()
     HomePage.Click_Select_Board()
-    time.sleep(5)
     HomePage.Click_Open_Board_Menu()
-    time.sleep(5)
     HomePage.Click_Change_Board()
-    time.sleep(5)
     HomePage.Upload_Background(r"D:\Anh\Anh.jpg")
     try:
         error_message = WebDriverWait(driver, 5).until(
@@ -185,8 +168,7 @@ def test__TaiAnhNen_KichThuocLon(driver):
     time.sleep(10)
 
 #Test case 11
-
-def test_dong_Board(driver):
+def test_Archive_Board(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
@@ -222,20 +204,14 @@ def test_dong_Board(driver):
     # Đợi cho nút tạo board hiển thị và nhấp vào
     HomePage.Click_Login_Button()
     HomePage.Click_Select_Board()
-    time.sleep(5)
     HomePage.Click_Open_Board_Menu()
-    time.sleep(5)
     HomePage.Click_Close_Board()
-    time.sleep(5)
     HomePage.Click_Confirm_Close_Board()
-    time.sleep(5)
     HomePage.Click_Return_Home()
-    time.sleep(5)
     driver.refresh()
 
 #Test case 12
-
-def test_mo_board_da_dong(driver):
+def test_Reopen_Board(driver):
     Login_Page = LoginPage(driver)
     AtlassianPage = HomeAtlassianPage(driver)
     HomePage = HomeTrelloPage(driver)
@@ -251,7 +227,6 @@ def test_mo_board_da_dong(driver):
 
     AtlassianPage.Menu_Click()
     AtlassianPage.Trello_Click()
-    # time.sleep(500)
 
     # Mở URL để tạo board mới
     driver.get(Trello_Url)
@@ -275,55 +250,4 @@ def test_mo_board_da_dong(driver):
     HomePage.Click_Reopen_Board()
     HomePage.Click_Confirm_Reopen()
     HomePage.Click_Return_Home()
-    time.sleep(10)
     driver.refresh()
-
-# def test_TaoBoard_TenDai(driver):
-#     Login_Page = LoginPage(driver)
-#     AtlassianPage = HomeAtlassianPage(driver)
-#     HomePage = HomeTrelloPage(driver)
-#     Login_Page.Open_Page(Login_Url)
-#     wait_for_element(driver, By.ID, "username")
-#     Login_Page.Enter_Email(Email)
-#     Login_Page.Click_Continue()
-#
-#     # Đợi cho phần tử mật khẩu hiển thị và nhập mật khẩu
-#     wait_for_element(driver, By.ID, "password")  # ID cho trường mật khẩu
-#     Login_Page.Enter_Password(Password)
-#     Login_Page.Click_Login()
-#
-#     AtlassianPage.Menu_Click()
-#     AtlassianPage.Trello_Click()
-#     # time.sleep(500)
-#
-#     # Mở URL để tạo board mới
-#     driver.get(Trello_Url)
-#
-#     # Lưu ID của cửa sổ gốc
-#     original_window = driver.current_window_handle
-#
-#     # Kiểm tra và đóng các cửa sổ khác nếu có
-#     for window_handle in driver.window_handles:
-#         if window_handle != original_window:
-#             driver.switch_to.window(window_handle)
-#             driver.close()  # Đóng cửa sổ mới
-#             driver.switch_to.window(original_window)  # Quay lại cửa sổ gốc
-#
-#     # Đảm bảo chỉ có một cửa sổ mở
-#     assert len(driver.window_handles) == 1
-#     # Đợi cho nút tạo board hiển thị và nhấp vào
-#     HomePage.Click_Login_Button()
-#     HomePage.Create_Board_Click()
-#     time.sleep(5)
-#     HomePage.Click_Create_New_Board_Button()
-#     time.sleep(10)
-#     HomePage.fill_board_name_input_withnamelong()
-#     time.sleep(5)
-#     HomePage.Submit_Create_Board()
-#     time.sleep(10)
-#     HomePage.Click_Return_Home()
-#     time.sleep(5)
-#     driver.refresh()
-
-
-

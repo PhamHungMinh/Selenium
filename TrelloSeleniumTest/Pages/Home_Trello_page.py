@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class HomeTrelloPage(BasePage):
     def __init__(self, driver):
-        self.Driver = driver
+        self.driver = driver
         self.Create_Board_Button = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
         self.Login_Button = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
         self.Create_New_Board_Button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/div/ul/li[1]/button")

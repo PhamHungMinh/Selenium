@@ -11,7 +11,7 @@ class LoginPage(BasePage):
 
     def Open_Page(self, url):
         """Mở trang đăng nhập."""
-        self.Driver.get(url)
+        self.driver.get(url)
 
     def Fill_Email(self, email):
         """Nhập địa chỉ email vào trường email."""
