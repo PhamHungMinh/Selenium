@@ -1,22 +1,19 @@
 import os
-
 import requests
-
 from selenium.webdriver.common.by import By
 from TrelloSeleniumTest.Base.base_page import BasePage
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
 class HomeTrelloPage(BasePage):
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
         self.Create_Board_Button = (By.XPATH, "//button[@data-testid='header-create-menu-button']")
         self.Login_Button = (By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/p/a')
-        self.Create_New_Board_Button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/div/ul/li[1]/button")
+        self.Create_New_Board_Button = (By.XPATH, "//button[@data-testid='header-create-board-button' and contains(., 'Create board')]")
         self.Board_Name = "Test3"
-        self.Long_Board_Name = "Dự án phát triển hệ thống quản lý nhân sự cho doanh nghiệp vừa và nhỏ năm 2025 - bản mở rộng đặc biệt - kế hoạch 10 năm"
-        self.Board_Name_Input = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/div[1]/label/input")
+        self.Board_Name_Input = (By.XPATH, "//input[@data-testid='create-board-title-input']")
         self.Create_Board_Submit_Button = (By.XPATH, "/html/body/div[6]/div[3]/section/div[2]/div/form/button")
         self.Enter_Board_Button = (By.XPATH, "//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
 
@@ -102,13 +99,13 @@ class HomeTrelloPage(BasePage):
     def Fill_Board_Name_Input(self):
         self.Wait_And_Send_Keys(self.Board_Name_Input, self.Board_Name)
 
-    def Submit_Create_Board(self):
+    def Click_Create_New_Board(self):
         self.Wait_And_Click(self.Create_Board_Submit_Button)
 
     def Click_Enter_Board(self):
         self.Wait_And_Click(self.Enter_Board_Button)
 
-     # Test case 09
+    # Test case 09
     def Click_Select_Board(self):
         self.Wait_And_Click(self.Select_Board)
 
@@ -135,12 +132,12 @@ class HomeTrelloPage(BasePage):
             raise FileNotFoundError(f"Không tìm thấy file: {file_path}")
 
         # Chờ phần tử có trong DOM (không cần hiển thị nếu nó bị ẩn)
-        upload_input = WebDriverWait(self.Driver, 10).until(
+        upload_input = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.Background_Input)
         )
 
         # Bỏ ẩn input nếu cần
-        self.Driver.execute_script("arguments[0].style.display = 'block';", upload_input)
+        self.driver.execute_script("arguments[0].style.display = 'block';", upload_input)
 
         # Gửi file vào input
         upload_input.send_keys(file_path)
@@ -165,9 +162,6 @@ class HomeTrelloPage(BasePage):
     def Click_Confirm_Reopen(self):
         self.Wait_And_Click(self.Confirm_Reopen_Button)
 
-    def Fill_Board_Name_Input_With_Long_Name(self):
-        self.Wait_And_Send_Keys(self.Board_Name_Input, self.Long_Board_Name)
-
         # Broken Link Test
 
     def Click_Info_Button(self):
@@ -178,11 +172,11 @@ class HomeTrelloPage(BasePage):
 
     def Get_All_Footer_Links(self):
         """Lấy tất cả các link trong footer"""
-        return self.Driver.find_elements(*self.Footer_Links)
+        return self.driver.find_elements(*self.Footer_Links)
 
     def Get_Link_URL(self, link_text):
         """Lấy URL của link dựa trên text hiển thị"""
-        link = self.Driver.find_element(*self.Link_Mapping[link_text])
+        link = self.driver.find_element(*self.Link_Mapping[link_text])
         return link.get_attribute("href")
 
     def Get_Link_Status(self, url):
@@ -194,7 +188,6 @@ class HomeTrelloPage(BasePage):
             return f"Error: {str(e)}"
 
         # Work space test
-
     def Click_Member_Button(self):
         self.Wait_And_Click(self.Member_Button)
 

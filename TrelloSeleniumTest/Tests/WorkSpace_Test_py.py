@@ -26,7 +26,6 @@ def test_Gioi_Han_WorkSpace(driver):
 
     navigate_to_trello(driver)
     HomePage = HomeTrelloPage(driver)
-
     HomePage.Click_Member_Button()
     HomePage.Click_Add_Member_Button()
     HomePage.Fill_Email_Input_Members()

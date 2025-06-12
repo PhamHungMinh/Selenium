@@ -102,5 +102,5 @@ class QuanLyCard(BasePage):
     def Click_Choose_User(self):
         self.Wait_And_Click(self.Choose_User)
 
-    def Comment_User(self):
+    def Comment_User_Enter(self):
         self.Wait_For_Element(self.Input_Tag_User).send_keys(self.Comment_User)
