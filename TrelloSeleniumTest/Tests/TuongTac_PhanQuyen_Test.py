@@ -10,10 +10,11 @@ from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Quan_Ly_Board import QuanLyBoard
 from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
-from TrelloSeleniumTest.Until.utils import wait_for_element, login_to_atlassian, navigate_to_trello
+from TrelloSeleniumTest.Until.utils import wait_for_element, login_to_atlassian, navigate_to_trello, \
+    wait_for_element_visible
 from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Password, EmailUser, PasswordUser
 
-Email_Invite = "0306221443@caothang.edu.vn"
+Email_Invite = "0306221443@caothang.edu.vn,"
 Find_User = "@nghiangotrng3"
 
 
@@ -26,17 +27,19 @@ def driver():
 
 
 # Test case 21
-def test_InviteMemberToBoard(driver):
+def test_Invite_Member_To_Board(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard = QuanLyBoard(driver)
     QLBoard.Share_Button_Click()
     QLBoard.Fill_Email_Input(Email_Invite)
+    wait_for_element_visible(driver,By.XPATH,"(//div[contains(@class, 'CYC1t6y1xBAjCz')])")
     QLBoard.Invite_Button_Click()
     QLBoard.Invite_Button_Click()
+    wait_for_element_visible(driver,By.XPATH,"(//div[@class='akZ_QjFRLmkzkA' and @data-testid='member-item'])[2]")
     # Admin bảng
     member_elements = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")  # Tìm tất cả thành viên
     member_count = len(member_elements)  # Đếm số lượng thành viên
@@ -76,12 +79,12 @@ def test_InviteMemberToBoard(driver):
 
 
 # Test case 22
-def test_MemberRequestToJoinBoard(driver):
+def test_Member_Request_To_Join_Board(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard = QuanLyBoard(driver)
     QLBoard.Share_Button_Click()
     QLBoard.Close_Share_Button_Click()
@@ -145,7 +148,7 @@ def test_MemberRequestToJoinBoard(driver):
     login_page.Fill_Password(Password)
     login_page.Login_Button_Click()
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard.Share_Button_Click()
 
     # Tìm kết quả bên admin
@@ -177,7 +180,7 @@ def test_MemberRequestToJoinBoard(driver):
 
 
 # Test case 23
-def test_MemberWSViewPrivateBoard(driver):
+def test_Member_WS_View_Private_Board(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 
@@ -206,6 +209,7 @@ def test_MemberWSViewPrivateBoard(driver):
     home_page.Click_Add_Member_23()
     home_page.Fill_Email_Member_Input_Click_23()
     home_page.Click_Send_Invite_Button_23()
+    time.sleep(10)
     home_page.Click_Close_Add_Member_Button_23()
     QLBoard.Member_Menu_Click()
     QLBoard.Log_Out_Click()
@@ -256,7 +260,7 @@ def test_MemberWSViewPrivateBoard(driver):
 
 
 # Test case 24:
-def test_UserRequestToJoinPrivateBoard(driver):
+def test_User_Request_To_Join_Private_Board(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 
@@ -359,7 +363,7 @@ def test_UserRequestToJoinPrivateBoard(driver):
 
 
 # Test case 25
-def test_Huy_YeuCau_User_ThamGia_Bang_Private(driver):
+def test_Cancel_User_Request_To_Join_Private_Board(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 

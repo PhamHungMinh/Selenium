@@ -1,16 +1,8 @@
-import time
 import logging
 import pytest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from TrelloSeleniumTest.Pages.Login_page import LoginPage
-from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
-from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
-from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
-from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver, reuse_session
 from TrelloSeleniumTest.Until.utils import *
+import os
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -30,7 +22,7 @@ LINK_TEXTS = [
 
 @pytest.fixture
 def driver():
-    driver = get_chrome_driver()
+    driver, session_id = get_chrome_driver()
     yield driver
     driver.quit()
 
@@ -75,7 +67,7 @@ def test_Footer_Links_Broken(driver):
     for entry in link_statuses:
         print(entry)
 
-#Test case 31 - Open link in new tab
+# Test case 31 - Open link in new tab
 @pytest.mark.brokenlink
 def test_Open_Links_In_New_Tab(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
@@ -92,10 +84,13 @@ def test_Open_Links_In_New_Tab(driver):
 
         # Chuyển đến tab mới
         driver.switch_to.window(driver.window_handles[-1])  # Chuyển đến tab mới
-        time.sleep(2)  # Đợi một chút để trang tải
+        time.sleep(2)  # Đợi một chút để trang tải - Các trang không có chung các element chung nên dùng tạm time sleep
 
         status = home_page.Get_Link_Status(url)  # Kiểm tra trạng thái của link
         print(f"{link_text}: {url} - Status: {status}")
+
+        # Assert kiểm tra trạng thái của link
+        assert status == 200, f"Link '{link_text}' with URL '{url}' is broken, status: {status}"
 
         driver.close()  # Đóng tab mới
         driver.switch_to.window(driver.window_handles[0])  # Quay lại tab gốc

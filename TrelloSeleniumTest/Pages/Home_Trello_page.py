@@ -74,7 +74,8 @@ class HomeTrelloPage(BasePage):
             "minhnghiaseleniumtest7@gmail.com",
             "minhnghiaseleniumtest8@gmail.com",
             "minhnghiaseleniumtest9@gmail.com",
-            "minhnghiaseleniumtest10@gmail.com"
+            "minhnghiaseleniumtest10@gmail.com",
+            ""
         ]
         self.Email_String = ','.join(self.Email_List)
 

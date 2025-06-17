@@ -87,7 +87,7 @@ def test_Create_List_With_Long_Name(driver):
     QLListPage.Button_Create_List_WithName_Click()
     # Kiểm tra độ dài tên danh sách bằng cách sử dụng phương thức từ lớp Quan_Ly_List
     textarea = driver.find_element(By.XPATH,
-                                   "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][2]//textarea[@data-testid='list-name-textarea']")
+                                   "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][4]//textarea[@data-testid='list-name-textarea']")
     length = len(textarea.get_attribute("value"))
 
     # Kiểm tra độ dài tên danh sách
@@ -121,10 +121,4 @@ def test_Archive_List(driver):
     assert list_count == 1, f"Test case FAIL: Số lượng danh sách 'List_Test_1' là {list_count}, nhưng mong đợi là 1."
 
     print("Test case PASS: Thông báo đã xuất hiện và chỉ có 1 danh sách 'List_Test_1'.")
-
-def test_xpath(driver):
-    login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
-    alassian = HomeAtlassianPage(driver)
-    alassian.Menu_Click()
-    alassian.Trello_Click()
 
