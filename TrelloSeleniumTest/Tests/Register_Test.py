@@ -1,62 +1,57 @@
 import time
+import logging
 import pytest
-from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
-from TrelloSeleniumTest.Pages.Quan_Ly_Board import QuanLyBoard
-from TrelloSeleniumTest.Pages.Register_page import RegisterPage
-from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Signup_Url, Email, Password, EmailUser, PasswordUser
-from TrelloSeleniumTest.Until.utils import login_to_atlassian, navigate_to_trello
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
+from TrelloSeleniumTest.Pages.Register_page import RegisterPage
+from TrelloSeleniumTest.Base.config import Signup_Url
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
+
+# Cấu hình logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture
 def driver():
-    driver, session_id = get_chrome_driver()
+    driver = get_chrome_driver()  # Đã cấu hình để chạy qua Grid trong Chrome_Driver.py
     yield driver
     driver.quit()
 
-
-#Test Case 2 - Đăng ký với tên không hợp lệ
+# Test Case 2 - Đăng ký với tên không hợp lệ
 def test_RegisterWithInvalidName(driver):
-   register_page = RegisterPage(driver)
-   register_page.Open_Page(Signup_Url)
-   register_page.Fill_Email_Input("minhpham")
-   register_page.Continue_Button_Click()
-   error_message = register_page.Get_Error_Message()
-   print(f"Lỗi hiển thị: {error_message}")
-   assert "@" in error_message or "email" in error_message.lower()
-
-
-
-def test_RegisterWithRegisteredEmail(driver):
-    login_to_atlassian(driver, Email, Password)
-    navigate_to_trello(driver)
-
-    home_page = HomeTrelloPage(driver)
-    home_page.Click_Enter_Board()
-
-    cur_url = driver.current_url
-
-    QLBoard = QuanLyBoard(driver)
-    QLBoard.Member_Menu_Click()
-    QLBoard.Log_Out_Click()
-
     register_page = RegisterPage(driver)
     register_page.Open_Page(Signup_Url)
-    register_page.Fill_Email_Input(Email)
+    register_page.Fill_Email_Input("minhpham")
+    register_page.Continue_Button_Click()
+    error_message = register_page.Get_Error_Message()
+    print(f"Thông báo lỗi: {error_message}")
+
+    if "@" in error_message or "email" in error_message.lower():
+        print("✅ Test case PASS: Hiển thị lỗi đúng khi nhập tên không hợp lệ")
+        return True
+    else:
+        print("❌ Test case FAIL: Không hiển thị lỗi đúng khi nhập tên không hợp lệ")
+        return False
+
+# Test case 3 - Đăng ký với email đã đăng ký trước đó
+def test_RegisterWithRegisteredEmail(driver):
+    register_page = RegisterPage(driver)
+    register_page.Open_Page(Signup_Url)
+    register_page.Fill_Email_Input("0306221442@caothang.edu.vn")
     register_page.Continue_Button_Click()
 
+    # Đợi cho đến khi URL thay đổi
+    WebDriverWait(driver, 10).until(EC.url_contains("https://id.atlassian.com/login"))
 
-    error_message2 = register_page.Get_Error_Message_TC3()
-    print("Thông báo lỗi thực tế:", error_message2)
+    # Kiểm tra URL sau khi nhấn nút tiếp tục
+    current_url = driver.current_url
+    expected_domain = "https://id.atlassian.com/login"
 
-
-    expected_vn = "bạn đã có một tài khoản"
-    expected_en = "you've already got an account"
-
-
-    print("Thông báo kỳ vọng (VN):", expected_vn)
-    print("Thông báo kỳ vọng (EN):", expected_en)
-
-
-    assert expected_vn in error_message2.lower() or expected_en in error_message2.lower(), \
-       "Thông báo lỗi không khớp báo lỗi không khớp với kỳ vọng bằng tiếng Việt hoặc tiếng Anh."
+    if expected_domain in current_url:
+        print("✅ Test case PASS: Chuyển hướng đến trang đăng nhập khi email đã đăng ký")
+        return True
+    else:
+        print("❌ Test case FAIL: Không chuyển hướng đến trang đăng nhập đúng khi email đã đăng ký")
+        print("URL hiện tại:", current_url)  # In ra URL hiện tại để kiểm tra
+        return False

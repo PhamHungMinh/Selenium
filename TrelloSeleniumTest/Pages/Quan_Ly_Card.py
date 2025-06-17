@@ -5,7 +5,6 @@ from TrelloSeleniumTest.Base.base_page import BasePage
 class QuanLyCard(BasePage):
     def __init__(self, driver):
         super().__init__(driver)  # Gọi hàm khởi tạo của lớp cha
-        self.driver = driver
         self.Name_Card = "card test 1"
         self.Name_Link = "https://docs.google.com/"
         self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][.//h2/button[contains(text(), 'List_Test_1')]]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
@@ -26,18 +25,14 @@ class QuanLyCard(BasePage):
         self.Date_Away = "6/10/2025"
         # test case 26
         self.Comment_Card = "Complete comment card"
-        self.Input_Comment_Card = (By.XPATH,
-                                   "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
-        self.Click_Button_Input = (By.XPATH,
-                                   "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
-        self.Button_Save = (By.XPATH,
-                            "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[2]/button")
+        self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
+        self.Click_Button_Input = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
+        self.Button_Save = (By.XPATH, "//button[@data-testid='card-back-comment-save-button' and text()='Save']")
         # test case 27
         self.Tag_User = "@"
         self.Comment_User = "Bạn làm bài tới đâu rồi hửm"
         self.Input_Tag_User = (By.XPATH, "//div[@id='ak-editor-textarea' and @contenteditable='true']")
-        self.Choose_User = (By.XPATH,
-                            "//div[@data-mention-item='true' and @data-mention-id='682b65bbd4dcd7cbb7f769d6']")
+        self.Choose_User = (By.XPATH, "//div[@data-mention-item='true' and @data-mention-id='682b65bbd4dcd7cbb7f769d6']")
 
     def Click_Create_Card_Area(self):
         self.Wait_And_Click(self.Create_Card_Area)
@@ -64,12 +59,8 @@ class QuanLyCard(BasePage):
         self.Click_Create_Card_Button()
 
     def Count_Cards_With_Deadline(self):
-        try:
-            cards = self.driver.find_elements(*self.Second_List_Cards_With_Deadline)
-            return len(cards)
-        except Exception as e:
-            print(f"Đã xảy ra lỗi khi đếm các thẻ có deadline: {e}")
-            return 0
+        cards = self.Wait_For_Element(self.Second_List_Cards_With_Deadline)
+        return len(cards)
 
     def Set_Deadline(self):
         self.Set_Single_Deadline(self.FirstCard, self.Date_Deadline)
