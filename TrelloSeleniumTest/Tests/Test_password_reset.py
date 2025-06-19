@@ -1,35 +1,28 @@
-import pytest
 import logging
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.reset_password_page import PasswordResetPage
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver  # Nhập hàm get_chrome_driver
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture
 def setup():
-    chrome_options = Options()
-    chrome_options.add_argument("--lang=vi")
-
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-    driver.maximize_window()
+    driver = get_chrome_driver()  # Sử dụng hàm get_chrome_driver để khởi tạo driver
     password_page = PasswordResetPage(driver)
     yield driver, password_page
     driver.quit()
 
-def test_Successful_Password_Reset(setup):
+def test_Request_Password_Reset(setup):
     driver, password_page = setup
     logging.info("Bắt đầu kiểm tra: Khôi phục mật khẩu thành công")
 
     # Mở trang khôi phục mật khẩu và nhập email
     password_page.Open_Reset_Page() \
-        .Enter_Email_Input("nghiatrong4554@gmail.com") \
+        .Enter_Email_Input("0306221443@caothang.edu.vn") \
         .Submit_Button_Click()
 
     # Chờ thông báo hiển thị và kiểm tra kết quả
@@ -37,7 +30,7 @@ def test_Successful_Password_Reset(setup):
         EC.visibility_of_element_located((By.XPATH, "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div[2]"))
     )
     actual_result = message_element.text.strip()
-    expected_result = "Chúng tôi đã gửi liên kết khôi phục cho bạn theo địa chỉ"
+    expected_result = "We sent a recovery link to you at"
 
     logging.info(f"Actual result: '{actual_result}'")
     logging.info(f"Expected result: '{expected_result}'")

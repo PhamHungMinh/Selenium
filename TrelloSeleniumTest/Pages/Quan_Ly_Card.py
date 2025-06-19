@@ -1,5 +1,7 @@
 import time
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Base.base_page import BasePage
 
 class QuanLyCard(BasePage):
@@ -11,7 +13,7 @@ class QuanLyCard(BasePage):
         self.Input_Name_Card = (By.XPATH, "//textarea[@data-testid='list-card-composer-textarea']")
         self.Create_Card_Button = (By.XPATH, "//button[@data-testid='list-card-composer-add-card-button']")
         self.First_List_Cards = (By.XPATH, "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card']")
-        self.Second_List_Cards_With_Deadline = (By.XPATH,"//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card' and .//div[@data-testid='card-done-state']]")
+        self.Second_List_Cards_With_Deadline = (By.XPATH, "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card' and .//div[@data-testid='card-done-state']]")
         self.FirstCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[1]")
         self.SecondCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[2]")
         self.ThirdCard = (By.XPATH, "(//ol[@data-testid='list-cards'])[1]/li[3]")
@@ -23,12 +25,12 @@ class QuanLyCard(BasePage):
         self.Date_Deadline = "6/8/2025"
         self.Near_Date = "6/9/2025"
         self.Date_Away = "6/10/2025"
-        # test case 26
+        # Test case 26
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
         self.Click_Button_Input = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
         self.Button_Save = (By.XPATH, "//button[@data-testid='card-back-comment-save-button' and text()='Save']")
-        # test case 27
+        # Test case 27
         self.Tag_User = "@"
         self.Comment_User = "Bạn làm bài tới đâu rồi hửm"
         self.Input_Tag_User = (By.XPATH, "//div[@id='ak-editor-textarea' and @contenteditable='true']")
@@ -45,7 +47,7 @@ class QuanLyCard(BasePage):
         self.Wait_And_Click(self.Create_Card_Button)
 
     def Create_Card(self, card_type='short'):
-        if card_type == 'short':
+        if card_type == 'nommar':
             card_name = self.Name_Card
         elif card_type == 'link':
             card_name = self.Name_Link
@@ -59,7 +61,10 @@ class QuanLyCard(BasePage):
         self.Click_Create_Card_Button()
 
     def Count_Cards_With_Deadline(self):
-        cards = self.Wait_For_Element(self.Second_List_Cards_With_Deadline)
+        # Chờ cho các thẻ có deadline xuất hiện
+        cards = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_all_elements_located(self.Second_List_Cards_With_Deadline)
+        )
         return len(cards)
 
     def Set_Deadline(self):

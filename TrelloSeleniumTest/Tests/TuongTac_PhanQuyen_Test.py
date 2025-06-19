@@ -14,9 +14,8 @@ from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
 from TrelloSeleniumTest.Until.utils import wait_for_element, login_to_atlassian, navigate_to_trello
 from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Password, EmailUser, PasswordUser
 
-Email_Invite = "0306221443@caothang.edu.vn"
+Email_Invite = "0306221443@caothang.edu.vn,"
 Find_User = "@nghiangotrng3"
-
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -27,18 +26,18 @@ def driver():
     yield driver
     driver.quit()
 
-
 # Test case 21
 def test_InviteMemberToBoard(driver):
     login_to_atlassian(driver, Email, Password)
     navigate_to_trello(driver)
 
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard = QuanLyBoard(driver)
     QLBoard.Share_Button_Click()
     QLBoard.Fill_Email_Input(Email_Invite)
     QLBoard.Invite_Button_Click()
+    time.sleep(2)
     QLBoard.Invite_Button_Click()
     # Admin bảng
     member_elements = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")  # Tìm tất cả thành viên
@@ -84,7 +83,7 @@ def test_MemberRequestToJoinBoard(driver):
     navigate_to_trello(driver)
 
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard = QuanLyBoard(driver)
     QLBoard.Share_Button_Click()
     QLBoard.Close_Share_Button_Click()
@@ -148,7 +147,7 @@ def test_MemberRequestToJoinBoard(driver):
     login_page.Fill_Password(Password)
     login_page.Login_Button_Click()
     home_page = HomeTrelloPage(driver)
-    home_page.Into_Board_Click()
+    home_page.Click_Enter_Board()
     QLBoard.Share_Button_Click()
 
     # Tìm kết quả bên admin
@@ -210,6 +209,7 @@ def test_MemberWSViewPrivateBoard(driver):
     home_page.Fill_Email_Member_Input_Click_23()
     home_page.Click_Send_Invite_Button_23()
     home_page.Click_Close_Add_Member_Button_23()
+
     QLBoard.Member_Menu_Click()
     QLBoard.Log_Out_Click()
     QLBoard.Login_Another_Click()
@@ -458,99 +458,105 @@ def test_Huy_YeuCau_User_ThamGia_Bang_Private(driver):
         return False
 
 
+#Test cas 26
 def test_MemberCommentSuccess(driver):
-    login_to_atlassian(driver, EmailUser, PasswordUser)
-    navigate_to_trello(driver)
+   login_to_atlassian(driver, EmailUser, PasswordUser)
+   navigate_to_trello(driver)
 
-    URL_SHARE = ""
-    home_page = HomeTrelloPage(driver)
-    QLBoard = QuanLyBoard(driver)
-    QLBoard.Into_Board_Click()
-    QLBoard.Click_To_Card()
-    QL_Card = QuanLyCard(driver)
-    QL_Card.Click_Button_Comment_Card()
-    QL_Card.Fill_Input_Comment_Card()
-    QL_Card.Click_Button_Save()
-    QLBoard.Click_Close_Card()
-    QLBoard.Member_Menu_Click()
-    QLBoard.Log_Out_Click()
-    QLBoard.Login_Another_Click()
-    QLBoard.Add_Another_Account_Click()
-    login_page = LoginPage(driver)
-    wait_for_element(driver, By.ID, "username")
-    login_page.Fill_Email(Email)
-    login_page.Continue_Button_Click()
 
-    wait_for_element(driver, By.ID, "password")
-    login_page.Fill_Password(Password)
-    login_page.Login_Button_Click()
-    QLBoard.Into_Board_Click()
-    QLBoard.Click_To_Card()
-    time.sleep(10)
-    comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
-    # Lấy tất cả các bình luận
-    comments = driver.find_elements(By.XPATH, comments_xpath)
-    # Kiểm tra xem có bình luận mới không
-    if comments:
-        print(f"Có {len(comments)} bình luận mới.")
-        # Lấy nội dung bình luận đầu tiên
-        first_comment = comments[0].find_element(By.XPATH, ".//div[contains(@class, 'ak-renderer-wrapper')]//p").text
-        print(f"Bình luận mới nhất: {first_comment}")
-    else:
-        print("Không có bình luận mới.")
+   URL_SHARE = ""
+   home_page = HomeTrelloPage(driver)
+   QLBoard = QuanLyBoard(driver)
+   QLBoard.Into_Board_Click()
+   QLBoard.Click_To_Card()
+   QL_Card = QuanLyCard(driver)
+   QL_Card.Click_Button_Comment_Card()
+   QL_Card.Fill_Input_Comment_Card()
+   QL_Card.Click_Button_Save()
+   QLBoard.Click_Close_Card()
+   QLBoard.Member_Menu_Click()
+   QLBoard.Log_Out_Click()
+   QLBoard.Login_Another_Click()
+   QLBoard.Add_Another_Account_Click()
+   login_page = LoginPage(driver)
+   wait_for_element(driver, By.ID, "username")
+   login_page.Fill_Email(Email)
+   login_page.Continue_Button_Click()
 
-    time.sleep(10)
 
+   wait_for_element(driver, By.ID, "password")
+   login_page.Fill_Password(Password)
+   login_page.Login_Button_Click()
+   QLBoard.Into_Board_Click()
+   QLBoard.Click_To_Card()
+   time.sleep(10)
+   comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
+   # Lấy tất cả các bình luận
+   comments = driver.find_elements(By.XPATH, comments_xpath)
+   # Kiểm tra xem có bình luận mới không
+   if comments:
+       print(f"Có {len(comments)} bình luận mới.")
+       # Lấy nội dung bình luận đầu tiên
+       first_comment = comments[0].find_element(By.XPATH, ".//div[contains(@class, 'ak-renderer-wrapper')]//p").text
+       print(f"Bình luận mới nhất: {first_comment}")
+   else:
+       print("Không có bình luận mới.")
 
 # Test case 27
 def test_MemberCommentTagUser(driver):
-    login_to_atlassian(driver, EmailUser, PasswordUser)
-    navigate_to_trello(driver)
+   login_to_atlassian(driver, EmailUser, PasswordUser)
+   navigate_to_trello(driver)
 
-    URL_SHARE = ""
-    home_page = HomeTrelloPage(driver)
-    QLBoard = QuanLyBoard(driver)
-    QLBoard.Into_Board_Click()
-    QLBoard.Click_To_Card()
-    QL_Card = QuanLyCard(driver)
-    QL_Card.Click_Button_Comment_Card()
-    QL_Card.Fill_Tag_User()
-    QL_Card.Click_Choose_User()
-    time.sleep(5)
-    QL_Card.Comment_User_Enter()
-    QL_Card.Click_Button_Save()
-    QLBoard.Click_Close_Card()
-    QLBoard.Member_Menu_Click()
-    QLBoard.Log_Out_Click()
-    QLBoard.Login_Another_Click()
-    QLBoard.Add_Another_Account_Click()
-    login_page = LoginPage(driver)
-    wait_for_element(driver, By.ID, "username")
-    login_page.Fill_Email(Email)
-    login_page.Continue_Button_Click()
 
-    wait_for_element(driver, By.ID, "password")
-    login_page.Fill_Password(Password)
-    login_page.Login_Button_Click()
-    QLBoard.Into_Board_Click()
-    QLBoard.Click_To_Card()
+   URL_SHARE = ""
+   home_page = HomeTrelloPage(driver)
+   QLBoard = QuanLyBoard(driver)
+   QLBoard.Into_Board_Click()
+   QLBoard.Click_To_Card()
+   QL_Card = QuanLyCard(driver)
+   QL_Card.Click_Button_Comment_Card()
+   QL_Card.Fill_Tag_User()
+   QL_Card.Click_Choose_User()
+   time.sleep(5)
+   QL_Card.Comment_User_Enter()
+   QL_Card.Click_Button_Save()
+   QLBoard.Click_Close_Card()
+   QLBoard.Member_Menu_Click()
+   QLBoard.Log_Out_Click()
+   QLBoard.Login_Another_Click()
+   QLBoard.Add_Another_Account_Click()
+   login_page = LoginPage(driver)
+   wait_for_element(driver, By.ID, "username")
+   login_page.Fill_Email(Email)
+   login_page.Continue_Button_Click()
 
-    comments_xpath2 = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
 
-    # Lấy tất cả các bình luận
-    comments = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.XPATH, comments_xpath2))
-    )
+   wait_for_element(driver, By.ID, "password")
+   login_page.Fill_Password(Password)
+   login_page.Login_Button_Click()
+   QLBoard.Into_Board_Click()
+   QLBoard.Click_To_Card()
 
-    # Kiểm tra xem có bình luận mới không
-    if comments:
-        print(f"Có {len(comments)} bình luận mới.")
 
-        # Lấy nội dung bình luận mới nhất (bình luận đầu tiên trong danh sách)
-        latest_comment = comments[0].find_element(By.XPATH, ".//div[@class='TTb5N2DgAn9VHs']//p").text
-        print(f"Bình luận mới nhất: {latest_comment}")
-    else:
-        print("Không có bình luận mới.")
-    time.sleep(10)
+   comments_xpath2 = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
+
+
+   # Lấy tất cả các bình luận
+   comments = WebDriverWait(driver, 10).until(
+       EC.presence_of_all_elements_located((By.XPATH, comments_xpath2))
+   )
+
+
+   # Kiểm tra xem có bình luận mới không
+   if comments:
+       print(f"Có {len(comments)} bình luận mới.")
+
+
+       # Lấy nội dung bình luận mới nhất (bình luận đầu tiên trong danh sách)
+       latest_comment = comments[0].find_element(By.XPATH, ".//div[@class='TTb5N2DgAn9VHs']//p").text
+       print(f"Bình luận mới nhất: {latest_comment}")
+   else:
+       print("Không có bình luận mới.")
+
 
 

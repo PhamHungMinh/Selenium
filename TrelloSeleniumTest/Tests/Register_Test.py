@@ -4,7 +4,6 @@ import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
 from TrelloSeleniumTest.Pages.Register_page import RegisterPage
 from TrelloSeleniumTest.Base.config import Signup_Url
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
@@ -38,7 +37,7 @@ def test_RegisterWithInvalidName(driver):
 def test_RegisterWithRegisteredEmail(driver):
     register_page = RegisterPage(driver)
     register_page.Open_Page(Signup_Url)
-    register_page.Fill_Email_Input("0306221442@caothang.edu.vn")
+    register_page.Fill_Email_Input("0306221443@caothang.edu.vn")
     register_page.Continue_Button_Click()
 
     # Đợi cho đến khi URL thay đổi

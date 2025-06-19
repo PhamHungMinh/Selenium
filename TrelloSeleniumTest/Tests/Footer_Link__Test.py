@@ -1,7 +1,6 @@
 import time
 import logging
 import pytest
-
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
@@ -10,12 +9,8 @@ from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
 from TrelloSeleniumTest.Until.utils import *
 
-from Selenium.TrelloSeleniumTest.Until.utils import login_to_atlassian, navigate_to_trello
-
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-
 # Danh sách các link cần kiểm tra
 LINK_TEXTS = [
     "Biểu phí",
@@ -28,8 +23,6 @@ LINK_TEXTS = [
     "Pháp lý",
     "Thuộc tính"
 ]
-
-
 @pytest.fixture
 def driver():
     driver = get_chrome_driver()
@@ -43,10 +36,8 @@ def test_Footer_Links_Broken(driver):
     broken_links = []
     link_statuses = []  # Danh sách để lưu trạng thái link
 
-
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
-
 
     home_page = HomeTrelloPage(driver)
     home_page.Click_Info_Button()

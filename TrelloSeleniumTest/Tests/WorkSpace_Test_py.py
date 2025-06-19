@@ -12,34 +12,27 @@ from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.utils import login_to_atlassian, wait_for_element, navigate_to_trello
 
-
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 
 @pytest.fixture
 def driver():
     # Khởi tạo trình duyệt
-    driver, session_id = get_chrome_driver()
+    driver = get_chrome_driver()
     yield driver
     driver.quit()
-
-
 def wait_for_element1(driver, by, value, timeout=20):
     return WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((by, value)))
-
 
 # Test case 29
 def test_Limit_Member_WorkSpace(driver):
     login_to_atlassian(driver, "0306221443@caothang.edu.vn", "Nghia842004@")
-
-
     navigate_to_trello(driver)
+
     home_page = HomeTrelloPage(driver)
     home_page.Click_Member_Button()
     home_page.Click_Add_Member_Button()
     home_page.Fill_Email_Input_Members()
-
 
     # Chờ cho email thừa xuất hiện
     try:

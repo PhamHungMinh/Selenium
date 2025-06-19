@@ -11,19 +11,14 @@ from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.utils import *
 
-from Selenium.TrelloSeleniumTest.Until.utils import login_to_atlassian, navigate_to_trello, wait_for_element
-
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-
 @pytest.fixture
 def driver():
-    # Khởi tạo trình duyệt
-    driver, session_id = get_chrome_driver()
+    driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
     yield driver
     driver.quit()
-
 
 # Hàm để đếm số lượng danh sách hiện có
 def count_lists(driver):
