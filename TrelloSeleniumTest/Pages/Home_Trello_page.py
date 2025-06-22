@@ -40,7 +40,7 @@ class HomeTrelloPage(BasePage):
         self.Confirm_Reopen_Button = (By.XPATH, "//button[@data-testid='workspace-chooser-reopen-button' and text()='Reopen board']")
         self.Exit_Button = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[3]/div/div/div/header/button/span/span")
 
-        # Broken Link Test
+        # Broken Link Test - Open link in new tab test
         self.Base_URL = "https://trello.com"
         self.Footer_Links = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
         self.Info_Button = (By.XPATH, "//button[@data-testid='header-info-button']")

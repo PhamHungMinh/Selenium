@@ -15,7 +15,7 @@ def setup():
     password_page = PasswordResetPage(driver)
     yield driver, password_page
     driver.quit()
-
+# Test case 5 - Gửi yêu cầu quên mật khẩu
 def test_Request_Password_Reset(setup):
     driver, password_page = setup
     logging.info("Bắt đầu kiểm tra: Khôi phục mật khẩu thành công")

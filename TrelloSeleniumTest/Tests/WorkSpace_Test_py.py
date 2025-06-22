@@ -46,7 +46,6 @@ def test_Limit_Member_WorkSpace(driver):
         email_elements = driver.find_elements(By.CSS_SELECTOR, "div.autocomplete-option.disabled")
         disabled_emails = [email.get_attribute('title') for email in email_elements]  # Lấy title của email bị thừa
 
-
     # Chờ cho nút "Gửi lời mời" xuất hiện
     try:
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located(
@@ -55,15 +54,12 @@ def test_Limit_Member_WorkSpace(driver):
         logging.error("Không tìm thấy nút 'Gửi lời mời' trong thời gian chờ.")
         assert False, "Test case failed: Nút 'Gửi lời mời' không xuất hiện."
 
-
     # Kiểm tra trạng thái của nút "Gửi lời mời"
     add_button = driver.find_element(By.XPATH,
                                      "//button[contains(@class, 'DXtVhm7hhVXHuw') and contains(span/text(), 'Send invites')]")
     is_add_button_disabled = not add_button.is_enabled()  # Kiểm tra xem nút có bị vô hiệu hóa hay không
 
-
     logging.info(f"Nút 'Gửi lời mời' bị chặn: {is_add_button_disabled}, Email thừa: {disabled_emails}")
-
 
     # Điều kiện để test case pass
     if is_add_button_disabled and disabled_emails:
@@ -76,8 +72,3 @@ def test_Limit_Member_WorkSpace(driver):
         if not disabled_emails:
             logging.error("Không có email thừa.")
             assert False, "Test case failed: Không có email thừa."
-
-
-
-
-

@@ -8,6 +8,7 @@ class LoginPage(BasePage):
         self.Continue_Button = (By.ID, "login-submit")
         self.Password_Textbox = (By.ID, "password")
         self.Login_Button = (By.ID, "login-submit")
+        self.Edit_Email = (By.XPATH, "(//div[@class='css-env1z2']//button[contains(@class, 'css-o6ruxu') and @type='button'])[1]")
 
     def Open_Page(self, url):
         """Mở trang đăng nhập."""
@@ -28,3 +29,9 @@ class LoginPage(BasePage):
     def Login_Button_Click(self):
         """Nhấn nút đăng nhập."""
         self.Wait_And_Click(self.Login_Button)
+    def Edit_Email_Click(self):
+        self.Wait_And_Click(self.Edit_Email)
+
+    def clear_email_field(self):
+        email_field = self.driver.find_element(*self.Email_Textbox)
+        email_field.clear()

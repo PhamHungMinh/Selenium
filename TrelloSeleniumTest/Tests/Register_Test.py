@@ -1,6 +1,7 @@
 import time
 import logging
 import pytest
+from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -13,12 +14,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-    driver = get_chrome_driver()  # Đã cấu hình để chạy qua Grid trong Chrome_Driver.py
+    options = webdriver.ChromeOptions()
+    options.add_argument("--start-maximized")
+    driver = webdriver.Chrome(options=options)
     yield driver
     driver.quit()
 
-# Test Case 2 - Đăng ký với tên không hợp lệ
-def test_RegisterWithInvalidName(driver):
+def run_tests(driver):
+    # Test Case 2 - Đăng ký với tên không hợp lệ
     register_page = RegisterPage(driver)
     register_page.Open_Page(Signup_Url)
     register_page.Fill_Email_Input("minhpham")
@@ -28,18 +31,14 @@ def test_RegisterWithInvalidName(driver):
 
     if "@" in error_message or "email" in error_message.lower():
         print("✅ Test case PASS: Hiển thị lỗi đúng khi nhập tên không hợp lệ")
-        return True
     else:
         print("❌ Test case FAIL: Không hiển thị lỗi đúng khi nhập tên không hợp lệ")
-        return False
 
-# Test case 3 - Đăng ký với email đã đăng ký trước đó
-def test_RegisterWithRegisteredEmail(driver):
-    register_page = RegisterPage(driver)
-    register_page.Open_Page(Signup_Url)
-    register_page.Fill_Email_Input("0306221443@caothang.edu.vn")
+    # Test case 3 - Đăng ký với email đã đăng ký trước đó
+    register_page.clear_email_field()
+    register_page.Fill_Email_Input("minhnghiaseleniumtest1@gmail.com")
     register_page.Continue_Button_Click()
-
+    time.sleep(15)
     # Đợi cho đến khi URL thay đổi
     WebDriverWait(driver, 10).until(EC.url_contains("https://id.atlassian.com/login"))
 
@@ -49,8 +48,10 @@ def test_RegisterWithRegisteredEmail(driver):
 
     if expected_domain in current_url:
         print("✅ Test case PASS: Chuyển hướng đến trang đăng nhập khi email đã đăng ký")
-        return True
     else:
         print("❌ Test case FAIL: Không chuyển hướng đến trang đăng nhập đúng khi email đã đăng ký")
         print("URL hiện tại:", current_url)  # In ra URL hiện tại để kiểm tra
-        return False
+
+# Gọi hàm run_tests trong pytest
+def test_all_cases(driver):
+    run_tests(driver)

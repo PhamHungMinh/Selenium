@@ -30,3 +30,6 @@ class RegisterPage(BasePage):
             "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/span"
         ))
         return element.text
+    def clear_email_field(self):
+        email_field = self.driver.find_element(*self.Email_Textbox_Input)
+        email_field.clear()
