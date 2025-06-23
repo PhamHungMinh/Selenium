@@ -1,10 +1,8 @@
 import time
 import logging
 import pytest
-from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 from TrelloSeleniumTest.Pages.Register_page import RegisterPage
 from TrelloSeleniumTest.Base.config import Signup_Url
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
@@ -14,11 +12,9 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    driver = webdriver.Chrome(options=options)
-    yield driver
-    driver.quit()
+   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   yield driver
+   driver.quit()
 
 def run_tests(driver):
     # Test Case 2 - Đăng ký với tên không hợp lệ
@@ -36,7 +32,7 @@ def run_tests(driver):
 
     # Test case 3 - Đăng ký với email đã đăng ký trước đó
     register_page.clear_email_field()
-    register_page.Fill_Email_Input("minhnghiaseleniumtest1@gmail.com")
+    register_page.Fill_Email_Input("0306221443@caothang.edu.vn")
     register_page.Continue_Button_Click()
     time.sleep(15)
     # Đợi cho đến khi URL thay đổi

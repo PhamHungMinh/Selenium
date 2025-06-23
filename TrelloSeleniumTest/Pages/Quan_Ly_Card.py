@@ -9,7 +9,7 @@ class QuanLyCard(BasePage):
         super().__init__(driver)  # Gọi hàm khởi tạo của lớp cha
         self.Name_Card = "card test 1"
         self.Name_Link = "https://docs.google.com/"
-        self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][.//h2/button[contains(text(), 'List_Test_1')]]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
+        self.Create_Card_Area = (By.XPATH, "//li[@data-testid='list-wrapper'][2]//div[@data-testid='list-footer']//button[@data-testid='list-add-card-button']")
         self.Input_Name_Card = (By.XPATH, "//textarea[@data-testid='list-card-composer-textarea']")
         self.Create_Card_Button = (By.XPATH, "//button[@data-testid='list-card-composer-add-card-button']")
         self.First_List_Cards = (By.XPATH, "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][1]//ol[@data-testid='list-cards']/li[@data-testid='list-card']")
@@ -22,9 +22,9 @@ class QuanLyCard(BasePage):
         self.Input_Hour = (By.XPATH, "/html/body/div[5]/div/section/div[2]/div/div/form/div[2]/div[2]/div/div[2]/input")
         self.Button_Save_Deadline = (By.XPATH, "//button[@data-testid='save-date-button']")
         self.Close_Set_Deadline_Button = (By.XPATH, "//span[@data-testid='CloseIcon']")
-        self.Date_Deadline = "6/8/2025"
-        self.Near_Date = "6/9/2025"
-        self.Date_Away = "6/10/2025"
+        self.Date_Deadline = "6/22/2025"
+        self.Near_Date = "6/23/2025"
+        self.Date_Away = "6/29/2025"
         # Test case 26
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
@@ -46,8 +46,8 @@ class QuanLyCard(BasePage):
     def Click_Create_Card_Button(self):
         self.Wait_And_Click(self.Create_Card_Button)
 
-    def Create_Card(self, card_type='short'):
-        if card_type == 'nommar':
+    def Create_Card(self, card_type='card test 1'):
+        if card_type == 'card test 1':
             card_name = self.Name_Card
         elif card_type == 'link':
             card_name = self.Name_Link
@@ -55,8 +55,8 @@ class QuanLyCard(BasePage):
             card_name = "limit"
         else:
             raise ValueError("Invalid card type. Use 'short' or 'link'.")
-
-        self.Click_Create_Card_Area()
+        if card_type == "card test 1" or card_type == 'limit':
+            self.Click_Create_Card_Area()
         self.Fill_Card_Name_Input(card_name)
         self.Click_Create_Card_Button()
 

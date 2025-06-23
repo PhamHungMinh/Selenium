@@ -5,20 +5,21 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Base.config import Login_Url, Email, Password, Signup_Url, Home_Url
 from TrelloSeleniumTest.Until.utils import wait_for_element
-from TrelloSeleniumTest.Base.base_page import BasePage
 
 error_xpath = "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div"
 
+# Cấu hình logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 @pytest.fixture
 def driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    driver = webdriver.Chrome(options=options)
-    yield driver
-    driver.quit()
+   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   yield driver
+   driver.quit()
 
 def run_tests(driver):
     # Test case 1 - Đăng nhập với tài khoản chưa đăng ký
@@ -56,7 +57,6 @@ def run_tests(driver):
     print("Test case 4 PASS: Thông báo lỗi đã hiển thị.")
 
     # Test case 6 - Đăng nhập thành công
-
     login_page.Edit_Email_Click()
     email_field = login_page.Wait_For_Element(login_page.Email_Textbox)
     login_page.clear_email_field()

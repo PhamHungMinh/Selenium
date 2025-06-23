@@ -1,9 +1,6 @@
 import time
 import logging
 import pytest
-from selenium import webdriver
-
-from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.utils import login_to_atlassian, navigate_to_trello
@@ -26,11 +23,9 @@ LINK_TEXTS = [
 
 @pytest.fixture
 def driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    driver = webdriver.Chrome(options=options)
-    yield driver
-    driver.quit()
+   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   yield driver
+   driver.quit()
 
 # Test Case 30 & 31 - Broken Link Test and Open link in new tab
 @pytest.mark.brokenlink

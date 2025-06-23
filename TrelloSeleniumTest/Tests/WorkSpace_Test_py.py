@@ -5,10 +5,7 @@ from selenium.common import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
-from TrelloSeleniumTest.Pages.Home_Atlassian_page import HomeAtlassianPage
-from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.utils import login_to_atlassian, wait_for_element, navigate_to_trello
 
