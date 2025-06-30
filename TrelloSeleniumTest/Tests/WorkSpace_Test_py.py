@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from TrelloSeleniumTest.Until.utils import login_to_atlassian, wait_for_element, navigate_to_trello
+from TrelloSeleniumTest.Until.untils import login_to_atlassian, wait_for_element, navigate_to_trello
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

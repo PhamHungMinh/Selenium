@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Login_page import LoginPage
 from TrelloSeleniumTest.Base.config import Login_Url, Email, Password, Signup_Url, Home_Url
-from TrelloSeleniumTest.Until.utils import wait_for_element
+from TrelloSeleniumTest.Until.untils import wait_for_element
 
 error_xpath = "/html/body/div[1]/div/div/div/div[2]/div/div/div/section/div[2]/div"
 
@@ -71,7 +71,7 @@ def run_tests(driver):
     expected_url = Home_Url
 
     assert current_url.startswith(expected_url), f"Expected URL to start with: {expected_url}, but got: {current_url}"
-    print("Test case 6 PASS: Đăng nhập thành công và chuyển hướng đến trang chủ")
+    print("Test case 6 PASS: Chuyển sang trang chủ của Atlassian")
 
 def test_all_cases(driver):
     run_tests(driver)

@@ -1,10 +1,11 @@
 from selenium.webdriver.common.by import By
-from TrelloSeleniumTest.Base.base_page import BasePage  # Cập nhật đúng đường dẫn base_page nếu cần
+from TrelloSeleniumTest.Base.base_page import BasePage
 
 class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)  # Gọi constructor của BasePage
-        self.Email_Textbox = (By.ID, "username")
+        self.Email_Textbox = (By.XPATH, "//input[@id='username-uid1' and @name='username' and @type='email']")
+        self.Email_Textbox_Again = (By.XPATH, "//input[@data-testid='username' and @name='username' and @type='email']")
         self.Continue_Button = (By.ID, "login-submit")
         self.Password_Textbox = (By.ID, "password")
         self.Login_Button = (By.ID, "login-submit")
@@ -17,6 +18,10 @@ class LoginPage(BasePage):
     def Fill_Email(self, email):
         """Nhập địa chỉ email vào trường email."""
         self.Wait_And_Send_Keys(self.Email_Textbox, email)
+
+    def Fill_Email_Again(self, email):
+        """Nhập địa chỉ email vào trường email."""
+        self.Wait_And_Send_Keys(self.Email_Textbox_Again, email)
 
     def Continue_Button_Click(self):
         """Nhấn nút tiếp tục."""

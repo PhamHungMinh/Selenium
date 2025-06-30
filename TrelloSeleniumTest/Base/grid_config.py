@@ -1,3 +1,3 @@
-GRID_HUB_URL = "http://172.31.99.46:4444/wd/hub"  # URL Hub
-BROWSER_NAME = "chrome"  # chrome/firefox/edge
-PLATFORM = "WINDOWS"     # LINUX/MAC
+GRID_HUB_URL = "http://192.168.1.159:4444/wd/hub"  # URL Hub
+BROWSER_NAME = "chrome"
+PLATFORM = "WINDOWS"

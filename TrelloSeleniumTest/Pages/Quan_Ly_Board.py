@@ -20,7 +20,7 @@ class QuanLyBoard(BasePage):
         self.Join_Button = (By.XPATH, "//button[@data-testid='join-button']")
         # Test case 23
         self.Visibility_Button = (By.XPATH, "//button[@type='button' and (contains(@data-testid, 'board-visibility-option'))]")
-        self.Visibility_Private_Button = (By.XPATH, "//button[.//span[contains(text(), 'Private')]]")
+        self.Visibility_Private_Button = (By.XPATH, "//button[contains(@class, 'gJDsPins_eYkBM') and contains(., 'Riêng tư')]")
         self.Menu_Trello = (By.XPATH, "//button[contains(@class, 'o7EAj6bxSlZptk') and @type='button']")
         self.Trello_Home = (By.XPATH, "//a[@data-testid='switcher-item__TRELLOTrello']")
         # Test case 24
@@ -37,6 +37,7 @@ class QuanLyBoard(BasePage):
         self.Close_Card = (By.XPATH, "//button[@aria-label='Close dialog']")
         # Test case 27
         self.Notification_Button = (By.XPATH, "//button[@class='o7EAj6bxSlZptk JLWAF01l7Cb26C frrHNIWnTojsww bxgKMAm3lq5BpA HAVwIqCeMHpVKh SEj5vUdI3VvxDc' and @type='button' and @data-testid='header-notifications-button' and @aria-label='0 Notifications']")
+        self.Close_Comment = (By.XPATH, "//button[.//span[@data-testid='CloseIcon']]")
 
     # Test case 21
     def Share_Button_Click(self):
@@ -119,3 +120,5 @@ class QuanLyBoard(BasePage):
     # Test case 27
     def Check_Notification(self):
         self.Wait_And_Click(self.Notification_Button)
+    def Click_Close_Comment(self):
+        self.Wait_And_Click(self.Close_Comment)

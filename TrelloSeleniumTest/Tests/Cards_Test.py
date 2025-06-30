@@ -1,9 +1,11 @@
 import logging
+import time
+
 import pytest
 from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Pages.Quan_Ly_Card import QuanLyCard
-from TrelloSeleniumTest.Until.utils import *
+from TrelloSeleniumTest.Until.untils import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -14,13 +16,11 @@ def driver():
    yield driver
    driver.quit()
 
-# Gom tất cả test case vào một hàm duy nhất
 def test_Trello_Card_Functionality(driver):
     login_to_atlassian(driver, "ngotrongnghia8424@gmail.com", "khongcomatkhau4654")
     navigate_to_trello(driver)
     home_page = HomeTrelloPage(driver)
     home_page.Click_Enter_Board()
-
     ql_card = QuanLyCard(driver)
 
     # Hàm đếm số thẻ trong danh sách
@@ -32,10 +32,9 @@ def test_Trello_Card_Functionality(driver):
                     (By.XPATH, f"(//li[@data-testid='list-wrapper'])[{list_index}]")  # Lấy danh sách theo chỉ số
                 )
             )
-
             # XPath để tìm tất cả các thẻ card trong danh sách
-            cards_xpath = f"(//li[@data-testid='list-wrapper'])[ {list_index}]//ol[@data-testid='list-cards']//li[@data-testid='list-card']"
-
+            cards_xpath = (f"(//li[@data-testid='list-wrapper'])[ {list_index}]//ol[@data-testid='list-cards']"
+                           f"//li[@data-testid='list-card']")
             # Tìm tất cả các thẻ card
             cards = driver.find_elements(By.XPATH, cards_xpath)
 

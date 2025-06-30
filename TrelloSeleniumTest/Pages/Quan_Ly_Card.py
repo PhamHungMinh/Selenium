@@ -29,7 +29,7 @@ class QuanLyCard(BasePage):
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
         self.Click_Button_Input = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
-        self.Button_Save = (By.XPATH, "//button[@data-testid='card-back-comment-save-button' and text()='Save']")
+        self.Button_Save = (By.XPATH, "//button[@data-testid='card-back-comment-save-button']")
         # Test case 27
         self.Tag_User = "@"
         self.Comment_User = "Bạn làm bài tới đâu rồi hửm"
@@ -54,7 +54,7 @@ class QuanLyCard(BasePage):
         elif card_type == 'limit':
             card_name = "limit"
         else:
-            raise ValueError("Invalid card type. Use 'short' or 'link'.")
+            raise ValueError("Invalid card type. Use 'card test 1' or 'link' or 'limit'.")
         if card_type == "card test 1" or card_type == 'limit':
             self.Click_Create_Card_Area()
         self.Fill_Card_Name_Input(card_name)
@@ -67,11 +67,6 @@ class QuanLyCard(BasePage):
         )
         return len(cards)
 
-    def Set_Deadline(self):
-        self.Set_Single_Deadline(self.FirstCard, self.Date_Deadline)
-        self.Set_Single_Deadline(self.SecondCard, self.Near_Date)
-        self.Set_Single_Deadline(self.ThirdCard, self.Date_Away)
-
     def Set_Single_Deadline(self, card_xpath, date):
         self.Wait_And_Click(card_xpath)
         self.Wait_And_Click(self.Edit_DeadLine)
@@ -80,6 +75,11 @@ class QuanLyCard(BasePage):
         deadline.send_keys(date)
         self.Wait_And_Click(self.Button_Save_Deadline)
         self.Wait_And_Click(self.Close_Set_Deadline_Button)
+
+    def Set_Deadline(self):
+        self.Set_Single_Deadline(self.FirstCard, self.Date_Deadline)
+        self.Set_Single_Deadline(self.SecondCard, self.Near_Date)
+        self.Set_Single_Deadline(self.ThirdCard, self.Date_Away)
 
     # Test case 26
     def Fill_Input_Comment_Card(self):

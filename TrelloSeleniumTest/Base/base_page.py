@@ -6,7 +6,7 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    def Wait_And_Click(self, locator, timeout=20):
+    def Wait_And_Click(self, locator, timeout=30):
         """Chờ cho phần tử hiển thị và nhấp vào nó."""
         WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator)

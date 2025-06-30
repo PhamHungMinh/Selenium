@@ -2,7 +2,7 @@ import logging
 import pytest
 from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from TrelloSeleniumTest.Until.utils import *
+from TrelloSeleniumTest.Until.untils import *
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -33,21 +33,20 @@ def test_Trello_List_Functionality(driver):
     ql_list_page.Button_Create_List_WithName_Click()
 
     wait_for_element(driver, By.XPATH, ql_list_page.Wait_For_Board_To_Display)
-    try:
-        list_element = driver.find_element(By.XPATH, "(//li[@data-testid='list-wrapper'])[2]//h2[@data-testid='list-name']/button/span[text()='List_Test_1']")
-        assert list_element.is_displayed(), "Danh sách 'List_Test_1' không được tìm thấy."
-        print("Test case 13 passed: Danh sách 'List_Test_1' đã được tạo và tìm thấy.")
-        logging.info("Test case 13 passed.")
-    except Exception as e:
-        pytest.fail("Không thể tìm thấy danh sách 'List_Test_1': " + str(e))
+    list_element = driver.find_element(By.XPATH, "(//li[@data-testid='list-wrapper'])[2]//h2[@data-testid='list-name']"
+                                                 "/button/span[text()='List_Test_1']")
+    assert list_element.is_displayed(), "Danh sách 'List_Test_1' không được tìm thấy."
+    print("Test case 13 passed: Danh sách 'List_Test_1' đã được tạo và tìm thấy.")
+    logging.info("Test case 13 passed.")
 
     # Test case 14: Tạo danh sách với tên trùng lặp
-    #ql_list_page.Create_List_Click()
     ql_list_page.Fill_Same_Name_List_Input()
     ql_list_page.Button_Create_List_WithName_Click()
 
     wait_for_element(driver, By.XPATH, ql_list_page.Wait_For_Board_To_Display)
-    list_elements = driver.find_elements(By.XPATH, "//li[@data-testid='list-wrapper']//h2[@data-testid='list-name']/button/span[text()='List_Test_1']")
+    list_elements = driver.find_elements(By.XPATH, "//li[@data-testid='list-wrapper']"
+                                                   "//h2[@data-testid='list-name']"
+                                                   "/button/span[text()='List_Test_1']")
     count = len(list_elements)
 
     assert count == 2, f"Số lượng danh sách 'List_Test_1' không phải là 2, mà là {count}."
@@ -55,12 +54,12 @@ def test_Trello_List_Functionality(driver):
     logging.info("Test case 14 passed.")
 
     # Test case 15: Tạo danh sách với tên dài
-    #ql_list_page.Create_List_Click()
     ql_list_page.Fill_Long_Name_List()
     ql_list_page.Button_Create_List_WithName_Click()
 
     textarea = driver.find_element(By.XPATH,
-                                   "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][4]//textarea[@data-testid='list-name-textarea']")
+                                   "//ol[@data-testid='lists']//li[@data-testid='list-wrapper'][4]"
+                                   "//textarea[@data-testid='list-name-textarea']")
     length = len(textarea.get_attribute("value"))
 
     expected_length = 512
@@ -75,9 +74,13 @@ def test_Trello_List_Functionality(driver):
     alert_visible = ql_list_page.Check_Alert_Message()
     wait_for_element(driver, By.XPATH, ql_list_page.Wait_For_Board_To_Display)
     driver.refresh()
-    Wait_List = wait_for_element(driver,By.XPATH,"//li[@data-testid='list-wrapper']//h2[@data-testid='list-name']/button/span[text()='List_Test_1']")
+    Wait_List = wait_for_element(driver,By.XPATH,"//li[@data-testid='list-wrapper']"
+                                                 "//h2[@data-testid='list-name']"
+                                                 "/button/span[text()='List_Test_1']")
 
-    list_elements = driver.find_elements(By.XPATH, "//li[@data-testid='list-wrapper']//h2[@data-testid='list-name']/button/span[text()='List_Test_1']")
+    list_elements = driver.find_elements(By.XPATH, "//li[@data-testid='list-wrapper']"
+                                                   "//h2[@data-testid='list-name']"
+                                                   "/button/span[text()='List_Test_1']")
     list_count = len(list_elements)
 
     assert alert_visible, "Test case FAIL: Thông báo không xuất hiện sau khi lưu trữ danh sách."

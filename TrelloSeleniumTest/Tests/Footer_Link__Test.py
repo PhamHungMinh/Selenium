@@ -3,7 +3,7 @@ import logging
 import pytest
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
-from TrelloSeleniumTest.Until.utils import login_to_atlassian, navigate_to_trello
+from TrelloSeleniumTest.Until.untils import login_to_atlassian, navigate_to_trello
 
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -45,10 +45,8 @@ def test_Footer_Links_Broken_And_Open_In_New_Tab(driver):
     for link_text in LINK_TEXTS:
         url = home_page.Get_Link_URL(link_text)
         status = home_page.Get_Link_Status(url)
-
         # Ghi lại trạng thái link
         link_statuses.append(f"{link_text}: {url} - Status: {status}")
-
         # Kiểm tra nếu status >= 400 hoặc có lỗi
         if isinstance(status, int) and status >= 400:
             broken_links.append(f"{link_text} ({url}): HTTP {status}")
