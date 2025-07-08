@@ -46,14 +46,14 @@ def test_Limit_Member_WorkSpace(driver):
     # Chờ cho nút "Gửi lời mời" xuất hiện
     try:
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located(
-            (By.XPATH, "//button[contains(@class, 'DXtVhm7hhVXHuw') and contains(span/text(), 'Send invites')]")))
+            (By.XPATH, "//button[span='Send invites']")))
     except TimeoutException:
         logging.error("Không tìm thấy nút 'Gửi lời mời' trong thời gian chờ.")
         assert False, "Test case failed: Nút 'Gửi lời mời' không xuất hiện."
 
     # Kiểm tra trạng thái của nút "Gửi lời mời"
     add_button = driver.find_element(By.XPATH,
-                                     "//button[contains(@class, 'DXtVhm7hhVXHuw') and contains(span/text(), 'Send invites')]")
+                                     "//button[span='Send invites']")
     is_add_button_disabled = not add_button.is_enabled()  # Kiểm tra xem nút có bị vô hiệu hóa hay không
 
     logging.info(f"Nút 'Gửi lời mời' bị chặn: {is_add_button_disabled}, Email thừa: {disabled_emails}")

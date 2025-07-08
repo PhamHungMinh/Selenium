@@ -1,4 +1,6 @@
 import logging
+import time
+
 import pytest
 from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver

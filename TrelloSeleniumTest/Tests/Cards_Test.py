@@ -53,7 +53,8 @@ def test_Trello_Card_Functionality(driver):
 
     # Test case 19: Tạo thẻ với tên là link
     ql_card.Create_Card('link')
-    card_xpath_19 = "//ol[@data-testid='list-cards']/li[div[@data-testid='link-card']//a[@href='https://docs.google.com/']]"
+    card_xpath_19 = "//li[@data-testid='list-card' and .//a[@href='https://docs.google.com/']]"
+    #time.sleep(1000)
     card_element_19 = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, card_xpath_19)))
     assert card_element_19 is not None, "Card 'https://docs.google.com/' không tồn tại trong danh sách 'List_Test_1'."
     print("Test case 19 passed: Card 'https://docs.google.com/' đã được tìm thấy trong danh sách 'List_Test_1'.")

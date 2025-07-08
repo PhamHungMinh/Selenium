@@ -95,6 +95,7 @@ def test_trello_functionality(driver):
    home_page.Click_View_Closed_Board()
    home_page.Click_Open_Board_Again()
    home_page.Click_Reopen_Board()
+   time.sleep(2)
    home_page.Click_Confirm_Reopen()
    home_page.Click_Return_Home()
    driver.refresh()

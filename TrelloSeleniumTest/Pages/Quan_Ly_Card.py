@@ -22,9 +22,9 @@ class QuanLyCard(BasePage):
         self.Input_Hour = (By.XPATH, "/html/body/div[5]/div/section/div[2]/div/div/form/div[2]/div[2]/div/div[2]/input")
         self.Button_Save_Deadline = (By.XPATH, "//button[@data-testid='save-date-button']")
         self.Close_Set_Deadline_Button = (By.XPATH, "//span[@data-testid='CloseIcon']")
-        self.Date_Deadline = "6/22/2025"
-        self.Near_Date = "6/23/2025"
-        self.Date_Away = "6/29/2025"
+        self.Date_Deadline = "7/7/2025"
+        self.Near_Date = "6/29/2025"
+        self.Date_Away = "7/10/2025"
         # Test case 26
         self.Comment_Card = "Complete comment card"
         self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")

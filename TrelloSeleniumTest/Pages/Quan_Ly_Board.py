@@ -20,7 +20,7 @@ class QuanLyBoard(BasePage):
         self.Join_Button = (By.XPATH, "//button[@data-testid='join-button']")
         # Test case 23
         self.Visibility_Button = (By.XPATH, "//button[@type='button' and (contains(@data-testid, 'board-visibility-option'))]")
-        self.Visibility_Private_Button = (By.XPATH, "//button[contains(@class, 'gJDsPins_eYkBM') and contains(., 'Riêng tư')]")
+        self.Visibility_Private_Button = (By.XPATH, "//button[.//span[@data-testid='PrivateIcon']]")
         self.Menu_Trello = (By.XPATH, "//button[contains(@class, 'o7EAj6bxSlZptk') and @type='button']")
         self.Trello_Home = (By.XPATH, "//a[@data-testid='switcher-item__TRELLOTrello']")
         # Test case 24

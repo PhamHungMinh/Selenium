@@ -15,7 +15,7 @@ class HomeTrelloPage(BasePage):
         self.Board_Name = "Test3"
         self.Board_Name_Input = (By.XPATH, "//input[@data-testid='create-board-title-input']")
         self.Create_Board_Submit_Button = (By.XPATH, "//button[@data-testid='create-board-submit-button']")
-        self.Enter_Board_Button = (By.XPATH, "//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
+        self.Enter_Board_Button = (By.XPATH, "//a[@title='Test']")
         # Test case 09
         self.Select_Board = (By.XPATH, "//a[@href='/b/wrJPJ1YC/test1']")
         self.Open_Board_Menu = (By.XPATH, "/html/body/div[1]/div[2]/div[1]/div/div[2]/div/div/div[2]/div/div/div[5]/div/div/div/div/div[1]/div/span[2]/button[2]")
@@ -39,7 +39,7 @@ class HomeTrelloPage(BasePage):
         self.Base_URL = "https://trello.com"
         self.Footer_Links = (By.CSS_SELECTOR, "ul.IiYlBscoXISxa9 a.Tsjb04K8H5mEwj")
         self.Info_Button = (By.XPATH, "//button[@data-testid='header-info-button']")
-        self.More_Info_Button = (By.XPATH, "//button[contains(@class, 'FCtIkW7rM2tRmZ') and contains(@class, 'Tsjb04K8H5mEwj')]")
+        self.More_Info_Button = (By.XPATH, "//button[text()='More…']")
         self.Link_Mapping = {
             "Biểu phí": (By.XPATH, "//a[@href='/pricing']"),
             "Ứng dụng": (By.XPATH, "//a[@href='/platforms']"),
@@ -72,8 +72,8 @@ class HomeTrelloPage(BasePage):
         self.Email_String = ','.join(self.Email_List)
         # Test case 23
         self.Members_Button_23 = (By.XPATH, "//a[@href='/w/userkhonggianlamvic65690210/members']")
-        self.Add_Member_23_Button = (By.XPATH, "//button[contains(@class, 'w2Ok_QPiPTxPuy') and contains(@class, 'bxgKMAm3lq5BpA')]")
-        self.Member_Input_23 = (By.XPATH, "//input[contains(@class, 'autocomplete-input') and contains(@class, 'xgUfhtnEk1vlSn')]")
+        self.Add_Member_23_Button = (By.XPATH, "//button[.//span[@data-testid='AddMemberIcon']]")
+        self.Member_Input_23 = (By.XPATH, "//input[@data-testid='add-members-input']")
         self.Send_Invite_Button_23 = (By.XPATH, "//button[span[text()='Gửi lời mời']]")
         self.Close_Add_Member_Button_23 = (By.XPATH, "//button[@data-testid='ws-invite-modal-close-button']")
         self.Close_Member_WS_Button_23 = (By.XPATH, "//span[contains(@class, '_1e0c1o8l') and contains(@class, '_1o9zidpf')]")

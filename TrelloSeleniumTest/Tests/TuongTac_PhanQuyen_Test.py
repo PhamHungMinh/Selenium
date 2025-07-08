@@ -35,12 +35,18 @@ def run_all_test_cases(driver):
     QLBoard.Share_Button_Click()
     QLBoard.Fill_Email_Input("0306221443@caothang.edu.vn,")
     QLBoard.Invite_Button_Click()
+    time.sleep(1)
     QLBoard.Invite_Button_Click()
+    time.sleep(3)
     member_elements = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")
-    member_count = len(member_elements)
+
+    # Kiểm tra xem email vừa được thêm vào có tồn tại trong danh sách thành viên không
     email_found = any(
-        Find_User in member.find_element(By.XPATH, ".//div[@class='Nb2wVffRyPwsUc']//div").text for member in
-        member_elements)
+        Find_User in member.find_element(By.XPATH,
+                                                            ".//div[@class='vA6KhdkFJOnrdx']//div[contains(text(), '@')]").text
+        for member in member_elements
+    )
+    member_count = len(member_elements)
 
     QLBoard.Close_Share_Button_Click()
     QLBoard.Member_Menu_Click()
@@ -55,12 +61,10 @@ def run_all_test_cases(driver):
     login_page.Fill_Password("Nghia842004@")
     login_page.Login_Button_Click()
     wait_for_element(driver, By.XPATH, "//a[@href='/b/6jkUMfhu/test']")
-
     # Assert kết quả
     assert member_count == 2, "Test case 21 FAIL: Số lượng thành viên không đúng."
     assert email_found, "Test case 21 FAIL: Không tìm thấy email mời."
-    assert driver.find_element(By.XPATH, "//a[@href='/b/6jkUMfhu/test']"), "Test case 21 FAIL: Phần tử không xuất hiện."
-    print("Test case 21 PASS: Số lượng thành viên là 2, tìm thấy email mời và phần tử đã xuất hiện.")
+    print("Test case 21 PASS: Số lượng thành viên là 2, tìm thấy email mời và phần tử bảng 'Test' đã xuất hiện.")
 
     # Test case 22:  Thành viên tham gia bảng qua link mời
     home_page.Click_Enter_Board()
@@ -77,6 +81,7 @@ def run_all_test_cases(driver):
     wait_for_element(driver, By.ID, "password")
     login_page.Fill_Password(Password)
     login_page.Login_Button_Click()
+
     wait_for_element_visible(driver, By.XPATH, "//button[@data-testid='header-create-menu-button']")
     new_url = "https://trello.com/invite/b/683728efeaab183d8b373c79/ATTIa4b2533b9eda91cff5b218e40978919eF170FF1B/test"
     driver.execute_script(f"window.location.href = '{new_url}';")
@@ -84,14 +89,19 @@ def run_all_test_cases(driver):
     QLBoard.Join_Board_Button_Click()
     QLBoard.Share_Button_Click()
 
-    member_elements = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")
     parent_div = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "div.avIXKTMFqNSYgO")))
-    child_divs = parent_div.find_elements(By.CSS_SELECTOR, "div.wFehm16heN83eQ")
+        EC.presence_of_element_located((By.CSS_SELECTOR, "div.qngLWuIQKfhlgV"))
+    )
+
+    # Tìm các phần tử con chứa thông tin thành viên
+    child_divs = parent_div.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")
     user_member_count = len(child_divs)
+
+    # Kiểm tra xem tên thành viên "Tester001" có tồn tại trong danh sách không
     user_name_found = any(
-        "Tester001" in member.find_element(By.CSS_SELECTOR, "span[data-testid='member-list-item-full-name']").text for
-        member in child_divs)
+        "Tester001" in member.find_element(By.CSS_SELECTOR, "span[data-testid='member-list-item-full-name']").text
+        for member in child_divs
+    )
 
     QLBoard.Close_Share_Button_Click2()
     QLBoard.Member_Menu_Click()
@@ -108,14 +118,18 @@ def run_all_test_cases(driver):
     home_page.Click_Enter_Board()
     QLBoard.Share_Button_Click()
 
-    member_elements_admin = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")
-    parent_div_admin = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "div.avIXKTMFqNSYgO")))
-    child_divs_admin = parent_div_admin.find_elements(By.CSS_SELECTOR, "div.wFehm16heN83eQ")
-    admin_member_count = len(child_divs_admin)
+    # Tìm các phần tử con chứa thông tin thành viên
+    parent_div = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "div.qngLWuIQKfhlgV"))
+    )
+    child_divs_admin = parent_div.find_elements(By.CSS_SELECTOR, "div[data-testid='member-item']")
+    admin_member_count = len(child_divs)
+
+    # Kiểm tra xem tên thành viên "Tester001" có tồn tại trong danh sách không
     admin_name_found = any(
-        "Tester001" in member.find_element(By.CSS_SELECTOR, "span[data-testid='member-list-item-full-name']").text for
-        member in child_divs_admin)
+        "Tester001" in member.find_element(By.CSS_SELECTOR, "span[data-testid='member-list-item-full-name']").text
+        for member in child_divs_admin
+    )
 
     # Assert kết quả
     assert user_member_count == 3, "Test case 22 FAIL: User member count không đúng."
@@ -137,9 +151,11 @@ def run_all_test_cases(driver):
     wait_for_element(driver, By.ID, "password")
     login_page.Fill_Password(Password)
     login_page.Login_Button_Click()
+
     home_page.Click_Enter_Board()
 
     QLBoard.Visibility_Click()
+
     QLBoard.Visibility_Private_Click()
     QLBoard.Menu_Trello_Click()
     QLBoard.Trello_Home_Click()
@@ -285,12 +301,12 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
 
     # Chờ cho phần tử với XPath cụ thể xuất hiện
-    wait_for_element_visible(driver, By.XPATH, "//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
+    wait_for_element_visible(driver, By.XPATH, "//a[@href='/b/6jkUMfhu/test']")
 
     # Kiểm tra sự tồn tại của phần tử
     test_board_exists = False
     try:
-        test_board_element = driver.find_element(By.XPATH, "//div[@class='EAVRQ0SLBlQrwI']/a[@title='Test']")
+        test_board_element = driver.find_element(By.XPATH, "//a[@href='/b/6jkUMfhu/test']")
         test_board_exists = True if test_board_element else False
     except NoSuchElementException:
         test_board_exists = False
@@ -439,7 +455,7 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
-    time.sleep(3)
+    time.sleep(30000)
     comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
     comments = driver.find_elements(By.XPATH, comments_xpath)
 
@@ -462,6 +478,7 @@ def run_all_test_cases(driver):
     wait_for_element(driver, By.ID, "password")
     login_page.Fill_Password(PasswordUser)
     login_page.Login_Button_Click()
+
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
     QL_Card = QuanLyCard(driver)
@@ -486,7 +503,9 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
-    comments_xpath2 = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
+
+    comments_xpath2 = "//li[@class='tHtuAoy3OW7uUR' and @data-testid='card-back-action']"
+
     comments = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, comments_xpath2)))
 
     if comments:

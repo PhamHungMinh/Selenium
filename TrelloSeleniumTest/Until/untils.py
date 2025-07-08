@@ -10,8 +10,8 @@ def __init__(self, driver):
     self.Driver = driver
 
 def wait_for_element(driver, by, value):
-    WebDriverWait(driver, 20).until(EC.element_to_be_clickable((by, value)))
-def wait_for_element_visible(driver, by, value, timeout=20):
+    WebDriverWait(driver, 15).until(EC.element_to_be_clickable((by, value)))
+def wait_for_element_visible(driver, by, value, timeout=15):
     WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((by, value)))
 
 def login_to_atlassian(driver, email, password):
