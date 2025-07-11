@@ -65,7 +65,7 @@ def test_trello_functionality(driver):
    home_page.Click_Open_Board_Menu()
    home_page.Click_Change_Board()
    time.sleep(5)
-   home_page.Upload_Background(r"D:\Anh\Anh.jpg")
+   home_page.Upload_Background(r"D:\Anh\Anh1.jpg")
 
    error_present = WebDriverWait(driver, 5).until(
        EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), 'File too large')]"))

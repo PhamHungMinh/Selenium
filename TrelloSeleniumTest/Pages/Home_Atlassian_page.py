@@ -8,7 +8,7 @@ class HomeAtlassianPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.Menu = (By.XPATH, "//button[@data-testid='app-switcher-button' and @type='button']")
+        self.Menu = (By.XPATH, "//button[@aria-haspopup='true']")
         self.Trello_Button = (By.XPATH, "//span[@data-testid='switcher-item__TRELLOTrello--primitive--icon-before']")
 
     # Chuyển từ trang chủ Atlassian sang Trello

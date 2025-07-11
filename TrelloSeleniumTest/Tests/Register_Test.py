@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   driver = get_chrome_driver()
    yield driver
    driver.quit()
 
