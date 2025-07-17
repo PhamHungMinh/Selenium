@@ -1,3 +1,3 @@
-GRID_HUB_URL = "http://192.168.30.152:4444/wd/hub"  # URL Hub
+GRID_HUB_URL = "http://192.168.1.25:4444/wd/hub"  # URL Hub
 BROWSER_NAME = "chrome"
 PLATFORM = "WINDOWS"

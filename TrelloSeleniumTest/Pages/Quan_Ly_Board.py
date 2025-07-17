@@ -21,7 +21,7 @@ class QuanLyBoard(BasePage):
         # Test case 23
         self.Visibility_Button = (By.XPATH, "//button[@type='button' and (contains(@data-testid, 'board-visibility-option'))]")
         self.Visibility_Private_Button = (By.XPATH, "//button[.//span[@data-testid='PrivateIcon']]")
-        self.Menu_Trello = (By.XPATH, "//button[contains(@class, 'o7EAj6bxSlZptk') and @type='button']")
+        self.Menu_Trello = (By.XPATH, "//button[contains(@class, 'kKCUvBL0NSbkMZ') and contains(@class, 'v_b8MhDgjxwsdL')]")
         self.Trello_Home = (By.XPATH, "//a[@data-testid='switcher-item__TRELLOTrello']")
         # Test case 24
         self.Accept_Into_Private_Board_Button = (By.XPATH, "//button[@data-testid='request-access-button']")

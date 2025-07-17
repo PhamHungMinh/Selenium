@@ -2,6 +2,8 @@ import logging
 import time
 
 import pytest
+from selenium import webdriver
+
 from TrelloSeleniumTest.Pages.Quan_ly_List import QuanLyList
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.untils import *
@@ -11,7 +13,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   driver = get_chrome_driver()
    yield driver
    driver.quit()
 

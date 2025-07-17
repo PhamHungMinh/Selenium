@@ -1,6 +1,7 @@
 import time
 import logging
 import pytest
+from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from TrelloSeleniumTest.Pages.Register_page import RegisterPage
@@ -10,9 +11,12 @@ from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 # Cấu hình logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Setup WebDriver
 @pytest.fixture
 def driver():
-   driver = get_chrome_driver()
+   options = webdriver.ChromeOptions()
+   options.add_argument("--start-maximized")
+   driver = webdriver.Chrome(options=options)
    yield driver
    driver.quit()
 

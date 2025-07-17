@@ -9,7 +9,7 @@ class LoginPage(BasePage):
         self.Continue_Button = (By.ID, "login-submit")
         self.Password_Textbox = (By.ID, "password")
         self.Login_Button = (By.ID, "login-submit")
-        self.Edit_Email = (By.XPATH, "(//div[@class='css-env1z2']//button[contains(@class, 'css-o6ruxu') and @type='button'])[1]")
+        self.Edit_Email = (By.XPATH, "(//span[@data-vc='icon-undefined' and contains(@class, 'css-snhnyn')])[1]")
 
     def Open_Page(self, url):
         """Mở trang đăng nhập."""

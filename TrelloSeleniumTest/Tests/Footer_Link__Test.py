@@ -1,6 +1,8 @@
 import time
 import logging
 import pytest
+from selenium import webdriver
+
 from TrelloSeleniumTest.Pages.Home_Trello_page import HomeTrelloPage
 from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver
 from TrelloSeleniumTest.Until.untils import login_to_atlassian, navigate_to_trello
@@ -21,9 +23,12 @@ LINK_TEXTS = [
     "Thuộc tính"
 ]
 
+# Cấu hình logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 @pytest.fixture
 def driver():
-   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   driver = get_chrome_driver()
    yield driver
    driver.quit()
 

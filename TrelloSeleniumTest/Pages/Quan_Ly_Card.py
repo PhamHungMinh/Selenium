@@ -27,8 +27,10 @@ class QuanLyCard(BasePage):
         self.Date_Away = "7/10/2025"
         # Test case 26
         self.Comment_Card = "Complete comment card"
-        self.Input_Comment_Card = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/div[1]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]")
-        self.Click_Button_Input = (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[4]/div/div/div[2]/div/div/div/div[2]/div[1]/section[2]/div[2]/div/div[2]/button")
+        self.Input_Comment_Card = (By.XPATH,
+                                   "//div[@id='ak-editor-textarea' and @role='textbox' and @contenteditable='true']")
+        self.Click_Button_Input = (By.XPATH,
+                                   "//button[@class='xmeFkSSQDCJzx2 ybVBgfOiuWZJtD mUpWqmjL4CZBvn _St8_YSRMkLv07' and @data-testid='card-back-new-comment-input-skeleton']")
         self.Button_Save = (By.XPATH, "//button[@data-testid='card-back-comment-save-button']")
         # Test case 27
         self.Tag_User = "@"

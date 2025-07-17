@@ -21,8 +21,8 @@ class QuanLyList(BasePage):
         # Test case 30
         self.Set_Limit_Card_Button = (By.XPATH, "//span[text()='Set list limit']")
         self.Input_Limit = (By.XPATH, "//input[@id='listLimit' and @type='number']")
-        self.Save_Button = (By.XPATH, "//button[@type='submit' and @class='bxgKMAm3lq5BpA SdamsUKjxSBwGb u0Qu04nzhYsVX_ SEj5vUdI3VvxDc']")
-        self.Close_Button = (By.XPATH, "//button[@aria-label='Close popover' and @class='q7bda2GIwjst4f zKzcyhLUVG0jDw']")
+        self.Save_Button = (By.XPATH, "//button[@type='submit' and text()='Save']")
+        self.Close_Button = (By.XPATH, "//button[@aria-label='Close popover']")
 
     def Create_List_Click(self):
         self.Wait_And_Click(self.Create_List_Button)

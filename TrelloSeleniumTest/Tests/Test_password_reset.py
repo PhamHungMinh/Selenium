@@ -1,5 +1,6 @@
 import logging
 import pytest
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -10,11 +11,10 @@ from TrelloSeleniumTest.Drivers.Chrome_Driver import get_chrome_driver  # Nhập
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture
-def setup():
-    driver = get_chrome_driver()  # Sử dụng hàm get_chrome_driver để khởi tạo driver
-    password_page = PasswordResetPage(driver)
-    yield driver, password_page
-    driver.quit()
+def driver():
+   driver = get_chrome_driver()
+   yield driver
+   driver.quit()
 # Test case 5 - Gửi yêu cầu quên mật khẩu
 def test_Request_Password_Reset(setup):
     driver, password_page = setup

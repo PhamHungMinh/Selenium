@@ -17,12 +17,14 @@ from TrelloSeleniumTest.Base.config import Login_Url, Trello_Url, Email, Passwor
 
 Find_User = "@nghiangotrng3"
 
+# Cấu hình logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 @pytest.fixture
 def driver():
-    driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
-    yield driver
-    driver.quit()
+   driver = get_chrome_driver()
+   yield driver
+   driver.quit()
 
 
 def run_all_test_cases(driver):
@@ -88,7 +90,7 @@ def run_all_test_cases(driver):
     driver.refresh()
     QLBoard.Join_Board_Button_Click()
     QLBoard.Share_Button_Click()
-
+    time.sleep(3)
     parent_div = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "div.qngLWuIQKfhlgV"))
     )
@@ -117,7 +119,7 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
     home_page.Click_Enter_Board()
     QLBoard.Share_Button_Click()
-
+    time.sleep(3)
     # Tìm các phần tử con chứa thông tin thành viên
     parent_div = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "div.qngLWuIQKfhlgV"))
@@ -153,9 +155,7 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
 
     home_page.Click_Enter_Board()
-
     QLBoard.Visibility_Click()
-
     QLBoard.Visibility_Private_Click()
     QLBoard.Menu_Trello_Click()
     QLBoard.Trello_Home_Click()
@@ -180,7 +180,7 @@ def run_all_test_cases(driver):
     home_page.Click_Send_Invite_Button_23()
     driver.refresh()
     home_page.Click_Close_Member_WS_Button()
-    home_page.Click_Close_MN_PS_Button()
+    #home_page.Click_Close_MN_PS_Button()
     QLBoard.Member_Menu_Click()
     QLBoard.Log_Out_Click()
     QLBoard.Login_Another_Click()
@@ -271,19 +271,9 @@ def run_all_test_cases(driver):
     QLBoard.Request_Into_Board_Click()
     QLBoard.Select_Visibility_Click()
     QLBoard.Select_Member_Click()
-
     result_message = False
-    try:
-        # Chờ cho thông báo xuất hiện
-        notification = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "div.YEctMXs9uZbttS"))
-        )
-
-        # Nếu thông báo xuất hiện, gán result_message là True
-        result_message = True
-
-    except Exception as e:
-        print(f"Lỗi khi kiểm tra thông báo: {str(e)}")
+    wait_for_element_visible(driver, By.XPATH, "//div[@role='alert']//span[contains(text(), 'Đã thêm Tester003 vào Test')]")
+    result_message = True
 
     QLBoard.Close_Share_Button_Click2()
     # Đăng xuất và đăng nhập lại
@@ -377,17 +367,8 @@ def run_all_test_cases(driver):
     QLBoard.Deny_Request_Into_Board_Click()
 
     notification_exists = False
-    try:
-        # Chờ cho thông báo xuất hiện
-        notification = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, "div.YEctMXs9uZbttS"))
-        )
-
-        # Nếu thông báo xuất hiện, gán result_message là True
-        notification_exists = True
-
-    except Exception as e:
-        print(f"Lỗi khi kiểm tra thông báo: {str(e)}")
+    wait_for_element_visible(driver, By.XPATH, "//div[@role='alert']")
+    notification_exists = True
 
     QLBoard.Close_Share_Button_Click2()
     # Đăng xuất và đăng nhập lại
@@ -455,7 +436,6 @@ def run_all_test_cases(driver):
     login_page.Login_Button_Click()
     QLBoard.Into_Board_Click()
     QLBoard.Click_To_Card()
-    time.sleep(30000)
     comments_xpath = "//ul[@class='FZdsp70kDqEsB8']/li[@data-testid='card-back-action']"
     comments = driver.find_elements(By.XPATH, comments_xpath)
 
@@ -509,7 +489,7 @@ def run_all_test_cases(driver):
     comments = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, comments_xpath2)))
 
     if comments:
-        latest_comment = comments[0].find_element(By.XPATH, ".//div[@class='TTb5N2DgAn9VHs']//p").text
+        latest_comment = comments[0].find_element(By.XPATH, "(//li[@class='tHtuAoy3OW7uUR' and @data-testid='card-back-action'])[1]").text
         print(f"Test case 27 PASS: Có {len(comments)} bình luận mới. Bình luận mới nhất: {latest_comment}")
     else:
         print("Test case 27 FAIL: Không có bình luận mới.")

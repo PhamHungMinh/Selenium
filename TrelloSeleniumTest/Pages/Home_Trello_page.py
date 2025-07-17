@@ -53,7 +53,7 @@ class HomeTrelloPage(BasePage):
         }
         # Test Limit Work Space
         self.Member_Button = (By.XPATH, "//a[@href='/w/userkhonggianlamvic33097947/members']")
-        self.Add_Member_Button = (By.XPATH, "//button[contains(@class, 'bxgKMAm3lq5BpA') and contains(@class, 'SdamsUKjxSBwGb')]")
+        self.Add_Member_Button = (By.XPATH, "//button[text()='Invite Workspace members']")
         self.Email_Input_Members = (By.XPATH, "//input[@data-testid='add-members-input']")
         self.Submit_Add_Button = (By.XPATH, "//button[@type='button' and contains(@class, 'bxgKMAm3lq5BpA')]")
         self.Email_List = [
@@ -76,7 +76,7 @@ class HomeTrelloPage(BasePage):
         self.Member_Input_23 = (By.XPATH, "//input[@data-testid='add-members-input']")
         self.Send_Invite_Button_23 = (By.XPATH, "//button[span[text()='Gửi lời mời']]")
         self.Close_Add_Member_Button_23 = (By.XPATH, "//button[@data-testid='ws-invite-modal-close-button']")
-        self.Close_Member_WS_Button_23 = (By.XPATH, "//span[contains(@class, '_1e0c1o8l') and contains(@class, '_1o9zidpf')]")
+        self.Close_Member_WS_Button_23 = (By.XPATH, "//span[@data-testid='CloseIcon']/ancestor::button")
         self.Work_Space_Button = (By.XPATH, "//span[text()='Work Space Test']")
         self.Boards_Button = (By.XPATH, "//span[text()='Boards']")
         self.Close_Personal_Manager_Button = (By.XPATH, "//span[@data-testid='CloseIcon']")

@@ -1,6 +1,8 @@
 import logging
 import pytest
 import time
+
+from selenium import webdriver
 from selenium.common import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,10 +16,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-    # Khởi tạo trình duyệt
-    driver = get_chrome_driver()
-    yield driver
-    driver.quit()
+   driver = get_chrome_driver()
+   yield driver
+   driver.quit()
+
 def wait_for_element1(driver, by, value, timeout=20):
     return WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((by, value)))
 

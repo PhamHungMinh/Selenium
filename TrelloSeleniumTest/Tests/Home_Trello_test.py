@@ -1,6 +1,8 @@
 import logging
 import pytest
 import time
+
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,7 +15,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 @pytest.fixture
 def driver():
-   driver = get_chrome_driver()  # Chỉ lấy driver mà không unpack
+   driver = get_chrome_driver()
    yield driver
    driver.quit()
 
@@ -65,7 +67,7 @@ def test_trello_functionality(driver):
    home_page.Click_Open_Board_Menu()
    home_page.Click_Change_Board()
    time.sleep(5)
-   home_page.Upload_Background(r"D:\Anh\Anh1.jpg")
+   home_page.Upload_Background(r"D:\Anh\Anh.jpg")
 
    error_present = WebDriverWait(driver, 5).until(
        EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), 'File too large')]"))
